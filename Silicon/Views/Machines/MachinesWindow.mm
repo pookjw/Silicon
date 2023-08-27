@@ -62,7 +62,6 @@ static NSToolbarItemIdentifier const processIndicatorItemIdentifier = @"Machines
 
 - (void)dealloc {
     [_progressIndicator release];
-    _downloadIPSWCancellable.get()->cancel();
     [super dealloc];
 }
 
@@ -94,6 +93,8 @@ static NSToolbarItemIdentifier const processIndicatorItemIdentifier = @"Machines
         
         self.downloadIPSWCancellable = self.viewModel.get()->downloadIPSW(url, progressHandler, completionHandler);
     }
+    
+    [panel release];
 }
 
 

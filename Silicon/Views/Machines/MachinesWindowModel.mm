@@ -11,12 +11,9 @@
 
 std::shared_ptr<Cancellable> MachinesWindowModel::downloadIPSW(NSURL *outputURL, std::function<void(NSProgress *)> progressHandler, std::function<void(NSError * _Nullable)> completionHandler) {
     __block NSURLSessionDownloadTask * _Nullable downloadTask = nullptr;
-    NSURLSessionDownloadTask * _Nullable (^downloadTaskBlock)() = ^{
-        return downloadTask;
-    };
     
-    std::shared_ptr<Cancellable> cancellable = std::make_shared<Cancellable>([downloadTaskBlock]() {
-        [downloadTaskBlock() cancel];
+    std::shared_ptr<Cancellable> cancellable = std::make_shared<Cancellable>(^{
+        [downloadTask cancel];
     });
     
     //
@@ -38,6 +35,8 @@ std::shared_ptr<Cancellable> MachinesWindowModel::downloadIPSW(NSURL *outputURL,
         
         NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
         NSURLSessionDownloadTask *_downloadTask = [session downloadTaskWithURL:restoreImage.URL completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            [downloadTask release];
+            
             if (error) {
                 completionHandler(error);
                 return;
