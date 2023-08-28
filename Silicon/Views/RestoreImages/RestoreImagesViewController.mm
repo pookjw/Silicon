@@ -5,7 +5,7 @@
 //  Created by Jinwoo Kim on 8/28/23.
 //
 
-#import "RestoreImagesViewController.h"
+#import "RestoreImagesViewController.hpp"
 
 @interface RestoreImagesViewController ()
 
@@ -15,7 +15,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
+    self.view.wantsLayer = YES;
+    self.view.layer.backgroundColor = NSColor.systemOrangeColor.CGColor;
 }
 
 @end

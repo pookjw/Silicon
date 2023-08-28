@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */; };
+		4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD979E32A9CAAB6004CD11C /* CoreData.framework */; };
 		4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */; };
 		4FE8DDDA2A9C65EE003B11C1 /* AppMenuItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDD92A9C65EE003B11C1 /* AppMenuItem.mm */; };
 		4FE8DDDD2A9C6903003B11C1 /* SettingsWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDDC2A9C6903003B11C1 /* SettingsWindow.mm */; };
@@ -26,6 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PersistentDataManager.hpp; sourceTree = "<group>"; };
+		4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PersistentDataManager.mm; sourceTree = "<group>"; };
+		4FD979E32A9CAAB6004CD11C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4FE8DDD42A9C656D003B11C1 /* BaseMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseMenu.hpp; sourceTree = "<group>"; };
 		4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseMenu.mm; sourceTree = "<group>"; };
 		4FE8DDD82A9C65EE003B11C1 /* AppMenuItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppMenuItem.hpp; sourceTree = "<group>"; };
@@ -65,6 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FFD77812A9B622100D11F88 /* Cocoa.framework in Frameworks */,
+				4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */,
 				4FFD77832A9B622500D11F88 /* Virtualization.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +153,7 @@
 		4FFD777F2A9B622100D11F88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FD979E32A9CAAB6004CD11C /* CoreData.framework */,
 				4FFD77822A9B622500D11F88 /* Virtualization.framework */,
 				4FFD77802A9B622100D11F88 /* Cocoa.framework */,
 			);
@@ -185,6 +192,8 @@
 				4FFD77B52A9B78BE00D11F88 /* Cancellable.hpp */,
 				4FFD77B62A9B78BE00D11F88 /* Cancellable.cc */,
 				4FFD77B82A9B826B00D11F88 /* constants.hpp */,
+				4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */,
+				4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -259,6 +268,7 @@
 			files = (
 				4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */,
 				4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */,
+				4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */,
 				4FFD77B12A9B785D00D11F88 /* MachinesWindowModel.mm in Sources */,
 				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,

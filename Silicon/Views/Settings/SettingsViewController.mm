@@ -6,6 +6,7 @@
 //
 
 #import "SettingsViewController.hpp"
+#import "RestoreImagesViewController.hpp"
 
 @interface SettingsViewController ()
 @property (retain) NSTabViewController *tabViewController;
@@ -21,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupTabViewController];
+    [self setupRestoreImagesViewController];
 }
 
 - (void)setupTabViewController {
@@ -41,6 +43,17 @@
     self.tabViewController = tabViewController;
     [self addChildViewController:tabViewController];
     [tabViewController release];
+}
+
+- (void)setupRestoreImagesViewController {
+    RestoreImagesViewController *restoreImagesViewController = [RestoreImagesViewController new];
+    NSTabViewItem *tabViewItem = [NSTabViewItem tabViewItemWithViewController:restoreImagesViewController];
+    [restoreImagesViewController release];
+    
+    tabViewItem.label = @"Images";
+    tabViewItem.image = [NSImage imageWithSystemSymbolName:@"opticaldiscdrive" accessibilityDescription:nullptr];
+    
+    [self.tabViewController addTabViewItem:tabViewItem];
 }
 
 @end

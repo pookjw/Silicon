@@ -16,7 +16,6 @@
         self.movableByWindowBackground = YES;
         self.title = @"Settings";
         self.releasedWhenClosed = NO;
-        self.titlebarAppearsTransparent = YES;
         
         SettingsViewController *contentViewController = [SettingsViewController new];
         self.contentViewController = contentViewController;
