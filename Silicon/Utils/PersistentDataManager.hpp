@@ -18,8 +18,16 @@ public:
     
     PersistentDataManager(const PersistentDataManager&) = delete;
     PersistentDataManager& operator=(const PersistentDataManager&) = delete;
+    
+    NSManagedObjectContext *context();
 private:
     PersistentDataManager();
+    ~PersistentDataManager();
+    
+    NSManagedObjectContext *_context;
+    NSPersistentContainer *_container;
+    
+    NSManagedObjectModel *managedObjectModel();
 };
 
 NS_HEADER_AUDIT_END(nullability, sendability)

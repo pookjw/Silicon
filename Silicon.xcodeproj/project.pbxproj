@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */; };
 		4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD979E32A9CAAB6004CD11C /* CoreData.framework */; };
 		4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */; };
@@ -28,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
+		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PersistentDataManager.hpp; sourceTree = "<group>"; };
 		4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PersistentDataManager.mm; sourceTree = "<group>"; };
 		4FD979E32A9CAAB6004CD11C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -194,6 +197,8 @@
 				4FFD77B82A9B826B00D11F88 /* constants.hpp */,
 				4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */,
 				4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */,
+				4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */,
+				4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */,
 				4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */,
 				4FFD77B12A9B785D00D11F88 /* MachinesWindowModel.mm in Sources */,
+				4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */,
 				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,
 				4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */,

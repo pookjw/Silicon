@@ -8,6 +8,7 @@
 #import "AppDelegate.hpp"
 #import "MachinesWindow.hpp"
 #import "BaseMenu.hpp"
+#import "PersistentDataManager.hpp"
 
 @interface AppDelegate ()
 @end
@@ -22,6 +23,8 @@
     BaseMenu *baseMenu = [BaseMenu new];
     NSApp.mainMenu = baseMenu;
     [baseMenu release];
+    
+    PersistentDataManager::getInstance();
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
