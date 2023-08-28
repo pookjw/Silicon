@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */; };
+		4FE8DDDA2A9C65EE003B11C1 /* AppMenuItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDD92A9C65EE003B11C1 /* AppMenuItem.mm */; };
+		4FE8DDDD2A9C6903003B11C1 /* SettingsWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDDC2A9C6903003B11C1 /* SettingsWindow.mm */; };
+		4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDDF2A9C69AE003B11C1 /* SettingsViewController.mm */; };
+		4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDE42A9C6D06003B11C1 /* RestoreImagesViewController.mm */; };
 		4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD776D2A9B619E00D11F88 /* AppDelegate.mm */; };
 		4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77702A9B619E00D11F88 /* ViewController.mm */; };
 		4FFD77732A9B619F00D11F88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FFD77722A9B619F00D11F88 /* Assets.xcassets */; };
@@ -21,6 +26,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FE8DDD42A9C656D003B11C1 /* BaseMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseMenu.hpp; sourceTree = "<group>"; };
+		4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseMenu.mm; sourceTree = "<group>"; };
+		4FE8DDD82A9C65EE003B11C1 /* AppMenuItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppMenuItem.hpp; sourceTree = "<group>"; };
+		4FE8DDD92A9C65EE003B11C1 /* AppMenuItem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppMenuItem.mm; sourceTree = "<group>"; };
+		4FE8DDDB2A9C6903003B11C1 /* SettingsWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SettingsWindow.hpp; sourceTree = "<group>"; };
+		4FE8DDDC2A9C6903003B11C1 /* SettingsWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsWindow.mm; sourceTree = "<group>"; };
+		4FE8DDDE2A9C69AE003B11C1 /* SettingsViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SettingsViewController.hpp; sourceTree = "<group>"; };
+		4FE8DDDF2A9C69AE003B11C1 /* SettingsViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsViewController.mm; sourceTree = "<group>"; };
+		4FE8DDE32A9C6D06003B11C1 /* RestoreImagesViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesViewController.hpp; sourceTree = "<group>"; };
+		4FE8DDE42A9C6D06003B11C1 /* RestoreImagesViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesViewController.mm; sourceTree = "<group>"; };
 		4FFD77692A9B619E00D11F88 /* Silicon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Silicon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FFD776C2A9B619E00D11F88 /* AppDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
 		4FFD776D2A9B619E00D11F88 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -57,6 +72,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4FE8DDD22A9C6470003B11C1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4FE8DDDB2A9C6903003B11C1 /* SettingsWindow.hpp */,
+				4FE8DDDC2A9C6903003B11C1 /* SettingsWindow.mm */,
+				4FE8DDDE2A9C69AE003B11C1 /* SettingsViewController.hpp */,
+				4FE8DDDF2A9C69AE003B11C1 /* SettingsViewController.mm */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4FE8DDD32A9C655F003B11C1 /* BaseMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4FE8DDD42A9C656D003B11C1 /* BaseMenu.hpp */,
+				4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */,
+				4FE8DDD72A9C65E4003B11C1 /* Items */,
+			);
+			path = BaseMenu;
+			sourceTree = "<group>";
+		};
+		4FE8DDD72A9C65E4003B11C1 /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				4FE8DDD82A9C65EE003B11C1 /* AppMenuItem.hpp */,
+				4FE8DDD92A9C65EE003B11C1 /* AppMenuItem.mm */,
+			);
+			path = Items;
+			sourceTree = "<group>";
+		};
+		4FE8DDE22A9C6CCC003B11C1 /* RestoreImages */ = {
+			isa = PBXGroup;
+			children = (
+				4FE8DDE32A9C6D06003B11C1 /* RestoreImagesViewController.hpp */,
+				4FE8DDE42A9C6D06003B11C1 /* RestoreImagesViewController.mm */,
+			);
+			path = RestoreImages;
+			sourceTree = "<group>";
+		};
 		4FFD77602A9B619E00D11F88 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +169,9 @@
 		4FFD77852A9B62AF00D11F88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FE8DDD32A9C655F003B11C1 /* BaseMenu */,
+				4FE8DDD22A9C6470003B11C1 /* Settings */,
+				4FE8DDE22A9C6CCC003B11C1 /* RestoreImages */,
 				4FFD77842A9B62A800D11F88 /* Machines */,
 			);
 			path = Views;
@@ -203,11 +260,16 @@
 				4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */,
 				4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */,
 				4FFD77B12A9B785D00D11F88 /* MachinesWindowModel.mm in Sources */,
+				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,
 				4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */,
+				4FE8DDDA2A9C65EE003B11C1 /* AppMenuItem.mm in Sources */,
+				4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */,
+				4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */,
 				4FFD778B2A9B63D400D11F88 /* MachinesViewController.mm in Sources */,
 				4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */,
 				4FFD77882A9B62C100D11F88 /* MachinesWindow.mm in Sources */,
+				4FE8DDDD2A9C6903003B11C1 /* SettingsWindow.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

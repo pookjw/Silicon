@@ -7,6 +7,7 @@
 
 #import "AppDelegate.hpp"
 #import "MachinesWindow.hpp"
+#import "BaseMenu.hpp"
 
 @interface AppDelegate ()
 @end
@@ -17,6 +18,10 @@
     MachinesWindow *window = [MachinesWindow new];
     [window makeKeyAndOrderFront:nullptr];
     [window release];
+    
+    BaseMenu *baseMenu = [BaseMenu new];
+    NSApp.mainMenu = baseMenu;
+    [baseMenu release];
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
