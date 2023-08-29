@@ -18,15 +18,18 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 }
 
 @interface RestoreImagesViewController () <NSCollectionViewDelegate>
+@property (retain) NSStackView *stackView;
 @property (retain) NSScrollView *scrollView;
 @property (retain) NSCollectionView *collectionView;
 @property (retain) NSButton *addButton;
 @property (assign) std::shared_ptr<RestoreImagesViewModel> viewModel;
+@property (assign) std::shared_ptr<Cancellable> addFromRemoteCancellable;
 @end
 
 @implementation RestoreImagesViewController
 
 - (void)dealloc {
+    [_stackView release];
     [_scrollView release];
     [_collectionView release];
     [_addButton release];
@@ -35,6 +38,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupStackView];
     [self setupScrollView];
     [self setupCollectionView];
     [self setupAddButton];
@@ -45,18 +49,30 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     });
 }
 
+- (void)setupStackView {
+    NSStackView *stackView = [NSStackView new];
+    stackView.orientation = NSUserInterfaceLayoutOrientationVertical;
+//    stackView.alignment = NSLayoutAttributeWidth;
+    stackView.distribution = NSStackViewDistributionFillProportionally;
+    stackView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self.view addSubview:stackView];
+    [NSLayoutConstraint activateConstraints:@[
+        [stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [stackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [stackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+    ]];
+    
+    self.stackView = stackView;
+    [stackView release];
+}
+
 - (void)setupScrollView {
     NSScrollView *scrollView = [NSScrollView new];
     scrollView.drawsBackground = NO;
-    scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self.view addSubview:scrollView];
-    [NSLayoutConstraint activateConstraints:@[
-        [scrollView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [scrollView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [scrollView.heightAnchor constraintEqualToConstant:400.f]
-    ]];
+    [self.stackView addArrangedSubview:scrollView];
     
     self.scrollView = scrollView;
     [scrollView release];
@@ -84,15 +100,8 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
                                              action:@selector(didTriggerAddButton:)];
     
     addButton.bezelStyle = NSBezelStyleSmallSquare;
-    addButton.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self.view addSubview:addButton];
-    [NSLayoutConstraint activateConstraints:@[
-        [addButton.topAnchor constraintEqualToAnchor:self.collectionView.bottomAnchor],
-        [addButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [addButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [addButton.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
-    ]];
+    [self.stackView addArrangedSubview:addButton];
     
     self.addButton = addButton;
 }
@@ -132,14 +141,24 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     
     if (response == NSModalResponseOK) {
         NSArray<NSURL *> *urls = panel.URLs;
-        self.viewModel.get()->addFromLocalURLs(urls, [](NSError * _Nullable error) {
+        self.viewModel.get()->addFromLocalIPSWURLs(urls, [](NSError * _Nullable error) {
             NSLog(@"%@", error);
         });
     }
+    
+    [panel release];
 }
 
 - (void)didTriggerAddFromRemoteMenuItem:(NSMenuItem *)sender {
+    auto progressHandler = [](NSProgress *progress) {
+        NSLog(@"%@", progress);
+    };
     
+    auto completionHandler = [](NSError * _Nullable error) {
+        NSLog(@"%@", error);
+    };
+    
+    self.addFromRemoteCancellable = self.viewModel.get()->addFromRemote(progressHandler, completionHandler);
 }
 
 - (NSCollectionViewCompositionalLayout *)makeCollectionViewLayout {

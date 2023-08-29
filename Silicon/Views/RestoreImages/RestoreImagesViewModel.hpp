@@ -7,9 +7,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import <functional>
+#import <memory>
 #import "RestoreImagesViewModelDelegate.hpp"
 #import "PersistentDataManager.hpp"
 #import "RestoreImageModel.hpp"
+#import "Cancellable.hpp"
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -20,7 +22,8 @@ public:
     
     void initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
     RestoreImageModel * _Nullable restoreImageModel(NSIndexPath *indexPath);
-    void addFromLocalURLs(NSArray<NSURL *> *localURLs, std::function<void (NSError * _Nullable)> completionHandler);
+    void addFromLocalIPSWURLs(NSArray<NSURL *> *localURLs, std::function<void (NSError * _Nullable)> completionHandler);
+    std::shared_ptr<Cancellable> addFromRemote(std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler);
     
     RestoreImagesViewModel(const RestoreImagesViewModel&) = delete;
     RestoreImagesViewModel& operator=(const RestoreImagesViewModel&) = delete;
