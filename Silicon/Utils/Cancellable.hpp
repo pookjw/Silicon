@@ -10,7 +10,7 @@
 
 class Cancellable {
 public:
-    Cancellable(std::function<void()> cancellationHandler) : cancellationHandler(cancellationHandler) {};
+    Cancellable(std::function<void ()> cancellationHandler) : _cancellationHandler(cancellationHandler) {};
     ~Cancellable();
     
     void cancel();
@@ -19,7 +19,7 @@ public:
     Cancellable(const Cancellable&) = delete;
     Cancellable& operator=(const Cancellable&) = delete;
 private:
-    std::function<void()> cancellationHandler;
+    const std::function<void ()> _cancellationHandler;
     bool _isCancelled = false;
-    std::mutex mtx;
+    std::mutex _mtx;
 };

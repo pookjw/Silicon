@@ -12,7 +12,7 @@
 @dynamic versions;
 @dynamic URL;
 
-+ (NSEntityDescription *)entity {
++ (NSEntityDescription *)_entity {
     NSEntityDescription *entity = [NSEntityDescription new];
     entity.name = NSStringFromClass(self);
     entity.managedObjectClassName = NSStringFromClass(self);
@@ -25,19 +25,19 @@
     buildVersionDescription.attributeType = NSStringAttributeType;
     
     NSAttributeDescription *majorVersionDescription = [NSAttributeDescription new];
-    buildVersionDescription.name = _RestoreImageModel::versionKeys::majorVersionKey;
-    buildVersionDescription.optional = NO;
-    buildVersionDescription.attributeType = NSInteger64AttributeType;
+    majorVersionDescription.name = _RestoreImageModel::versionKeys::majorVersionKey;
+    majorVersionDescription.optional = NO;
+    majorVersionDescription.attributeType = NSInteger64AttributeType;
     
     NSAttributeDescription *minorVersionDescription = [NSAttributeDescription new];
-    buildVersionDescription.name = _RestoreImageModel::versionKeys::minorVersionKey;
-    buildVersionDescription.optional = NO;
-    buildVersionDescription.attributeType = NSInteger64AttributeType;
+    minorVersionDescription.name = _RestoreImageModel::versionKeys::minorVersionKey;
+    minorVersionDescription.optional = NO;
+    minorVersionDescription.attributeType = NSInteger64AttributeType;
     
     NSAttributeDescription *patchVersionDescription = [NSAttributeDescription new];
-    buildVersionDescription.name = _RestoreImageModel::versionKeys::patchVersionKey;
-    buildVersionDescription.optional = NO;
-    buildVersionDescription.attributeType = NSInteger64AttributeType;
+    patchVersionDescription.name = _RestoreImageModel::versionKeys::patchVersionKey;
+    patchVersionDescription.optional = NO;
+    patchVersionDescription.attributeType = NSInteger64AttributeType;
     
     NSCompositeAttributeDescription *versionsDescription = [NSCompositeAttributeDescription new];
     versionsDescription.name = @"versions";

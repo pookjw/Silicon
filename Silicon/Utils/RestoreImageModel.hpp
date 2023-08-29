@@ -19,7 +19,7 @@ static NSString * const patchVersionKey = @"patchVersion";
 }
 
 @interface RestoreImageModel : NSManagedObject
-@property (class, readonly, nonatomic) NSEntityDescription *entity;
+@property (class, readonly, nonatomic) NSEntityDescription *_entity;
 @property (assign) NSDictionary<NSString *, id> *versions;
 @property (assign) NSURL *URL;
 @end

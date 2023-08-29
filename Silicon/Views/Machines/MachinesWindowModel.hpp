@@ -14,7 +14,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 class MachinesWindowModel {
 public:
-     std::shared_ptr<Cancellable> downloadIPSW(NSURL *outputURL, std::function<void(NSProgress *)> progressHandler, std::function<void(NSError * _Nullable)> completionHandler);
+     std::shared_ptr<Cancellable> downloadIPSW(NSURL *outputURL, std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler);
 };
 
 NS_HEADER_AUDIT_END(nullability, sendability)

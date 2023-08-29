@@ -24,7 +24,9 @@
     NSApp.mainMenu = baseMenu;
     [baseMenu release];
     
-    PersistentDataManager::getInstance();
+    PersistentDataManager::getInstance().initialize([](NSError * _Nullable error) {
+        NSLog(@"%@", error);
+    });
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {

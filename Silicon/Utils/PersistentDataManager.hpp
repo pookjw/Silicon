@@ -6,6 +6,7 @@
 //
 
 #import <CoreData/CoreData.h>
+#import <functional>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -20,14 +21,19 @@ public:
     PersistentDataManager& operator=(const PersistentDataManager&) = delete;
     
     NSManagedObjectContext *context();
+    NSOperationQueue *queue();
+    void initialize(std::function<void (NSError * _Nullable)> completionHandler);
 private:
     PersistentDataManager();
     ~PersistentDataManager();
     
     NSManagedObjectContext *_context;
     NSPersistentContainer *_container;
+    NSOperationQueue *_queue;
     
-    NSManagedObjectModel *managedObjectModel();
+    bool _isInitialized = false;
+    
+    NSManagedObjectModel *_managedObjectModel();
 };
 
 NS_HEADER_AUDIT_END(nullability, sendability)

@@ -9,7 +9,7 @@
 #import "constants.hpp"
 #import <Virtualization/Virtualization.h>
 
-std::shared_ptr<Cancellable> MachinesWindowModel::downloadIPSW(NSURL *outputURL, std::function<void(NSProgress *)> progressHandler, std::function<void(NSError * _Nullable)> completionHandler) {
+std::shared_ptr<Cancellable> MachinesWindowModel::downloadIPSW(NSURL *outputURL, std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler) {
     __block NSURLSessionDownloadTask * _Nullable downloadTask = nullptr;
     
     std::shared_ptr<Cancellable> cancellable = std::make_shared<Cancellable>(^{
@@ -25,7 +25,7 @@ std::shared_ptr<Cancellable> MachinesWindowModel::downloadIPSW(NSURL *outputURL,
         }
         
         if (cancellable.get()->isCancelled()) {
-            completionHandler([NSError errorWithDomain:Silicon::constants::SiliconErrorDomain code:NSUserCancelledError userInfo:nullptr]);
+            completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconUserCancelledError userInfo:nullptr]);
             return;
         }
         

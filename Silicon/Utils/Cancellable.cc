@@ -12,22 +12,22 @@ Cancellable::~Cancellable() {
 }
 
 void Cancellable::cancel() {
-    mtx.lock();
+    _mtx.lock();
     if (_isCancelled) {
-        mtx.unlock();
+        _mtx.unlock();
         return;
     }
-    cancellationHandler();
+    _cancellationHandler();
     _isCancelled = true;
-    mtx.unlock();
+    _mtx.unlock();
 }
 
 bool Cancellable::isCancelled() {
     bool isCancelled;
     
-    mtx.lock();
+    _mtx.lock();
     isCancelled = _isCancelled;
-    mtx.unlock();
+    _mtx.unlock();
     
     return isCancelled;
 }

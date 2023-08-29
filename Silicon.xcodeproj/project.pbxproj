@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F4E13C52A9DCB0600FC6305 /* NSTextField+LabelStyle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */; };
+		4F55C8F52A9E2566009CADBD /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */; };
+		4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D0E2A9DAE2200DBB7EB /* RestoreImagesViewModel.mm */; };
+		4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D122A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm */; };
+		4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */; };
 		4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD979E32A9CAAB6004CD11C /* CoreData.framework */; };
@@ -29,6 +34,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F4E13C32A9DCB0600FC6305 /* NSTextField+LabelStyle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "NSTextField+LabelStyle.hpp"; sourceTree = "<group>"; };
+		4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSTextField+LabelStyle.mm"; sourceTree = "<group>"; };
+		4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		4F607D0E2A9DAE2200DBB7EB /* RestoreImagesViewModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesViewModel.mm; sourceTree = "<group>"; };
+		4F607D0F2A9DAE2200DBB7EB /* RestoreImagesViewModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesViewModel.hpp; sourceTree = "<group>"; };
+		4F607D112A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesViewModelDelegate.hpp; sourceTree = "<group>"; };
+		4F607D122A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesViewModelDelegate.mm; sourceTree = "<group>"; };
+		4F607D142A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesCollectionViewItem.hpp; sourceTree = "<group>"; };
+		4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesCollectionViewItem.mm; sourceTree = "<group>"; };
 		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PersistentDataManager.hpp; sourceTree = "<group>"; };
@@ -72,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F55C8F52A9E2566009CADBD /* UniformTypeIdentifiers.framework in Frameworks */,
 				4FFD77812A9B622100D11F88 /* Cocoa.framework in Frameworks */,
 				4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */,
 				4FFD77832A9B622500D11F88 /* Virtualization.framework in Frameworks */,
@@ -116,6 +131,12 @@
 			children = (
 				4FE8DDE32A9C6D06003B11C1 /* RestoreImagesViewController.hpp */,
 				4FE8DDE42A9C6D06003B11C1 /* RestoreImagesViewController.mm */,
+				4F607D0F2A9DAE2200DBB7EB /* RestoreImagesViewModel.hpp */,
+				4F607D0E2A9DAE2200DBB7EB /* RestoreImagesViewModel.mm */,
+				4F607D112A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.hpp */,
+				4F607D122A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm */,
+				4F607D142A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.hpp */,
+				4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */,
 			);
 			path = RestoreImages;
 			sourceTree = "<group>";
@@ -156,6 +177,7 @@
 		4FFD777F2A9B622100D11F88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */,
 				4FD979E32A9CAAB6004CD11C /* CoreData.framework */,
 				4FFD77822A9B622500D11F88 /* Virtualization.framework */,
 				4FFD77802A9B622100D11F88 /* Cocoa.framework */,
@@ -192,6 +214,8 @@
 			children = (
 				4FFD778D2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.h */,
 				4FFD778E2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm */,
+				4F4E13C32A9DCB0600FC6305 /* NSTextField+LabelStyle.hpp */,
+				4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */,
 				4FFD77B52A9B78BE00D11F88 /* Cancellable.hpp */,
 				4FFD77B62A9B78BE00D11F88 /* Cancellable.cc */,
 				4FFD77B82A9B826B00D11F88 /* constants.hpp */,
@@ -272,8 +296,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */,
+				4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */,
+				4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */,
+				4F4E13C52A9DCB0600FC6305 /* NSTextField+LabelStyle.mm in Sources */,
 				4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */,
 				4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */,
+				4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */,
 				4FFD77B12A9B785D00D11F88 /* MachinesWindowModel.mm in Sources */,
 				4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */,
 				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
@@ -302,7 +330,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -363,7 +391,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
