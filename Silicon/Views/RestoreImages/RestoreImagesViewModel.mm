@@ -142,8 +142,19 @@ std::shared_ptr<Cancellable> RestoreImagesViewModel::addFromRemote(std::function
             
             NSURL *applicationSupportURL = [NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
             NSURL *ipswsURL = [applicationSupportURL URLByAppendingPathComponent:@"ipsws" isDirectory:YES];
-            NSURL *URL = [ipswsURL URLByAppendingPathComponent:response.suggestedFilename];
+            
             NSError * _Nullable ioError = nullptr;
+            
+            if (![NSFileManager.defaultManager fileExistsAtPath:ipswsURL.path]) {
+                [NSFileManager.defaultManager createDirectoryAtURL:ipswsURL withIntermediateDirectories:YES attributes:nullptr error:&ioError];
+                
+                if (ioError) {
+                    completionHandler(ioError);
+                    return;
+                }
+            }
+            
+            NSURL *URL = [ipswsURL URLByAppendingPathComponent:response.suggestedFilename];
             [NSFileManager.defaultManager moveItemAtURL:location toURL:URL error:&ioError];
             
             if (ioError) {
@@ -170,6 +181,7 @@ std::shared_ptr<Cancellable> RestoreImagesViewModel::addFromRemote(std::function
         
         _downloadTask = downloadTask;
         progressHandler(downloadTask.progress);
+        [downloadTask resume];
         [session finishTasksAndInvalidate];
     }];
     

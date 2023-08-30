@@ -27,7 +27,20 @@
 - (void)configureWithRestoreImageModel:(RestoreImageModel *)restoreImageModel {
     self.restoreImageModel = restoreImageModel;
     
-    self.textField.stringValue = restoreImageModel.objectID.URIRepresentation.absoluteString;
+    [restoreImageModel.managedObjectContext performBlock:^{
+        NSDictionary<NSString *, id> *versions = restoreImageModel.versions;
+        NSString *buildVersion = versions[_RestoreImageModel::versionKeys::buildVersionKey];
+        NSNumber *majorVersion = versions[_RestoreImageModel::versionKeys::majorVersionKey];
+        NSNumber *minorVersion = versions[_RestoreImageModel::versionKeys::minorVersionKey];
+        NSNumber *patchVersion = versions[_RestoreImageModel::versionKeys::patchVersionKey];
+        NSURL *URL = restoreImageModel.URL;
+        
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            if (![restoreImageModel isEqual:self.restoreImageModel]) return;
+            
+            self.textField.stringValue = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", buildVersion, majorVersion, minorVersion, patchVersion, URL];
+        }];
+    }];
 }
 
 - (void)setupTextField {

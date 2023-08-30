@@ -7,6 +7,7 @@
 
 #import "PersistentDataManager.hpp"
 #import "RestoreImageModel.hpp"
+#import "VirtualMachineModel.hpp"
 #import "constants.hpp"
 
 PersistentDataManager::PersistentDataManager() {
@@ -85,7 +86,8 @@ NSManagedObjectModel *PersistentDataManager::_managedObjectModel() {
     NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel new];
     
     managedObjectModel.entities = @[
-        RestoreImageModel._entity
+        RestoreImageModel._entity,
+        VirtualMachineModel._entity
     ];
     
     return [managedObjectModel autorelease];

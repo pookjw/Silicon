@@ -18,10 +18,11 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 }
 
 @interface RestoreImagesViewController () <NSCollectionViewDelegate>
-@property (retain) NSStackView *stackView;
 @property (retain) NSScrollView *scrollView;
 @property (retain) NSCollectionView *collectionView;
 @property (retain) NSButton *addButton;
+@property (retain) NSProgressIndicator *progressIndicator;
+@property (retain) NSGridView *gridView;
 @property (assign) std::shared_ptr<RestoreImagesViewModel> viewModel;
 @property (assign) std::shared_ptr<Cancellable> addFromRemoteCancellable;
 @end
@@ -29,50 +30,31 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 @implementation RestoreImagesViewController
 
 - (void)dealloc {
-    [_stackView release];
     [_scrollView release];
     [_collectionView release];
     [_addButton release];
+    [_progressIndicator release];
+    [_gridView release];
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupStackView];
     [self setupScrollView];
     [self setupCollectionView];
     [self setupAddButton];
+    [self setupProgressIndicator];
     [self setupViewModel];
+    [self setupGridView];
     
     self.viewModel.get()->initialize([self makeDataSource], [](NSError * _Nullable error) {
         NSLog(@"%@", error);
     });
 }
 
-- (void)setupStackView {
-    NSStackView *stackView = [NSStackView new];
-    stackView.orientation = NSUserInterfaceLayoutOrientationVertical;
-//    stackView.alignment = NSLayoutAttributeWidth;
-    stackView.distribution = NSStackViewDistributionFillProportionally;
-    stackView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    [self.view addSubview:stackView];
-    [NSLayoutConstraint activateConstraints:@[
-        [stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [stackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [stackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
-    ]];
-    
-    self.stackView = stackView;
-    [stackView release];
-}
-
 - (void)setupScrollView {
     NSScrollView *scrollView = [NSScrollView new];
     scrollView.drawsBackground = NO;
-    
-    [self.stackView addArrangedSubview:scrollView];
     
     self.scrollView = scrollView;
     [scrollView release];
@@ -101,9 +83,39 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     
     addButton.bezelStyle = NSBezelStyleSmallSquare;
     
-    [self.stackView addArrangedSubview:addButton];
-    
     self.addButton = addButton;
+}
+
+- (void)setupProgressIndicator {
+    NSProgressIndicator *progressIndicator = [NSProgressIndicator new];
+    progressIndicator.usesThreadedAnimation = YES;
+    progressIndicator.style = NSProgressIndicatorStyleSpinning;
+    progressIndicator.indeterminate = NO;
+    progressIndicator.displayedWhenStopped = YES;
+    
+    self.progressIndicator = progressIndicator;
+    [progressIndicator release];
+}
+
+- (void)setupGridView {
+    NSGridView *gridView = [NSGridView new];
+    gridView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [gridView addRowWithViews:@[self.scrollView]];
+    [gridView addRowWithViews:@[self.progressIndicator, self.addButton]];
+    
+    [[gridView cellForView:self.scrollView].row mergeCellsInRange:NSMakeRange(0, 2)];
+    
+    [self.view addSubview:gridView];
+    [NSLayoutConstraint activateConstraints:@[
+        [gridView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [gridView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [gridView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [gridView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
+    
+    self.gridView = gridView;
+    [gridView release];
 }
 
 - (void)setupViewModel {
@@ -150,8 +162,12 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 }
 
 - (void)didTriggerAddFromRemoteMenuItem:(NSMenuItem *)sender {
-    auto progressHandler = [](NSProgress *progress) {
-        NSLog(@"%@", progress);
+    NSProgressIndicator *progressIndicator = self.progressIndicator;
+    
+    auto progressHandler = [progressIndicator](NSProgress *progress) {
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            progressIndicator.observedProgress = progress;
+        }];
     };
     
     auto completionHandler = [](NSError * _Nullable error) {

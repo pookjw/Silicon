@@ -6,7 +6,7 @@
 //
 
 #import "AppDelegate.hpp"
-#import "MachinesWindow.hpp"
+#import "VirtualMachinesWindow.hpp"
 #import "BaseMenu.hpp"
 #import "PersistentDataManager.hpp"
 
@@ -16,7 +16,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    MachinesWindow *window = [MachinesWindow new];
+    VirtualMachinesWindow *window = [VirtualMachinesWindow new];
     [window makeKeyAndOrderFront:nullptr];
     [window release];
     

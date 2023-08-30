@@ -12,6 +12,9 @@
 		4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D0E2A9DAE2200DBB7EB /* RestoreImagesViewModel.mm */; };
 		4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D122A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm */; };
 		4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */; };
+		4F66B1512A9EE66D00D188F0 /* CreateVirtualMachineViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1502A9EE66D00D188F0 /* CreateVirtualMachineViewController.mm */; };
+		4F66B1542A9EE6FD00D188F0 /* VirtualMachineModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1532A9EE6FD00D188F0 /* VirtualMachineModel.mm */; };
+		4F66B1582A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1572A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.mm */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */; };
 		4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD979E32A9CAAB6004CD11C /* CoreData.framework */; };
@@ -26,10 +29,9 @@
 		4FFD77782A9B619F00D11F88 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77772A9B619F00D11F88 /* main.mm */; };
 		4FFD77812A9B622100D11F88 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFD77802A9B622100D11F88 /* Cocoa.framework */; };
 		4FFD77832A9B622500D11F88 /* Virtualization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFD77822A9B622500D11F88 /* Virtualization.framework */; };
-		4FFD77882A9B62C100D11F88 /* MachinesWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77872A9B62C100D11F88 /* MachinesWindow.mm */; };
-		4FFD778B2A9B63D400D11F88 /* MachinesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD778A2A9B63D400D11F88 /* MachinesViewController.mm */; };
+		4FFD77882A9B62C100D11F88 /* VirtualMachinesWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77872A9B62C100D11F88 /* VirtualMachinesWindow.mm */; };
+		4FFD778B2A9B63D400D11F88 /* VirtualMachinesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD778A2A9B63D400D11F88 /* VirtualMachinesViewController.mm */; };
 		4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD778E2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm */; };
-		4FFD77B12A9B785D00D11F88 /* MachinesWindowModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77B02A9B785D00D11F88 /* MachinesWindowModel.mm */; };
 		4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77B62A9B78BE00D11F88 /* Cancellable.cc */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,12 @@
 		4F607D122A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesViewModelDelegate.mm; sourceTree = "<group>"; };
 		4F607D142A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesCollectionViewItem.hpp; sourceTree = "<group>"; };
 		4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesCollectionViewItem.mm; sourceTree = "<group>"; };
+		4F66B14F2A9EE66D00D188F0 /* CreateVirtualMachineViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateVirtualMachineViewController.hpp; sourceTree = "<group>"; };
+		4F66B1502A9EE66D00D188F0 /* CreateVirtualMachineViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CreateVirtualMachineViewController.mm; sourceTree = "<group>"; };
+		4F66B1522A9EE6FD00D188F0 /* VirtualMachineModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMachineModel.hpp; sourceTree = "<group>"; };
+		4F66B1532A9EE6FD00D188F0 /* VirtualMachineModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachineModel.mm; sourceTree = "<group>"; };
+		4F66B1562A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateVirtualMachineLocationViewController.hpp; sourceTree = "<group>"; };
+		4F66B1572A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CreateVirtualMachineLocationViewController.mm; sourceTree = "<group>"; };
 		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PersistentDataManager.hpp; sourceTree = "<group>"; };
@@ -68,14 +76,12 @@
 		4FFD77792A9B619F00D11F88 /* Silicon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Silicon.entitlements; sourceTree = "<group>"; };
 		4FFD77802A9B622100D11F88 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4FFD77822A9B622500D11F88 /* Virtualization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Virtualization.framework; path = System/Library/Frameworks/Virtualization.framework; sourceTree = SDKROOT; };
-		4FFD77862A9B62C100D11F88 /* MachinesWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MachinesWindow.hpp; sourceTree = "<group>"; };
-		4FFD77872A9B62C100D11F88 /* MachinesWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MachinesWindow.mm; sourceTree = "<group>"; };
-		4FFD77892A9B63D400D11F88 /* MachinesViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MachinesViewController.hpp; sourceTree = "<group>"; };
-		4FFD778A2A9B63D400D11F88 /* MachinesViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MachinesViewController.mm; sourceTree = "<group>"; };
+		4FFD77862A9B62C100D11F88 /* VirtualMachinesWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMachinesWindow.hpp; sourceTree = "<group>"; };
+		4FFD77872A9B62C100D11F88 /* VirtualMachinesWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachinesWindow.mm; sourceTree = "<group>"; };
+		4FFD77892A9B63D400D11F88 /* VirtualMachinesViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMachinesViewController.hpp; sourceTree = "<group>"; };
+		4FFD778A2A9B63D400D11F88 /* VirtualMachinesViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachinesViewController.mm; sourceTree = "<group>"; };
 		4FFD778D2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Foundation_IvarDescription.h"; sourceTree = "<group>"; };
 		4FFD778E2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSObject+Foundation_IvarDescription.mm"; sourceTree = "<group>"; };
-		4FFD77AF2A9B785D00D11F88 /* MachinesWindowModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MachinesWindowModel.hpp; sourceTree = "<group>"; };
-		4FFD77B02A9B785D00D11F88 /* MachinesWindowModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MachinesWindowModel.mm; sourceTree = "<group>"; };
 		4FFD77B52A9B78BE00D11F88 /* Cancellable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cancellable.hpp; sourceTree = "<group>"; };
 		4FFD77B62A9B78BE00D11F88 /* Cancellable.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cancellable.cc; sourceTree = "<group>"; };
 		4FFD77B82A9B826B00D11F88 /* constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
@@ -96,6 +102,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F66B1552A9EE8E300D188F0 /* CreateVirtualMachine */ = {
+			isa = PBXGroup;
+			children = (
+				4F66B14F2A9EE66D00D188F0 /* CreateVirtualMachineViewController.hpp */,
+				4F66B1502A9EE66D00D188F0 /* CreateVirtualMachineViewController.mm */,
+				4F66B1562A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.hpp */,
+				4F66B1572A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.mm */,
+			);
+			path = CreateVirtualMachine;
+			sourceTree = "<group>";
+		};
 		4FE8DDD22A9C6470003B11C1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,17 +202,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4FFD77842A9B62A800D11F88 /* Machines */ = {
+		4FFD77842A9B62A800D11F88 /* VirtualMachines */ = {
 			isa = PBXGroup;
 			children = (
-				4FFD77862A9B62C100D11F88 /* MachinesWindow.hpp */,
-				4FFD77872A9B62C100D11F88 /* MachinesWindow.mm */,
-				4FFD77AF2A9B785D00D11F88 /* MachinesWindowModel.hpp */,
-				4FFD77B02A9B785D00D11F88 /* MachinesWindowModel.mm */,
-				4FFD77892A9B63D400D11F88 /* MachinesViewController.hpp */,
-				4FFD778A2A9B63D400D11F88 /* MachinesViewController.mm */,
+				4FFD77862A9B62C100D11F88 /* VirtualMachinesWindow.hpp */,
+				4FFD77872A9B62C100D11F88 /* VirtualMachinesWindow.mm */,
+				4FFD77892A9B63D400D11F88 /* VirtualMachinesViewController.hpp */,
+				4FFD778A2A9B63D400D11F88 /* VirtualMachinesViewController.mm */,
 			);
-			path = Machines;
+			path = VirtualMachines;
 			sourceTree = "<group>";
 		};
 		4FFD77852A9B62AF00D11F88 /* Views */ = {
@@ -204,7 +219,8 @@
 				4FE8DDD32A9C655F003B11C1 /* BaseMenu */,
 				4FE8DDD22A9C6470003B11C1 /* Settings */,
 				4FE8DDE22A9C6CCC003B11C1 /* RestoreImages */,
-				4FFD77842A9B62A800D11F88 /* Machines */,
+				4FFD77842A9B62A800D11F88 /* VirtualMachines */,
+				4F66B1552A9EE8E300D188F0 /* CreateVirtualMachine */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +239,8 @@
 				4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */,
 				4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */,
 				4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */,
+				4F66B1522A9EE6FD00D188F0 /* VirtualMachineModel.hpp */,
+				4F66B1532A9EE6FD00D188F0 /* VirtualMachineModel.mm */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -296,23 +314,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */,
+				4F66B1512A9EE66D00D188F0 /* CreateVirtualMachineViewController.mm in Sources */,
 				4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */,
 				4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */,
 				4F4E13C52A9DCB0600FC6305 /* NSTextField+LabelStyle.mm in Sources */,
 				4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */,
 				4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */,
 				4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */,
-				4FFD77B12A9B785D00D11F88 /* MachinesWindowModel.mm in Sources */,
 				4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */,
+				4F66B1542A9EE6FD00D188F0 /* VirtualMachineModel.mm in Sources */,
 				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
+				4F66B1582A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.mm in Sources */,
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,
 				4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */,
 				4FE8DDDA2A9C65EE003B11C1 /* AppMenuItem.mm in Sources */,
 				4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */,
 				4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */,
-				4FFD778B2A9B63D400D11F88 /* MachinesViewController.mm in Sources */,
+				4FFD778B2A9B63D400D11F88 /* VirtualMachinesViewController.mm in Sources */,
 				4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */,
-				4FFD77882A9B62C100D11F88 /* MachinesWindow.mm in Sources */,
+				4FFD77882A9B62C100D11F88 /* VirtualMachinesWindow.mm in Sources */,
 				4FE8DDDD2A9C6903003B11C1 /* SettingsWindow.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,15 +1,15 @@
 //
-//  MachinesViewController.hpp
+//  CreateVirtualMachineViewController.hpp
 //  Silicon
 //
-//  Created by Jinwoo Kim on 8/27/23.
+//  Created by Jinwoo Kim on 8/30/23.
 //
 
 #import <Cocoa/Cocoa.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface MachinesViewController : NSViewController
+@interface CreateVirtualMachineViewController : NSViewController
 
 @end
 
