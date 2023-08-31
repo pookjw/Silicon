@@ -28,6 +28,7 @@ static NSToolbarItemIdentifier const createVirtualMachineItemIdentifier = @"Virt
         self.title = @"Machines";
         self.releasedWhenClosed = NO;
         self.titlebarAppearsTransparent = YES;
+        self.contentMinSize = NSMakeSize(400.f, 400.f);
         
         NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:_VirtualMachinesWindow::identifiers::toolbarIdentifier];
         toolbar.delegate = self;

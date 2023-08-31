@@ -6,64 +6,64 @@
 //
 
 #import "CreateVirtualMachineViewController.hpp"
+#import "NavigationController.hpp"
 #import "CreateVirtualMachineLocationViewController.hpp"
+#import "RestoreImagesViewController.hpp"
 
-@interface CreateVirtualMachineViewController () <CreateVirtualMachineLocationViewControllerDelegate>
-@property (retain) __kindof NSViewController * _Nullable currentContentViewController;
+@interface CreateVirtualMachineViewController () <CreateVirtualMachineLocationViewControllerDelegate, RestoreImagesViewControllerDelegate>
+@property (retain) NavigationController *navigationController;
 @end
 
 @implementation CreateVirtualMachineViewController
 
 - (void)dealloc {
-    [_currentContentViewController release];
+    [_navigationController release];
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    CreateVirtualMachineLocationViewController *locationViewController = [CreateVirtualMachineLocationViewController new];
-    locationViewController.delegate = self;
-    [self presentContentViewController:locationViewController animated:NO];
-    [locationViewController release];
+    [self setupNavigationController];
+    [self pushToLocationViewController];
 }
 
-- (void)presentContentViewController:(__kindof NSViewController *)contentViewController animated:(BOOL)animated {
-    NSView *contentView = contentViewController.view;
-    contentView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+- (void)setupNavigationController {
+    NavigationController *navigationController = [NavigationController new];
+    navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:navigationController.view];
     
-    [self.view addSubview:contentView];
-    [self addChildViewController:contentViewController];
+    [NSLayoutConstraint activateConstraints:@[
+        [navigationController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [navigationController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [navigationController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [navigationController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
     
-    BOOL _animated = animated && self.currentContentViewController;
-    
-    if (_animated) {
-        [self transitionFromViewController:self.currentContentViewController
-                          toViewController:contentViewController
-                                   options:NSViewControllerTransitionCrossfade | NSViewControllerTransitionSlideForward
-                         completionHandler:^{
-            [self removeCurrentContentViewController];
-            self.currentContentViewController = contentViewController;
-        }];
-    } else {
-        [self removeCurrentContentViewController];
-        self.currentContentViewController = contentViewController;
-    }
+    self.navigationController = navigationController;
+    [navigationController release];
 }
 
-- (void)removeCurrentContentViewController {
-    [self.currentContentViewController removeFromParentViewController];
-    [self.currentContentViewController.view removeFromSuperview];
+- (void)pushToLocationViewController {
+    CreateVirtualMachineLocationViewController *viewController = [CreateVirtualMachineLocationViewController new];
+    viewController.delegate = self;
+    [self.navigationController pushViewController:viewController completionHandler:nullptr];
+    [viewController release];
 }
 
+- (void)pushToRestoreImagesViewController {
+    RestoreImagesViewController *viewController = [RestoreImagesViewController new];
+    viewController.delegate = self;
+    [self.navigationController pushViewController:viewController completionHandler:nullptr];
+    [viewController release];
+}
 
 #pragma mark - CreateVirtualMachineLocationViewControllerDelegate
 
 - (void)locationViewControllerCreateNewVirtualMachine:(CreateVirtualMachineLocationViewController *)viewController {
-    
+    [self pushToRestoreImagesViewController];
 }
 
-- (void)locationViewController:(CreateVirtualMachineLocationViewController *)viewController didSelectLocalBundleURL:(NSURL *)localBundleURL {
+- (void)locationViewControllerAddExistingVirtualMachine:(CreateVirtualMachineLocationViewController *)viewController {
     
 }
 

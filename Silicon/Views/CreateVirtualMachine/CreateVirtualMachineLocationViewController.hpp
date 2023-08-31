@@ -12,7 +12,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 @class CreateVirtualMachineLocationViewController;
 @protocol CreateVirtualMachineLocationViewControllerDelegate <NSObject>
 - (void)locationViewControllerCreateNewVirtualMachine:(CreateVirtualMachineLocationViewController *)viewController;
-- (void)locationViewController:(CreateVirtualMachineLocationViewController *)viewController didSelectLocalBundleURL:(NSURL *)localBundleURL;
+- (void)locationViewControllerAddExistingVirtualMachine:(CreateVirtualMachineLocationViewController *)viewController;
 @end
 
 @interface CreateVirtualMachineLocationViewController : NSViewController
