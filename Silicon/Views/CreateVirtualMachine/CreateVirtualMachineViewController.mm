@@ -10,7 +10,7 @@
 #import "CreateVirtualMachineLocationViewController.hpp"
 #import "RestoreImagesViewController.hpp"
 
-@interface CreateVirtualMachineViewController () <CreateVirtualMachineLocationViewControllerDelegate, RestoreImagesViewControllerDelegate>
+@interface CreateVirtualMachineViewController () <CreateVirtualMachineLocationViewControllerDelegate>
 @property (retain) NavigationController *navigationController;
 @end
 
@@ -44,15 +44,14 @@
 }
 
 - (void)pushToLocationViewController {
-    CreateVirtualMachineLocationViewController *viewController = [CreateVirtualMachineLocationViewController new];
-    viewController.delegate = self;
-    [self.navigationController pushViewController:viewController completionHandler:nullptr];
-    [viewController release];
+    CreateVirtualMachineLocationViewController *locationViewContrller = [CreateVirtualMachineLocationViewController new];
+    locationViewContrller.delegate = self;
+    [self.navigationController pushViewController:locationViewContrller completionHandler:nullptr];
+    [locationViewContrller release];
 }
 
 - (void)pushToRestoreImagesViewController {
     RestoreImagesViewController *viewController = [RestoreImagesViewController new];
-    viewController.delegate = self;
     [self.navigationController pushViewController:viewController completionHandler:nullptr];
     [viewController release];
 }

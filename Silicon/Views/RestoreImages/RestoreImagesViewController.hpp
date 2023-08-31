@@ -10,13 +10,8 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class RestoreImagesViewController;
-@protocol RestoreImagesViewControllerDelegate <NSObject>
-- (void)restoreImagesViewController:(RestoreImagesViewController *)viewController didSelectRestoreImageModel:(RestoreImageModel * _Nullable)restoreImageModel;
-@end
-
 @interface RestoreImagesViewController : NSViewController
-@property (assign) id<RestoreImagesViewControllerDelegate> delegate;
+@property (readonly, retain) RestoreImageModel * _Nullable selectedRestoreModel;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

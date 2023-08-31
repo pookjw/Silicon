@@ -18,6 +18,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 }
 
 @interface RestoreImagesViewController () <NSCollectionViewDelegate>
+@property (retain) RestoreImageModel * _Nullable selectedRestoreModel;
 @property (retain) NSScrollView *scrollView;
 @property (retain) NSCollectionView *collectionView;
 @property (retain) NSButton *addButton;
@@ -30,6 +31,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 @implementation RestoreImagesViewController
 
 - (void)dealloc {
+    [_selectedRestoreModel release];
     [_scrollView release];
     [_collectionView release];
     [_addButton release];
@@ -67,6 +69,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     collectionView.backgroundColors = @[NSColor.clearColor];
     collectionView.selectable = YES;
     collectionView.allowsMultipleSelection = NO;
+    collectionView.allowsEmptySelection = YES;
     collectionView.delegate = self;
     
     [collectionView registerClass:RestoreImagesCollectionViewItem.class forItemWithIdentifier:_RestoreImagesViewController::identifiers::collectionViewItemIdentifier];
@@ -216,6 +219,26 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     }];
     
     return [dataSource autorelease];
+}
+
+- (void)updateSelectedRestoreModel {
+    NSIndexPath * _Nullable indexPath = self.collectionView.selectionIndexPaths.allObjects.firstObject;
+    
+    if (indexPath) {
+        self.selectedRestoreModel = self.viewModel.get()->restoreImageModel(indexPath);
+    } else {
+        self.selectedRestoreModel = nullptr;
+    }
+}
+
+#pragma mark - NSCollectionViewDelegate
+
+- (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [self updateSelectedRestoreModel];
+}
+
+- (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [self updateSelectedRestoreModel];
 }
 
 @end

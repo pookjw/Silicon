@@ -16,7 +16,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 @end
 
 @interface CreateVirtualMachineLocationViewController : NSViewController
-@property (assign) id<CreateVirtualMachineLocationViewControllerDelegate> delegate;
+@property (assign) id<CreateVirtualMachineLocationViewControllerDelegate> _Nullable delegate;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
