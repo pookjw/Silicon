@@ -62,6 +62,7 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 
 - (void)dealloc {
     static_cast<NavigationContentView *>(self.view).didChangeToolbarHandler = std::nullopt;
+    [self removeObserversFromLastNavigationItem];
     [_viewControllers release];
     [super dealloc];
 }
@@ -253,14 +254,21 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 }
 
 - (void)willChangeViewControllers {
+    [self removeObserversFromLastNavigationItem];
+}
+
+- (void)didChangeViewControllers {
+    [self reloadToolbar];
+    [self addObserversFromLastNavigationItem];
+}
+
+- (void)removeObserversFromLastNavigationItem {
     [self.lastNavigationItem removeObserver:self forKeyPath:@"navigationalItemIdentifiers" context:_navigationalItemIdentifiersContext.get()];
     [self.lastNavigationItem removeObserver:self forKeyPath:@"itemIdentifiers" context:_itemIdentifiersContext.get()];
     [self.lastNavigationItem removeObserver:self forKeyPath:@"toolbarItemHandler" context:_toolbarItemHandlerContext.get()];
 }
 
-- (void)didChangeViewControllers {
-    [self reloadToolbar];
-    
+- (void)addObserversFromLastNavigationItem {
     [self.lastNavigationItem addObserver:self forKeyPath:@"navigationalItemIdentifiers" options:NSKeyValueObservingOptionNew context:_navigationalItemIdentifiersContext.get()];
     [self.lastNavigationItem addObserver:self forKeyPath:@"itemIdentifiers" options:NSKeyValueObservingOptionNew context:_itemIdentifiersContext.get()];
     [self.lastNavigationItem addObserver:self forKeyPath:@"toolbarItemHandler" options:NSKeyValueObservingOptionNew context:_toolbarItemHandlerContext.get()];
