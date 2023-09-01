@@ -31,6 +31,7 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 @property (assign) std::shared_ptr<std::uint8_t> navigationalItemIdentifiersContext;
 @property (assign) std::shared_ptr<std::uint8_t> itemIdentifiersContext;
 @property (assign) std::shared_ptr<std::uint8_t> toolbarItemHandlerContext;
+@property (assign) std::shared_ptr<std::uint8_t> titleContext;
 @property (assign, readonly, nonatomic) NavigationItem * _Nullable lastNavigationItem;
 @end
 
@@ -63,6 +64,7 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 - (void)dealloc {
     static_cast<NavigationContentView *>(self.view).didChangeToolbarHandler = std::nullopt;
     [self removeObserversFromLastNavigationItem];
+    [_viewControllers.lastObject removeObserver:self forKeyPath:@"title" context:_titleContext.get()];
     [_viewControllers release];
     [super dealloc];
 }
@@ -74,6 +76,8 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
         [self reloadToolbar];
     } else if (context == _toolbarItemHandlerContext.get()) {
         [self reloadToolbar];
+    } else if (context == _titleContext.get()) {
+        [self updateTitle];
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
@@ -95,6 +99,7 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
     _navigationalItemIdentifiersContext = std::make_shared<std::uint8_t>();
     _itemIdentifiersContext = std::make_shared<std::uint8_t>();
     _toolbarItemHandlerContext = std::make_shared<std::uint8_t>();
+    _titleContext = std::make_shared<std::uint8_t>();
 }
 
 - (void)pushViewController:(NSViewController *)viewController transitionOptions:(NSViewControllerTransitionOptions)options completionHandler:(void (^)(void))completionHandler {
@@ -255,11 +260,13 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 
 - (void)willChangeViewControllers {
     [self removeObserversFromLastNavigationItem];
+    [_viewControllers.lastObject removeObserver:self forKeyPath:@"title" context:_titleContext.get()];
 }
 
 - (void)didChangeViewControllers {
     [self reloadToolbar];
     [self addObserversFromLastNavigationItem];
+    [self updateTitle];
 }
 
 - (void)removeObserversFromLastNavigationItem {
@@ -289,6 +296,22 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
     if (![toolbar.identifier isEqualToString:_NavigationController::identifiers::toolbarIdentifier]) {
         [self reloadToolbar];
     }
+    
+    [self updateTitle];
+}
+
+- (void)updateTitle {
+    if (!self.overrideToolbar) return;
+    
+    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
+    if (lastViewController) {
+        if (self.overrideToolbar) {
+            NSString * _Nullable title = lastViewController.title;
+            if (!title) title = [NSString string];
+            self.view.window.title = title;
+        }
+        [lastViewController addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:_titleContext.get()];
+    }
 }
 
 - (void)didTriggerBackButtonItem:(NSToolbarItem *)sender {
@@ -303,6 +326,7 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
     
     if (overrideToolbar) {
         [self reloadToolbar];
+        [self updateTitle];
     } else {
         if ([self.view.window.toolbar.identifier isEqualToString:_NavigationController::identifiers::toolbarIdentifier]) {
             self.view.window.toolbar = nullptr;

@@ -25,9 +25,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupAttributes];
     [self setupStackView];
     [self setupCreateNewButton];
     [self setupAddExistingButton];
+}
+
+- (void)setupAttributes {
+    self.title = @"Location";
 }
 
 - (void)setupStackView {

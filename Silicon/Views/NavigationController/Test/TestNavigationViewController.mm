@@ -62,11 +62,16 @@
                                                        target:self
                                                        action:@selector(didTriggerToggleToolbarButton:)];
     
+    NSButton *updateTitleButton = [NSButton buttonWithTitle:@"Update Title"
+                                                     target:self
+                                                     action:@selector(didTriggerUpdateTitleButtonButton:)];
+    
     [stackView addArrangedSubview:addNavigationItemButton];
     [stackView addArrangedSubview:removeNavigationItemButton];
     [stackView addArrangedSubview:addItemButton];
     [stackView addArrangedSubview:removeItemButton];
     [stackView addArrangedSubview:toggleToolbarButton];
+    [stackView addArrangedSubview:updateTitleButton];
     
     [self.view addSubview:stackView];
     [NSLayoutConstraint activateConstraints:@[
@@ -108,6 +113,10 @@
 - (void)didTriggerToggleToolbarButton:(NSButton *)sender {
     auto navigationController = static_cast<NavigationController *>(self.parentViewController);
     navigationController.overrideToolbar = !navigationController.overrideToolbar;
+}
+
+- (void)didTriggerUpdateTitleButtonButton:(NSButton *)sender {
+    self.title = [NSString stringWithFormat:@"%@", [NSDate date]];
 }
 
 @end

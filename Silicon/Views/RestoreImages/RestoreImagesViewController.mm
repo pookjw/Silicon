@@ -80,6 +80,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Restore Images";
     [self setupScrollView];
     [self setupCollectionView];
     [self setupAddButton];
