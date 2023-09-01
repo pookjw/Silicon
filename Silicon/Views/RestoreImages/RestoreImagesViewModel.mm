@@ -77,6 +77,15 @@ RestoreImageModel * _Nullable RestoreImagesViewModel::restoreImageModel(NSIndexP
     return [_fetchedResultsController objectAtIndexPath:indexPath];
 }
 
+void RestoreImagesViewModel::restoreImageModel(NSIndexPath * _Nonnull indexPath, std::function<void (RestoreImageModel * _Nullable)> completionHandler) {
+    NSFetchedResultsController<RestoreImageModel *> *fetchedResultsController = _fetchedResultsController;
+    
+    [_queue addBarrierBlock:^{
+        RestoreImageModel * _Nullable result = [fetchedResultsController objectAtIndexPath:indexPath];
+        completionHandler(result);
+    }];
+}
+
 void RestoreImagesViewModel::addFromLocalIPSWURLs(NSArray<NSURL *> *localURLs, std::function<void (NSError * _Nullable)> completionHandler) {
     PersistentDataManager &dataManager = _dataManager;
     

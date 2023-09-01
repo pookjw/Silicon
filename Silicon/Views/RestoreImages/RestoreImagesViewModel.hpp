@@ -21,7 +21,10 @@ public:
     ~RestoreImagesViewModel();
     
     void initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
+    
     RestoreImageModel * _Nullable restoreImageModel(NSIndexPath *indexPath);
+    void restoreImageModel(NSIndexPath *indexPath, std::function<void (RestoreImageModel * _Nullable)> completionHandler);
+    
     void addFromLocalIPSWURLs(NSArray<NSURL *> *localURLs, std::function<void (NSError * _Nullable)> completionHandler);
     std::shared_ptr<Cancellable> addFromRemote(std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler);
     

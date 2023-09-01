@@ -8,12 +8,6 @@
 #import "CreateVirtualMachineLocationViewController.hpp"
 #import "NSTextField+LabelStyle.hpp"
 
-namespace _CreateVirtualMachineLocationViewController {
-namespace identifiers {
-static NSToolbarItemIdentifier const nextButtonItemIdentifier = @"CreateVirtualMachineLocationViewController.nextButtonItem";
-}
-}
-
 @interface CreateVirtualMachineLocationViewController () <NSToolbarDelegate>
 @property (retain) NSStackView *stackView;
 @property (retain) NSButton *createNewButton;
@@ -83,37 +77,6 @@ static NSToolbarItemIdentifier const nextButtonItemIdentifier = @"CreateVirtualM
 - (void)didTriggerAddExistingButton:(NSButton *)sender {
     self.createNewButton.state = NSControlStateValueOff;
     self.addExistingButton.state = NSControlStateValueOn;
-}
-
-- (void)didTriggerNextButton:(NSButton *)sender {
-    if (self.createNewButton.state == NSControlStateValueOn) {
-        [self.delegate locationViewControllerCreateNewVirtualMachine:self];
-    } else if (self.addExistingButton.state == NSControlStateValueOn) {
-        [self.delegate locationViewControllerAddExistingVirtualMachine:self];
-    }
-}
-
-#pragma mark - NSToolbarDelegate
-
-- (NSArray<NSToolbarItemIdentifier> *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar {
-    return @[_CreateVirtualMachineLocationViewController::identifiers::nextButtonItemIdentifier];
-}
-
-- (NSArray<NSToolbarItemIdentifier> *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar {
-    return @[_CreateVirtualMachineLocationViewController::identifiers::nextButtonItemIdentifier];
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag {
-    if ([itemIdentifier isEqualToString:_CreateVirtualMachineLocationViewController::identifiers::nextButtonItemIdentifier]) {
-        NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
-        item.title = @"Next";
-        item.target = self;
-        item.action = @selector(didTriggerNextButton:);
-        
-        return [item autorelease];
-    } else {
-        return nullptr;
-    }
 }
 
 @end

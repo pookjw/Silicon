@@ -26,6 +26,7 @@
 		4FE8DDDD2A9C6903003B11C1 /* SettingsWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDDC2A9C6903003B11C1 /* SettingsWindow.mm */; };
 		4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDDF2A9C69AE003B11C1 /* SettingsViewController.mm */; };
 		4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDE42A9C6D06003B11C1 /* RestoreImagesViewController.mm */; };
+		4FFAB68B2AA1FE7400DC71AA /* NavigationItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAB68A2AA1FE7400DC71AA /* NavigationItem.mm */; };
 		4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD776D2A9B619E00D11F88 /* AppDelegate.mm */; };
 		4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77702A9B619E00D11F88 /* ViewController.mm */; };
 		4FFD77732A9B619F00D11F88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FFD77722A9B619F00D11F88 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		4FFD778B2A9B63D400D11F88 /* VirtualMachinesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD778A2A9B63D400D11F88 /* VirtualMachinesViewController.mm */; };
 		4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD778E2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm */; };
 		4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4FFD77B62A9B78BE00D11F88 /* Cancellable.cc */; };
+		4FFF2CA32AA2200600B22FEA /* TestNavigationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFF2CA22AA2200600B22FEA /* TestNavigationViewController.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		4FE8DDDF2A9C69AE003B11C1 /* SettingsViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsViewController.mm; sourceTree = "<group>"; };
 		4FE8DDE32A9C6D06003B11C1 /* RestoreImagesViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesViewController.hpp; sourceTree = "<group>"; };
 		4FE8DDE42A9C6D06003B11C1 /* RestoreImagesViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesViewController.mm; sourceTree = "<group>"; };
+		4FFAB6892AA1FE7400DC71AA /* NavigationItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NavigationItem.hpp; sourceTree = "<group>"; };
+		4FFAB68A2AA1FE7400DC71AA /* NavigationItem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NavigationItem.mm; sourceTree = "<group>"; };
 		4FFD77692A9B619E00D11F88 /* Silicon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Silicon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FFD776C2A9B619E00D11F88 /* AppDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
 		4FFD776D2A9B619E00D11F88 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 		4FFD77B52A9B78BE00D11F88 /* Cancellable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cancellable.hpp; sourceTree = "<group>"; };
 		4FFD77B62A9B78BE00D11F88 /* Cancellable.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cancellable.cc; sourceTree = "<group>"; };
 		4FFD77B82A9B826B00D11F88 /* constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
+		4FFF2CA12AA2200600B22FEA /* TestNavigationViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestNavigationViewController.hpp; sourceTree = "<group>"; };
+		4FFF2CA22AA2200600B22FEA /* TestNavigationViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestNavigationViewController.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +134,9 @@
 				4F7ECC812AA0245F00781951 /* NavigationController.mm */,
 				4F23E0E72AA06F3B00A12F7B /* NavigationContentView.hpp */,
 				4F23E0E82AA06F3B00A12F7B /* NavigationContentView.mm */,
+				4FFAB6892AA1FE7400DC71AA /* NavigationItem.hpp */,
+				4FFAB68A2AA1FE7400DC71AA /* NavigationItem.mm */,
+				4FFF2CA02AA21FEA00B22FEA /* Test */,
 			);
 			path = NavigationController;
 			sourceTree = "<group>";
@@ -266,6 +275,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		4FFF2CA02AA21FEA00B22FEA /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				4FFF2CA12AA2200600B22FEA /* TestNavigationViewController.hpp */,
+				4FFF2CA22AA2200600B22FEA /* TestNavigationViewController.mm */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -345,6 +363,7 @@
 				4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */,
 				4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */,
 				4F66B1542A9EE6FD00D188F0 /* VirtualMachineModel.mm in Sources */,
+				4FFAB68B2AA1FE7400DC71AA /* NavigationItem.mm in Sources */,
 				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
 				4F66B1582A9EE94C00D188F0 /* CreateVirtualMachineLocationViewController.mm in Sources */,
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,
@@ -353,6 +372,7 @@
 				4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */,
 				4F23E0E92AA06F3B00A12F7B /* NavigationContentView.mm in Sources */,
 				4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */,
+				4FFF2CA32AA2200600B22FEA /* TestNavigationViewController.mm in Sources */,
 				4FFD778B2A9B63D400D11F88 /* VirtualMachinesViewController.mm in Sources */,
 				4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */,
 				4F7ECC822AA0245F00781951 /* NavigationController.mm in Sources */,

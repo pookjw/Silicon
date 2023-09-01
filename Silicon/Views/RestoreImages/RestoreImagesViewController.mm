@@ -10,6 +10,7 @@
 #import "RestoreImagesCollectionViewItem.hpp"
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <memory>
+#import <cinttypes>
 
 namespace _RestoreImagesViewController {
 namespace identifiers {
@@ -18,7 +19,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 }
 
 @interface RestoreImagesViewController () <NSCollectionViewDelegate>
-@property (retain) RestoreImageModel * _Nullable selectedRestoreModel;
+@property (retain) RestoreImageModel * _Nullable selectedRestoreImageModel;
 @property (retain) NSScrollView *scrollView;
 @property (retain) NSCollectionView *collectionView;
 @property (retain) NSButton *addButton;
@@ -26,18 +27,55 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 @property (retain) NSGridView *gridView;
 @property (assign) std::shared_ptr<RestoreImagesViewModel> viewModel;
 @property (assign) std::shared_ptr<Cancellable> addFromRemoteCancellable;
+@property (assign) std::shared_ptr<std::uint8_t> selectionIndexPathsContext;
 @end
 
 @implementation RestoreImagesViewController
 
+- (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        [self RestoreImagesViewController_commonInit];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if (self = [super initWithCoder:coder]) {
+        [self RestoreImagesViewController_commonInit];
+    }
+    
+    return self;
+}
+
 - (void)dealloc {
-    [_selectedRestoreModel release];
+    [_selectedRestoreImageModel release];
     [_scrollView release];
+    [_collectionView removeObserver:self forKeyPath:@"selectionIndexPaths" context:_selectionIndexPathsContext.get()];
     [_collectionView release];
     [_addButton release];
     [_progressIndicator release];
     [_gridView release];
     [super dealloc];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == _selectionIndexPathsContext.get()) {
+        NSSet<NSIndexPath *> *selectionIndexPaths = static_cast<NSCollectionView *>(object).selectionIndexPaths;
+        NSIndexPath * _Nullable firstIndexPath = selectionIndexPaths.allObjects.firstObject;
+        if (!firstIndexPath) return;
+        
+        self.viewModel.get()->restoreImageModel(firstIndexPath, [self](RestoreImageModel * _Nullable result) {
+            self.selectedRestoreImageModel = result;
+            [self.delegate restoreImagesViewController:self didSelectRestoreImageModel:result];
+        });
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (void)RestoreImagesViewController_commonInit {
+    _selectionIndexPathsContext = std::make_shared<std::uint8_t>();
 }
 
 - (void)viewDidLoad {
@@ -65,6 +103,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 - (void)setupCollectionView {
     NSCollectionViewCompositionalLayout *collectionViewLayout = [self makeCollectionViewLayout];
     NSCollectionView *collectionView = [NSCollectionView new];
+    [collectionView addObserver:self forKeyPath:@"selectionIndexPaths" options:NSKeyValueObservingOptionNew context:_selectionIndexPathsContext.get()];
     collectionView.collectionViewLayout = collectionViewLayout;
     collectionView.backgroundColors = @[NSColor.clearColor];
     collectionView.selectable = YES;
@@ -219,26 +258,6 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     }];
     
     return [dataSource autorelease];
-}
-
-- (void)updateSelectedRestoreModel {
-    NSIndexPath * _Nullable indexPath = self.collectionView.selectionIndexPaths.allObjects.firstObject;
-    
-    if (indexPath) {
-        self.selectedRestoreModel = self.viewModel.get()->restoreImageModel(indexPath);
-    } else {
-        self.selectedRestoreModel = nullptr;
-    }
-}
-
-#pragma mark - NSCollectionViewDelegate
-
-- (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
-    [self updateSelectedRestoreModel];
-}
-
-- (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
-    [self updateSelectedRestoreModel];
 }
 
 @end

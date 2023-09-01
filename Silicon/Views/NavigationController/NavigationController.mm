@@ -7,21 +7,42 @@
 
 #import "NavigationController.hpp"
 #import "NavigationContentView.hpp"
+#import "NavigationItem.hpp"
 #import <objc/message.h>
+#import <objc/runtime.h>
+#import <memory>
+#import <cinttypes>
 
 namespace _NavigationController {
 namespace identifiers {
 static NSToolbarIdentifier const toolbarIdentifier = @"_NavigationController.toolbar";
 static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationController.backButtonItem";
 }
+
+namespace keys {
+std::uint8_t *navigationItemAssociationKey = nullptr;
+}
 }
 
-@interface NavigationController () <NSToolbarDelegate> {
+@interface NavigationController () <NSToolbarDelegate, NSToolbarItemValidation> {
     NSMutableArray<NSViewController *> *_viewControllers;
 }
+
+@property (assign) std::shared_ptr<std::uint8_t> navigationalItemIdentifiersContext;
+@property (assign) std::shared_ptr<std::uint8_t> itemIdentifiersContext;
+@property (assign) std::shared_ptr<std::uint8_t> toolbarItemHandlerContext;
+@property (assign, readonly, nonatomic) NavigationItem * _Nullable lastNavigationItem;
 @end
 
 @implementation NavigationController
+
++ (std::uint8_t *)navigationItemAssociationKey {
+    if (!_NavigationController::keys::navigationItemAssociationKey) {
+        _NavigationController::keys::navigationItemAssociationKey = new std::uint8_t;
+    }
+    
+    return _NavigationController::keys::navigationItemAssociationKey;
+}
 
 - (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -45,8 +66,16 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
     [super dealloc];
 }
 
-- (void)NavigationController_commonInit {
-    _viewControllers = [NSMutableArray<NSViewController *> new];
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == _navigationalItemIdentifiersContext.get()) {
+        [self reloadToolbar];
+    } else if (context == _itemIdentifiersContext.get()) {
+        [self reloadToolbar];
+    } else if (context == _toolbarItemHandlerContext.get()) {
+        [self reloadToolbar];
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (void)loadView {
@@ -59,6 +88,14 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
     [view release];
 }
 
+- (void)NavigationController_commonInit {
+    _viewControllers = [NSMutableArray<NSViewController *> new];
+    _overrideToolbar = YES;
+    _navigationalItemIdentifiersContext = std::make_shared<std::uint8_t>();
+    _itemIdentifiersContext = std::make_shared<std::uint8_t>();
+    _toolbarItemHandlerContext = std::make_shared<std::uint8_t>();
+}
+
 - (void)pushViewController:(NSViewController *)viewController transitionOptions:(NSViewControllerTransitionOptions)options completionHandler:(void (^)(void))completionHandler {
     viewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     viewController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
@@ -68,8 +105,9 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
     
     if (_viewControllers.count) {
         NSViewController *previousViewController = _viewControllers.lastObject;
+        [self willChangeViewControllers];
         [_viewControllers addObject:viewController];
-        [self reloadToolbar];
+        [self didChangeViewControllers];
         
         [self transitionFromViewController:previousViewController
                           toViewController:viewController
@@ -81,8 +119,10 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
             }
         }];
     } else {
+        [self willChangeViewControllers];
         [_viewControllers addObject:viewController];
-        [self reloadToolbar];
+        [self didChangeViewControllers];
+        
         if (completionHandler) {
             completionHandler();
         }
@@ -103,8 +143,11 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
         return nullptr;
     } else if (count == 1) {
         NSViewController *lastViewController = _viewControllers.lastObject;
+        
+        [self willChangeViewControllers];
         [_viewControllers removeObject:lastViewController];
-        [self reloadToolbar];
+        [self didChangeViewControllers];
+        
         [lastViewController.view removeFromSuperview];
         [lastViewController removeFromParentViewController];
         if (completionHandler) {
@@ -116,8 +159,10 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
         NSViewController *fromViewController = _viewControllers.lastObject;
         NSViewController *toViewController = _viewControllers[count - 2];
         
+        [self willChangeViewControllers];
         [_viewControllers removeObject:fromViewController];
-        [self reloadToolbar];
+        [self didChangeViewControllers];
+        
         toViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
         toViewController.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         toViewController.view.frame = self.view.bounds;
@@ -154,9 +199,10 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
     NSViewController * _Nullable previousLastViewController = _viewControllers.lastObject;
     NSViewController * _Nullable nextLastViewController = viewControllers.lastObject;
     
+    [self willChangeViewControllers];
     [_viewControllers release];
     _viewControllers = [viewControllers mutableCopy];
-    [self reloadToolbar];
+    [self didChangeViewControllers];
     
     if ((previousLastViewController == nullptr) && (nextLastViewController == nullptr)) {
         if (completionHandler) {
@@ -206,7 +252,23 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
     [self setViewControllers:viewControllers transitionOptions:NSViewControllerTransitionCrossfade | NSViewControllerTransitionSlideForward completionHandler:completionHandler];
 }
 
+- (void)willChangeViewControllers {
+    [self.lastNavigationItem removeObserver:self forKeyPath:@"navigationalItemIdentifiers" context:_navigationalItemIdentifiersContext.get()];
+    [self.lastNavigationItem removeObserver:self forKeyPath:@"itemIdentifiers" context:_itemIdentifiersContext.get()];
+    [self.lastNavigationItem removeObserver:self forKeyPath:@"toolbarItemHandler" context:_toolbarItemHandlerContext.get()];
+}
+
+- (void)didChangeViewControllers {
+    [self reloadToolbar];
+    
+    [self.lastNavigationItem addObserver:self forKeyPath:@"navigationalItemIdentifiers" options:NSKeyValueObservingOptionNew context:_navigationalItemIdentifiersContext.get()];
+    [self.lastNavigationItem addObserver:self forKeyPath:@"itemIdentifiers" options:NSKeyValueObservingOptionNew context:_itemIdentifiersContext.get()];
+    [self.lastNavigationItem addObserver:self forKeyPath:@"toolbarItemHandler" options:NSKeyValueObservingOptionNew context:_toolbarItemHandlerContext.get()];
+}
+
 - (void)reloadToolbar {
+    if (!self.overrideToolbar) return;
+    
     NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:_NavigationController::identifiers::toolbarIdentifier];
     toolbar.displayMode = NSToolbarDisplayModeIconOnly;
     toolbar.delegate = self;
@@ -216,7 +278,7 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
 }
 
 - (void)didChangeToolbar:(NSToolbar * _Nullable)toolbar {
-    if (!toolbar) {
+    if (![toolbar.identifier isEqualToString:_NavigationController::identifiers::toolbarIdentifier]) {
         [self reloadToolbar];
     }
 }
@@ -225,99 +287,52 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
     [self popViewControllerWithCompletionHandler:nullptr];
 }
 
+- (void)setOverrideToolbar:(BOOL)overrideToolbar {
+    BOOL oldValue = _overrideToolbar;
+    if (oldValue == _overrideToolbar) return;
+    
+    _overrideToolbar = overrideToolbar;
+    
+    if (overrideToolbar) {
+        [self reloadToolbar];
+    } else {
+        if ([self.view.window.toolbar.identifier isEqualToString:_NavigationController::identifiers::toolbarIdentifier]) {
+            self.view.window.toolbar = nullptr;
+        }
+    }
+}
+
+- (NavigationItem *)lastNavigationItem {
+    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
+    
+    if (!lastViewController) return nullptr;
+    
+    return objc_getAssociatedObject(lastViewController, NavigationController.navigationItemAssociationKey);
+}
+
 #pragma mark - NSToolbarDelegate
 
 - (NSArray<NSToolbarItemIdentifier> *)toolbarNavigationalItemIdentifiers:(NSToolbar *)toolbar {
-    return @[_NavigationController::identifiers::backButtonItemIdentifier];
+    return [@[_NavigationController::identifiers::backButtonItemIdentifier] arrayByAddingObjectsFromArray:self.lastNavigationItem.navigationalItemIdentifiers];
 }
 
 - (NSArray<NSToolbarItemIdentifier> *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar {
-    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-    NSArray<NSToolbarItemIdentifier> *itemIdentifiers = @[
-        _NavigationController::identifiers::backButtonItemIdentifier
-    ];
+    NavigationItem * _Nullable lastNavigationItem = self.lastNavigationItem;
+    NSArray<NSToolbarIdentifier> * _Nullable allItemIdentifiers = [lastNavigationItem.navigationalItemIdentifiers arrayByAddingObjectsFromArray:lastNavigationItem.itemIdentifiers];
     
-    if ([lastViewController respondsToSelector:@selector(toolbarAllowedItemIdentifiers:)]) {
-        NSArray<NSToolbarItemIdentifier> *results = [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbarAllowedItemIdentifiers:toolbar];
-        
-        if (_viewControllers.count == 1) {
-            return results;
-        } else {
-            return [itemIdentifiers arrayByAddingObjectsFromArray:results];
-        }
+    if (_viewControllers.count < 2) {
+        return allItemIdentifiers;
     } else {
-        return itemIdentifiers;
+        return [@[_NavigationController::identifiers::backButtonItemIdentifier] arrayByAddingObjectsFromArray:allItemIdentifiers];
     }
 }
 
 - (NSArray<NSToolbarItemIdentifier> *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar {
-    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-    NSArray<NSToolbarItemIdentifier> *itemIdentifiers = @[
-        _NavigationController::identifiers::backButtonItemIdentifier
-    ];
-    
-    if ([lastViewController respondsToSelector:@selector(toolbarDefaultItemIdentifiers:)]) {
-        NSArray<NSToolbarItemIdentifier> *results = [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbarDefaultItemIdentifiers:toolbar];
-        
-        if (_viewControllers.count == 1) {
-            return results;
-        } else {
-            return [itemIdentifiers arrayByAddingObjectsFromArray:results];
-        }
-    } else {
-        return itemIdentifiers;
-    }
+    return [self toolbarAllowedItemIdentifiers:toolbar];
 }
 
 - (NSSet<NSToolbarItemIdentifier> *)toolbarImmovableItemIdentifiers:(NSToolbar *)toolbar {
-    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-    NSSet<NSToolbarItemIdentifier> *itemIdentifiers = [NSSet<NSToolbarItemIdentifier> setWithArray:@[
-        _NavigationController::identifiers::backButtonItemIdentifier
-    ]];
-    
-    if ([lastViewController respondsToSelector:@selector(toolbarImmovableItemIdentifiers:)]) {
-        NSSet<NSToolbarItemIdentifier> *results = [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbarImmovableItemIdentifiers:toolbar];
-        
-        if (_viewControllers.count == 1) {
-            return results;
-        } else {
-            return [itemIdentifiers setByAddingObjectsFromSet:results];
-        }
-    } else {
-        return itemIdentifiers;
-    }
-}
-
-- (NSArray<NSToolbarItemIdentifier> *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar {
-    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-    NSArray<NSToolbarItemIdentifier> *itemIdentifiers = @[
-        _NavigationController::identifiers::backButtonItemIdentifier
-    ];
-    
-    if ([lastViewController respondsToSelector:@selector(toolbarSelectableItemIdentifiers:)]) {
-        NSArray<NSToolbarItemIdentifier> *results = [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbarSelectableItemIdentifiers:toolbar];
-        
-        if (_viewControllers.count == 1) {
-            return results;
-        } else {
-            return [itemIdentifiers arrayByAddingObjectsFromArray:results];
-        }
-    } else {
-        return itemIdentifiers;
-    }
-}
-
-- (BOOL)toolbar:(NSToolbar *)toolbar itemIdentifier:(NSToolbarItemIdentifier)itemIdentifier canBeInsertedAtIndex:(NSInteger)index {
-    if ([itemIdentifier isEqualToString:_NavigationController::identifiers::backButtonItemIdentifier]) {
-        return YES;
-    } else {
-        NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-        if ([lastViewController respondsToSelector:@selector(toolbar:itemIdentifier:canBeInsertedAtIndex:)]) {
-            return [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbar:toolbar itemIdentifier:itemIdentifier canBeInsertedAtIndex:index];
-        } else {
-            return YES;
-        }
-    }
+    return [NSSet setWithArray:[self toolbarAllowedItemIdentifiers:toolbar]];
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag {
@@ -329,26 +344,8 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
         
         return [item autorelease];
     } else {
-        NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-        if ([lastViewController respondsToSelector:@selector(toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:)]) {
-            return [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbar:toolbar itemForItemIdentifier:itemIdentifier willBeInsertedIntoToolbar:flag];
-        } else {
-            return nullptr;
-        }
-    }
-}
-
-- (void)toolbarWillAddItem:(NSNotification *)notification {
-    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-    if ([lastViewController respondsToSelector:@selector(toolbarWillAddItem:)]) {
-        [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbarWillAddItem:notification];
-    }
-}
-
-- (void)toolbarDidRemoveItem:(NSNotification *)notification {
-    NSViewController * _Nullable lastViewController = _viewControllers.lastObject;
-    if ([lastViewController respondsToSelector:@selector(toolbarDidRemoveItem:)]) {
-        [static_cast<id<NSToolbarDelegate>>(lastViewController) toolbarDidRemoveItem:notification];
+        NavigationItem * _Nullable lastNavigationItem = self.lastNavigationItem;
+        return lastNavigationItem.toolbarItemHandler(itemIdentifier);
     }
 }
 

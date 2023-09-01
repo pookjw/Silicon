@@ -7,10 +7,19 @@
 
 #import "CreateVirtualMachineViewController.hpp"
 #import "NavigationController.hpp"
+#import "NavigationItem.hpp"
 #import "CreateVirtualMachineLocationViewController.hpp"
 #import "RestoreImagesViewController.hpp"
+#import "TestNavigationViewController.hpp"
+#import <objc/runtime.h>
 
-@interface CreateVirtualMachineViewController () <CreateVirtualMachineLocationViewControllerDelegate>
+namespace _CreateVirtualMachineViewController {
+namespace identifiers {
+static NSToolbarItemIdentifier const locationNextButtonItemIdentifier = @"CreateVirtualMachineViewController.locationNextButtonItem";
+}
+}
+
+@interface CreateVirtualMachineViewController () <RestoreImagesViewControllerDelegate>
 @property (retain) NavigationController *navigationController;
 @end
 
@@ -45,25 +54,53 @@
 
 - (void)pushToLocationViewController {
     CreateVirtualMachineLocationViewController *locationViewContrller = [CreateVirtualMachineLocationViewController new];
-    locationViewContrller.delegate = self;
+    
+    NSToolbarItem *locationNextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineViewController::identifiers::locationNextButtonItemIdentifier];
+    locationNextItem.title = @"Next";
+    locationNextItem.target = self;
+    locationNextItem.action = @selector(didTriggerLocationNextItem:);
+    
+    NavigationItem *navigationItem = [NavigationItem new];
+    navigationItem.itemIdentifiers = @[
+        _CreateVirtualMachineViewController::identifiers::locationNextButtonItemIdentifier
+    ];
+    navigationItem.toolbarItemHandler = ^NSToolbarItem * _Nullable (NSToolbarIdentifier identifier) {
+        if ([identifier isEqualToString:_CreateVirtualMachineViewController::identifiers::locationNextButtonItemIdentifier]) {
+            return locationNextItem;
+        } else {
+            return nullptr;
+        }
+    };
+    
+    [locationNextItem release];
+    
+    objc_setAssociatedObject(locationViewContrller, NavigationController.navigationItemAssociationKey, navigationItem, OBJC_ASSOCIATION_RETAIN);
+    
+    [navigationItem release];
+    
     [self.navigationController pushViewController:locationViewContrller completionHandler:nullptr];
     [locationViewContrller release];
 }
 
 - (void)pushToRestoreImagesViewController {
     RestoreImagesViewController *viewController = [RestoreImagesViewController new];
+    viewController.delegate = self;
     [self.navigationController pushViewController:viewController completionHandler:nullptr];
     [viewController release];
 }
 
-#pragma mark - CreateVirtualMachineLocationViewControllerDelegate
-
-- (void)locationViewControllerCreateNewVirtualMachine:(CreateVirtualMachineLocationViewController *)viewController {
+- (void)didTriggerLocationNextItem:(NSToolbarItem *)sender {
     [self pushToRestoreImagesViewController];
 }
 
-- (void)locationViewControllerAddExistingVirtualMachine:(CreateVirtualMachineLocationViewController *)viewController {
-    
+#pragma mark - RestoreImagesViewControllerDelegate
+
+- (void)restoreImagesViewController:(RestoreImagesViewController *)viewControoler didSelectRestoreImageModel:(RestoreImageModel *)restoreImageModel {
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        TestNavigationViewController *vc = [TestNavigationViewController new];
+        [self.navigationController pushViewController:vc completionHandler:nullptr];
+        [vc release];
+    }];
 }
 
 @end
