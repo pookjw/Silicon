@@ -181,7 +181,7 @@ std::uint8_t *navigationItemAssociationKey = new std::uint8_t;
             }
         }];
         
-        return nullptr;
+        return toViewController;
     }
 }
 
