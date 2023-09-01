@@ -289,7 +289,7 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 
 - (void)setOverrideToolbar:(BOOL)overrideToolbar {
     BOOL oldValue = _overrideToolbar;
-    if (oldValue == _overrideToolbar) return;
+    if (oldValue == overrideToolbar) return;
     
     _overrideToolbar = overrideToolbar;
     

@@ -58,10 +58,15 @@
                                                     target:self
                                                     action:@selector(didTriggerRemoveItemButton:)];
     
+    NSButton *toggleToolbarButton = [NSButton buttonWithTitle:@"Toggle Toolbar"
+                                                       target:self
+                                                       action:@selector(didTriggerToggleToolbarButton:)];
+    
     [stackView addArrangedSubview:addNavigationItemButton];
     [stackView addArrangedSubview:removeNavigationItemButton];
     [stackView addArrangedSubview:addItemButton];
     [stackView addArrangedSubview:removeItemButton];
+    [stackView addArrangedSubview:toggleToolbarButton];
     
     [self.view addSubview:stackView];
     [NSLayoutConstraint activateConstraints:@[
@@ -98,6 +103,11 @@
     [results removeLastObject];
     self.navigationItem.itemIdentifiers = results;
     [results release];
+}
+
+- (void)didTriggerToggleToolbarButton:(NSButton *)sender {
+    auto navigationController = static_cast<NavigationController *>(self.parentViewController);
+    navigationController.overrideToolbar = !navigationController.overrideToolbar;
 }
 
 @end

@@ -48,7 +48,9 @@
     if (context == _context.get()) {
         if (!self.didChangeToolbarHandler.has_value()) return;
         
-        auto toolbar = static_cast<NSToolbar * _Nullable>(change[NSKeyValueChangeNewKey]);
+        id _Nullable newValue = change[NSKeyValueChangeNewKey];
+        if ([newValue isEqual:[NSNull null]]) newValue = nullptr;
+        auto toolbar = static_cast<NSToolbar * _Nullable>(newValue);
         self.didChangeToolbarHandler.value()(toolbar);
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
