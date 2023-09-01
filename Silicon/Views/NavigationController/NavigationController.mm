@@ -20,7 +20,7 @@ static NSToolbarItemIdentifier const backButtonItemIdentifier = @"NavigationCont
 }
 
 namespace keys {
-std::uint8_t *navigationItemAssociationKey = nullptr;
+std::uint8_t *navigationItemAssociationKey = new std::uint8_t;
 }
 }
 
@@ -38,10 +38,6 @@ std::uint8_t *navigationItemAssociationKey = nullptr;
 @implementation NavigationController
 
 + (std::uint8_t *)navigationItemAssociationKey {
-    if (!_NavigationController::keys::navigationItemAssociationKey) {
-        _NavigationController::keys::navigationItemAssociationKey = new std::uint8_t;
-    }
-    
     return _NavigationController::keys::navigationItemAssociationKey;
 }
 
