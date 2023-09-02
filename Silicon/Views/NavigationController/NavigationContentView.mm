@@ -16,7 +16,7 @@
 @implementation NavigationContentView
 
 - (instancetype)initWithDidChangeToolbarHandler:(std::function<void (NSToolbar * _Nullable)>)didChangeToolbarHandler {
-    if (self = [super init]) {
+    if (self = [self init]) {
         self.didChangeToolbarHandler = didChangeToolbarHandler;
     }
     
@@ -25,7 +25,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
-        _context = std::make_shared<std::uint8_t>();
+        [self NavigationContentView_commonInit];
     }
     
     return self;
@@ -33,7 +33,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        _context = std::make_shared<std::uint8_t>();
+        [self NavigationContentView_commonInit];
     }
     
     return self;
@@ -55,6 +55,10 @@
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (void)NavigationContentView_commonInit {
+    _context = std::make_shared<std::uint8_t>();
 }
 
 - (void)viewWillMoveToWindow:(NSWindow *)newWindow {
