@@ -1,11 +1,11 @@
 //
-//  CreateVirtualMachineViewController.mm
+//  CreateVirtualMachineWindow.mm
 //  Silicon
 //
-//  Created by Jinwoo Kim on 8/30/23.
+//  Created by Jinwoo Kim on 9/2/23.
 //
 
-#import "CreateVirtualMachineViewController.hpp"
+#import "CreateVirtualMachineWindow.hpp"
 #import "NavigationController.hpp"
 #import "NavigationItem.hpp"
 #import "CreateVirtualMachineLocationViewController.hpp"
@@ -13,59 +13,56 @@
 #import "CreateVirtualMachineInstallationViewController.hpp"
 #import <objc/runtime.h>
 
-namespace _CreateVirtualMachineViewController {
+namespace _CreateVirtualMachineWindow {
 namespace identifiers {
-static NSToolbarItemIdentifier const locationNextButtonItemIdentifier = @"CreateVirtualMachineViewController.locationNextButtonItem";
+static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtualMachineWindow.locationNextItem";
 }
 }
 
-@interface CreateVirtualMachineViewController () <RestoreImagesViewControllerDelegate>
+@interface CreateVirtualMachineWindow () <RestoreImagesViewControllerDelegate>
 @property (retain) NavigationController *navigationController;
 @end
 
-@implementation CreateVirtualMachineViewController
+@implementation CreateVirtualMachineWindow
+
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)backingStoreType defer:(BOOL)flag {
+    if (self = [super initWithContentRect:contentRect styleMask:style backing:backingStoreType defer:flag]) {
+        self.styleMask = NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskResizable | NSWindowStyleMaskTitled;
+        self.movableByWindowBackground = YES;
+        self.releasedWhenClosed = NO;
+        self.titlebarAppearsTransparent = YES;
+        self.contentMinSize = NSMakeSize(400.f, 400.f);
+        
+        NavigationController *navigationController = [NavigationController new];
+        self.contentViewController = navigationController;
+        self.navigationController = navigationController;
+        [navigationController release];
+        
+        [self pushToLocationViewController];
+    }
+    
+    return self;
+}
 
 - (void)dealloc {
     [_navigationController release];
     [super dealloc];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self setupNavigationController];
-    [self pushToLocationViewController];
-}
-
-- (void)setupNavigationController {
-    NavigationController *navigationController = [NavigationController new];
-    navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:navigationController.view];
-    
-    [NSLayoutConstraint activateConstraints:@[
-        [navigationController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [navigationController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [navigationController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [navigationController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-    ]];
-    
-    self.navigationController = navigationController;
-    [navigationController release];
-}
-
 - (void)pushToLocationViewController {
     CreateVirtualMachineLocationViewController *locationViewContrller = [CreateVirtualMachineLocationViewController new];
     
-    NSToolbarItem *locationNextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineViewController::identifiers::locationNextButtonItemIdentifier];
+    NSToolbarItem *locationNextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier];
     locationNextItem.title = @"Next";
     locationNextItem.target = self;
     locationNextItem.action = @selector(didTriggerLocationNextItem:);
     
     NavigationItem *navigationItem = [NavigationItem new];
     navigationItem.itemIdentifiers = @[
-        _CreateVirtualMachineViewController::identifiers::locationNextButtonItemIdentifier
+        _CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier
     ];
     navigationItem.toolbarItemHandler = ^NSToolbarItem * _Nullable (NSToolbarIdentifier identifier) {
-        if ([identifier isEqualToString:_CreateVirtualMachineViewController::identifiers::locationNextButtonItemIdentifier]) {
+        if ([identifier isEqualToString:_CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier]) {
             return locationNextItem;
         } else {
             return nullptr;
@@ -89,7 +86,7 @@ static NSToolbarItemIdentifier const locationNextButtonItemIdentifier = @"Create
     [viewController release];
 }
 
-- (void)pushToLoadingViewControllerWithIPSWURL:(NSURL *)ipswURL {
+- (void)pushToInstallationViewControllerWithIPSWURL:(NSURL *)ipswURL {
     CreateVirtualMachineInstallationViewController *viewController = [[CreateVirtualMachineInstallationViewController alloc] initWithIPSWURL:ipswURL];
     [self.navigationController pushViewController:viewController completionHandler:nullptr];
     [viewController release];
@@ -106,7 +103,7 @@ static NSToolbarItemIdentifier const locationNextButtonItemIdentifier = @"Create
         NSURL *ipswURL = restoreImageModel.URL;
         
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            [self pushToLoadingViewControllerWithIPSWURL:ipswURL];
+            [self pushToInstallationViewControllerWithIPSWURL:ipswURL];
         }];
     }];
 }

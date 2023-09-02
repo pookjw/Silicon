@@ -7,7 +7,7 @@
 
 #import "VirtualMachinesWindow.hpp"
 #import "VirtualMachinesViewController.hpp"
-#import "CreateVirtualMachineViewController.hpp"
+#import "CreateVirtualMachineWindow.hpp"
 
 namespace _VirtualMachinesWindow {
 namespace identifiers {
@@ -46,9 +46,9 @@ static NSToolbarItemIdentifier const createVirtualMachineItemIdentifier = @"Virt
 }
 
 - (void)didTriggerCreateVirtualMachineItem:(NSToolbarItem *)sender {
-    CreateVirtualMachineViewController *viewController = [CreateVirtualMachineViewController new];
-    [self.contentViewController presentViewControllerAsSheet:viewController];
-    [viewController release];
+    CreateVirtualMachineWindow *window = [CreateVirtualMachineWindow new];
+    [window makeKeyAndOrderFront:nullptr];
+    [window release];
 }
 
 #pragma mark - NSToolbarDelegate
