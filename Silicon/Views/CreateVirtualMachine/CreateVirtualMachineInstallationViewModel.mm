@@ -12,6 +12,8 @@
 #import <Virtualization/Virtualization.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <atomic>
+#import <algorithm>
+#import <cinttypes>
 
 CreateVirtualMachineInstallationViewModel::CreateVirtualMachineInstallationViewModel(NSURL *ipswURL) : _ipswURL([ipswURL copy]) {
     NSOperationQueue *queue = [NSOperationQueue new];
@@ -170,13 +172,18 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
         VZMacKeyboardConfiguration *keyboardConfiguration = [[VZMacKeyboardConfiguration alloc] init];
         [keyboardConfiguration autorelease];
         
+        // 8GB
+        std::uint64_t memorySize = 8ull * 1024ull * 1024ull * 1024ull;
+        memorySize = std::max(memorySize, VZVirtualMachineConfiguration.minimumAllowedMemorySize);
+        memorySize = std::min(memorySize, VZVirtualMachineConfiguration.maximumAllowedMemorySize);
+        
         //
         
         VZVirtualMachineConfiguration *virtualMachineConfiguration = [VZVirtualMachineConfiguration new];
         
         virtualMachineConfiguration.platform = platformConfiguration;
         virtualMachineConfiguration.CPUCount = VZVirtualMachineConfiguration.maximumAllowedCPUCount;
-        virtualMachineConfiguration.memorySize = VZVirtualMachineConfiguration.maximumAllowedMemorySize;
+        virtualMachineConfiguration.memorySize = memorySize;
         virtualMachineConfiguration.bootLoader = bootLoader;
         virtualMachineConfiguration.graphicsDevices = @[graphicsDeviceConfiguration];
         virtualMachineConfiguration.storageDevices = @[storageDeviceConfiguration];
