@@ -80,7 +80,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Restore Images";
+    [self setupAttributes];
     [self setupScrollView];
     [self setupCollectionView];
     [self setupAddButton];
@@ -91,6 +91,10 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     self.viewModel.get()->initialize([self makeDataSource], [](NSError * _Nullable error) {
         NSLog(@"%@", error);
     });
+}
+
+- (void)setupAttributes {
+    self.title = @"Restore Images";
 }
 
 - (void)setupScrollView {

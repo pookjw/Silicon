@@ -24,6 +24,11 @@
     [self setupTextField];
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.textField.stringValue = [NSString string];
+}
+
 - (void)configureWithRestoreImageModel:(RestoreImageModel *)restoreImageModel {
     self.restoreImageModel = restoreImageModel;
     

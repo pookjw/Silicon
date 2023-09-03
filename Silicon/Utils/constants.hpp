@@ -11,5 +11,7 @@ NSErrorDomain const SiliconErrorDomain = @"SiliconErrorDomain";
 
 typedef NS_ERROR_ENUM(SiliconErrorDomain, SiliconErrorCode) {
     SiliconUserCancelledError,
-    SiliconAlreadyInitializedError
+    SiliconAlreadyInitializedError,
+    SiliconNotSupportedHardware,
+    SiliconFileIOError
 };

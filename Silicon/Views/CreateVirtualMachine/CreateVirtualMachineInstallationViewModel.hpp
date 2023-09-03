@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 #import <functional>
+#import <memory>
+#import "Cancellable.hpp"
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -15,7 +17,7 @@ public:
     CreateVirtualMachineInstallationViewModel(NSURL *ipswURL);
     ~CreateVirtualMachineInstallationViewModel();
     
-    void startInstallation(std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler);
+    std::shared_ptr<Cancellable> startInstallation(std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler);
     
     CreateVirtualMachineInstallationViewModel(const CreateVirtualMachineInstallationViewModel&) = delete;
     CreateVirtualMachineInstallationViewModel& operator=(const CreateVirtualMachineInstallationViewModel&) = delete;

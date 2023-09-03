@@ -20,8 +20,7 @@ public:
     PersistentDataManager(const PersistentDataManager&) = delete;
     PersistentDataManager& operator=(const PersistentDataManager&) = delete;
     
-    NSManagedObjectContext *context();
-    NSOperationQueue *queue();
+    void context(std::function<void (NSManagedObjectContext *)> handler);
     void initialize(std::function<void (NSError * _Nullable)> completionHandler);
 private:
     PersistentDataManager();

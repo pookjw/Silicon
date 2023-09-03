@@ -9,7 +9,6 @@
 #import <functional>
 #import <memory>
 #import "RestoreImagesViewModelDelegate.hpp"
-#import "PersistentDataManager.hpp"
 #import "RestoreImageModel.hpp"
 #import "Cancellable.hpp"
 
@@ -36,7 +35,6 @@ private:
     NSOperationQueue *_queue;
     RestoreImagesViewModelDelegate *_delegate;
     bool _isInitialized = false;
-    PersistentDataManager &_dataManager;
 };
 
 NS_HEADER_AUDIT_END(nullability, sendability)

@@ -7,13 +7,14 @@
 
 #import "PersistentDataManager.hpp"
 #import "RestoreImageModel.hpp"
-#import "VirtualMachineModel.hpp"
+#import "VirtualMachineMacModel.hpp"
 #import "constants.hpp"
 
 PersistentDataManager::PersistentDataManager() {
     NSOperationQueue *queue = [NSOperationQueue new];
     queue.name = @"PersistentDataManager";
     queue.qualityOfService = NSOperationQualityOfServiceUtility;
+    queue.maxConcurrentOperationCount = 1;
     [_queue release];
     _queue = [queue retain];
     [queue release];
@@ -26,16 +27,14 @@ PersistentDataManager::~PersistentDataManager() {
     [_queue release];
 }
 
-NSManagedObjectContext *PersistentDataManager::context() {
-    return _context;
-}
-
-NSOperationQueue *PersistentDataManager::queue() {
-    return _queue;
+void PersistentDataManager::context(std::function<void (NSManagedObjectContext * _Nonnull)> handler) {
+    [_queue addOperationWithBlock:^{
+        handler(_context);
+    }];
 }
 
 void PersistentDataManager::initialize(std::function<void (NSError * _Nullable)> completionHandler) {
-    [_queue addBarrierBlock:^{
+    [_queue addOperationWithBlock:^{
         if (_isInitialized) {
             completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconAlreadyInitializedError userInfo:nullptr]);
             return;
@@ -87,7 +86,7 @@ NSManagedObjectModel *PersistentDataManager::_managedObjectModel() {
     
     managedObjectModel.entities = @[
         RestoreImageModel._entity,
-        VirtualMachineModel._entity
+        VirtualMachineMacModel._entity
     ];
     
     return [managedObjectModel autorelease];

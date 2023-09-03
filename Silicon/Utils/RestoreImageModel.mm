@@ -6,6 +6,7 @@
 //
 
 #import "RestoreImageModel.hpp"
+#import "BookmarkURLValueTransformer.hpp"
 
 @implementation RestoreImageModel
 
@@ -13,6 +14,10 @@
 @dynamic URL;
 
 + (NSEntityDescription *)_entity {
+    [BookmarkURLValueTransformer registerIfNeeded];
+    
+    //
+    
     NSEntityDescription *entity = [NSEntityDescription new];
     entity.name = NSStringFromClass(self);
     entity.managedObjectClassName = NSStringFromClass(self);
@@ -59,11 +64,17 @@
     NSAttributeDescription *URLAttributeDescription = [NSAttributeDescription new];
     URLAttributeDescription.name = @"URL";
     URLAttributeDescription.optional = NO;
-    URLAttributeDescription.attributeType = NSURIAttributeType;
+    URLAttributeDescription.attributeType = NSTransformableAttributeType;
+    URLAttributeDescription.attributeValueClassName = NSStringFromClass(NSURL.class);
+    URLAttributeDescription.valueTransformerName = NSStringFromClass(BookmarkURLValueTransformer.class);
     
     //
     
-    entity.properties = @[versionsDescription, URLAttributeDescription];
+    entity.properties = @[
+        versionsDescription,
+        URLAttributeDescription
+    ];
+    
     [versionsDescription release];
     [URLAttributeDescription release];
     

@@ -7,9 +7,11 @@
 
 #import "RestoreImagesViewModel.hpp"
 #import "constants.hpp"
+#import "PersistentDataManager.hpp"
 #import <Virtualization/Virtualization.h>
+#import <atomic>
 
-RestoreImagesViewModel::RestoreImagesViewModel() : _dataManager(PersistentDataManager::getInstance()) {
+RestoreImagesViewModel::RestoreImagesViewModel() {
     NSOperationQueue *queue = [NSOperationQueue new];
     queue.qualityOfService = NSOperationQualityOfServiceUtility;
     queue.maxConcurrentOperationCount = 1;
@@ -18,11 +20,13 @@ RestoreImagesViewModel::RestoreImagesViewModel() : _dataManager(PersistentDataMa
     [queue release];
     
     RestoreImagesViewModelDelegate *delegate = [RestoreImagesViewModelDelegate new];
+    [_delegate release];
     _delegate = [delegate retain];
     [delegate release];
 }
 
 RestoreImagesViewModel::~RestoreImagesViewModel() {
+    _delegate.controllerDidChangeContentWithSnapshot = nullptr;
     [_queue cancelAllOperations];
     [_dataSource release];
     [_fetchedResultsController release];
@@ -40,20 +44,33 @@ void RestoreImagesViewModel::initialize(NSCollectionViewDiffableDataSource<NSStr
         [_dataSource release];
         _dataSource = [dataSource retain];
         
-        _delegate.controllerDidChangeContentWithSnapshot = [dataSource = this->_dataSource, queue = this->_queue](auto controller, auto snapshot) {
-            [queue addBarrierBlock:^{
+        NSOperationQueue *queue = _queue;
+        void (^handler)(NSFetchedResultsController *, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *) = [^(NSFetchedResultsController *controller, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *snapshot) {
+            [queue addOperationWithBlock:^{
                 [dataSource applySnapshot:snapshot animatingDifferences:YES];
             }];
-        };
+        } copy];
         
-        NSFetchRequest<RestoreImageModel *> *fetchRequest = [NSFetchRequest<RestoreImageModel *> fetchRequestWithEntityName:@"RestoreImageModel"];
+        _delegate.controllerDidChangeContentWithSnapshot = handler;
+        [handler release];
+        
+        NSFetchRequest<RestoreImageModel *> *fetchRequest = [NSFetchRequest<RestoreImageModel *> fetchRequestWithEntityName:NSStringFromClass(RestoreImageModel.class)];
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"versions.buildVersion" ascending:YES];
         fetchRequest.sortDescriptors = @[sortDescriptor];
         [sortDescriptor release];
         fetchRequest.returnsObjectsAsFaults = YES;
         
+        __block NSManagedObjectContext * _Nullable context = nullptr;
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        PersistentDataManager::getInstance().context(^(NSManagedObjectContext *_context) {
+            context = _context;
+            dispatch_semaphore_signal(semaphore);
+        });
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_release(semaphore);
+        
         NSFetchedResultsController<RestoreImageModel *> *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                                        managedObjectContext:this->_dataManager.context()
+                                                                                                                        managedObjectContext:context
                                                                                                                           sectionNameKeyPath:nullptr
                                                                                                                                    cacheName:nullptr];
         
@@ -87,42 +104,51 @@ void RestoreImagesViewModel::restoreImageModel(NSIndexPath * _Nonnull indexPath,
 }
 
 void RestoreImagesViewModel::addFromLocalIPSWURLs(NSArray<NSURL *> *localURLs, std::function<void (NSError * _Nullable)> completionHandler) {
-    PersistentDataManager &dataManager = _dataManager;
-    
-    [localURLs enumerateObjectsUsingBlock:^(NSURL * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [VZMacOSRestoreImage loadFileURL:obj completionHandler:^(VZMacOSRestoreImage * _Nullable restoreImage, NSError * _Nullable error) {
+    [_queue addOperationWithBlock:^{
+        [localURLs enumerateObjectsUsingBlock:^(NSURL * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSError * _Nullable error = nullptr;
+            
             if (error) {
                 completionHandler(error);
+                *stop = YES;
                 return;
             }
             
-            [dataManager.context() performBlock:^{
-                RestoreImageModel *restoreImageModel = [[RestoreImageModel alloc] initWithContext:dataManager.context()];
-                restoreImageModel.versions = @{
-                    _RestoreImageModel::versionKeys::buildVersionKey: restoreImage.buildVersion,
-                    _RestoreImageModel::versionKeys::majorVersionKey: @(restoreImage.operatingSystemVersion.majorVersion),
-                    _RestoreImageModel::versionKeys::minorVersionKey: @(restoreImage.operatingSystemVersion.minorVersion),
-                    _RestoreImageModel::versionKeys::patchVersionKey: @(restoreImage.operatingSystemVersion.patchVersion),
-                };
-                restoreImageModel.URL = restoreImage.URL;
-                [restoreImageModel release];
+            [VZMacOSRestoreImage loadFileURL:obj completionHandler:^(VZMacOSRestoreImage * _Nullable restoreImage, NSError * _Nullable error) {
+                if (error) {
+                    completionHandler(error);
+                    return;
+                }
                 
-                NSError * _Nullable error = nullptr;
-                [dataManager.context() save:&error];
-                completionHandler(error);
+                PersistentDataManager::getInstance().context(^(NSManagedObjectContext *context) {
+                    [context performBlock:^{
+                        RestoreImageModel *restoreImageModel = [[RestoreImageModel alloc] initWithContext:context];
+                        restoreImageModel.versions = @{
+                            _RestoreImageModel::versionKeys::buildVersionKey: restoreImage.buildVersion,
+                            _RestoreImageModel::versionKeys::majorVersionKey: @(restoreImage.operatingSystemVersion.majorVersion),
+                            _RestoreImageModel::versionKeys::minorVersionKey: @(restoreImage.operatingSystemVersion.minorVersion),
+                            _RestoreImageModel::versionKeys::patchVersionKey: @(restoreImage.operatingSystemVersion.patchVersion),
+                        };
+                        restoreImageModel.URL = restoreImage.URL;
+                        
+                        [restoreImageModel release];
+                        
+                        NSError * _Nullable error = nullptr;
+                        [context save:&error];
+                        completionHandler(error);
+                    }];
+                });
             }];
         }];
     }];
 }
 
 std::shared_ptr<Cancellable> RestoreImagesViewModel::addFromRemote(std::function<void (NSProgress *)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler) {
-    __block NSURLSessionDownloadTask * _Nullable _downloadTask = nullptr;
+    std::shared_ptr<std::atomic<NSURLSessionDownloadTask * _Nullable>> _downloadTask = std::make_shared<std::atomic<NSURLSessionDownloadTask * _Nullable>>(nullptr);
     
-    std::shared_ptr<Cancellable> cancellable = std::make_shared<Cancellable>(^{
-        [_downloadTask cancel];
+    std::shared_ptr<Cancellable> cancellable = std::make_shared<Cancellable>([_downloadTask]{
+        [_downloadTask.get()->load() cancel];
     });
-    
-    PersistentDataManager &dataManager = _dataManager;
     
     [VZMacOSRestoreImage fetchLatestSupportedWithCompletionHandler:^(VZMacOSRestoreImage * _Nullable restoreImage, NSError * _Nullable error) {
         if (error) {
@@ -142,7 +168,9 @@ std::shared_ptr<Cancellable> RestoreImagesViewModel::addFromRemote(std::function
         NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
         
         NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithURL:restoreImage.URL completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            _downloadTask = nullptr;
+            
+            [_downloadTask.get()->load() release];
+            _downloadTask.get()->store(nullptr);
             
             if (error) {
                 completionHandler(error);
@@ -171,24 +199,27 @@ std::shared_ptr<Cancellable> RestoreImagesViewModel::addFromRemote(std::function
                 return;
             }
             
-            [dataManager.context() performBlock:^{
-                RestoreImageModel *restoreImageModel = [[RestoreImageModel alloc] initWithContext:dataManager.context()];
-                restoreImageModel.versions = @{
-                    _RestoreImageModel::versionKeys::buildVersionKey: restoreImage.buildVersion,
-                    _RestoreImageModel::versionKeys::majorVersionKey: @(restoreImage.operatingSystemVersion.majorVersion),
-                    _RestoreImageModel::versionKeys::minorVersionKey: @(restoreImage.operatingSystemVersion.minorVersion),
-                    _RestoreImageModel::versionKeys::patchVersionKey: @(restoreImage.operatingSystemVersion.patchVersion),
-                };
-                restoreImageModel.URL = URL;
-                [restoreImageModel release];
-                
-                NSError * _Nullable error = nullptr;
-                [dataManager.context() save:&error];
-                completionHandler(error);
-            }];
+            PersistentDataManager::getInstance().context(^(NSManagedObjectContext *context) {
+                [context performBlock:^{
+                    RestoreImageModel *restoreImageModel = [[RestoreImageModel alloc] initWithContext:context];
+                    restoreImageModel.versions = @{
+                        _RestoreImageModel::versionKeys::buildVersionKey: restoreImage.buildVersion,
+                        _RestoreImageModel::versionKeys::majorVersionKey: @(restoreImage.operatingSystemVersion.majorVersion),
+                        _RestoreImageModel::versionKeys::minorVersionKey: @(restoreImage.operatingSystemVersion.minorVersion),
+                        _RestoreImageModel::versionKeys::patchVersionKey: @(restoreImage.operatingSystemVersion.patchVersion),
+                    };
+                    restoreImageModel.URL = URL;
+                    [restoreImageModel release];
+                    
+                    NSError * _Nullable error = nullptr;
+                    [context save:&error];
+                    completionHandler(error);
+                }];
+            });
         }];
         
-        _downloadTask = downloadTask;
+        [_downloadTask.get()->load() release];
+        _downloadTask.get()->store([downloadTask retain]);
         progressHandler(downloadTask.progress);
         [downloadTask resume];
         [session finishTasksAndInvalidate];

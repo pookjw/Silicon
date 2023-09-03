@@ -16,6 +16,10 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    PersistentDataManager::getInstance().initialize([](NSError * _Nullable error) {
+        NSLog(@"%@", error);
+    });
+    
     VirtualMachinesWindow *window = [VirtualMachinesWindow new];
     [window makeKeyAndOrderFront:nullptr];
     [window release];
@@ -23,10 +27,6 @@
     BaseMenu *baseMenu = [BaseMenu new];
     NSApp.mainMenu = baseMenu;
     [baseMenu release];
-    
-    PersistentDataManager::getInstance().initialize([](NSError * _Nullable error) {
-        NSLog(@"%@", error);
-    });
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
