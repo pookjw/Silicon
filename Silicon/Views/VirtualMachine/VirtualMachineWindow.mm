@@ -25,7 +25,7 @@ namespace _VirtualMachineWindow {
         self.movableByWindowBackground = YES;
         self.title = @"Untitled";
         self.releasedWhenClosed = NO;
-        self.titlebarAppearsTransparent = YES;
+        self.titlebarAppearsTransparent = NO;
         self.contentMinSize = NSMakeSize(400.f, 400.f);
         
         VirtualMachineViewController *contentViewController = [[VirtualMachineViewController alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
