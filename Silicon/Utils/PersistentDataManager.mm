@@ -56,6 +56,7 @@ void PersistentDataManager::initialize(std::function<void (NSError * _Nullable)>
             error = _error;
             dispatch_semaphore_signal(semaphore);
         }];
+        [persistentStoreDescription release];
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_release(semaphore);
         

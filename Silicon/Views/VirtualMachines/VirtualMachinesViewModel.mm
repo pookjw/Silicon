@@ -91,3 +91,9 @@ void VirtualMachinesViewModel::initialize(NSCollectionViewDiffableDataSource<NSS
 VirtualMachineMacModel * _Nullable VirtualMachinesViewModel::virtualMachineMacModel(NSIndexPath * _Nonnull indexPath) {
     return [_fetchedResultsController objectAtIndexPath:indexPath];
 }
+
+void VirtualMachinesViewModel::virtualMachineMacModel(NSIndexPath *indexPath, std::function<void (VirtualMachineMacModel * _Nullable)> handler) {
+    [_queue addOperationWithBlock:^{
+        handler([_fetchedResultsController objectAtIndexPath:indexPath]);
+    }];
+}

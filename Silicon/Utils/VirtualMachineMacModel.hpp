@@ -13,15 +13,26 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 @interface VirtualMachineMacModel : NSManagedObject
 @property (assign) NSDate *createdDate;
 @property (assign) NSURL *bundleURL;
-@property (assign) VZMacHardwareModel *hardwareModel;
-@property (assign) NSURL *axiliaryStorageURL;
-@property (assign) VZMacMachineIdentifier *machineIdentifier;
+
+@property (assign) NSNumber *CPUCount;
+@property (assign) NSNumber *memorySize;
+
+@property (assign) VZMACAddress *MACAddress;
+
 @property (assign) NSURL *diskImageURL;
+
 @property (assign) NSNumber *displayWidthInPixels;
 @property (assign) NSNumber *displayHeightInPixels;
 @property (assign) NSNumber *displayPixelsForInch;
-@property (assign) VZMACAddress *MACAddress;
+
+@property (assign) VZMacHardwareModel *hardwareModel;
+@property (assign) NSURL *axiliaryStorageURL;
+@property (assign) VZMacMachineIdentifier *machineIdentifier;
+
 + (NSEntityDescription *)_entity;
+
+- (VZVirtualMachineConfiguration * _Nullable)virtualMachineConfigurationWithError:(NSError * _Nullable *)error;
+- (void)setPropertiesFromVirtualMachineConfiguration:(VZVirtualMachineConfiguration *)virtualMachineConfiguration;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

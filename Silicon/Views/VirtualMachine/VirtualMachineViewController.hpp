@@ -1,5 +1,5 @@
 //
-//  VirtualMachineWindow.hpp
+//  VirtualMachineViewController.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
@@ -10,8 +10,11 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface VirtualMachineWindow : NSWindow
+@interface VirtualMachineViewController : NSViewController
 + (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(nullable NSNibName)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder *)coder NS_UNAVAILABLE;
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel;
 @end
 

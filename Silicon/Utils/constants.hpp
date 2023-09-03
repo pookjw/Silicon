@@ -13,5 +13,6 @@ typedef NS_ERROR_ENUM(SiliconErrorDomain, SiliconErrorCode) {
     SiliconUserCancelledError,
     SiliconAlreadyInitializedError,
     SiliconNotSupportedHardware,
-    SiliconFileIOError
+    SiliconFileIOError,
+    SiliconDeletedVirtualMachineModel
 };

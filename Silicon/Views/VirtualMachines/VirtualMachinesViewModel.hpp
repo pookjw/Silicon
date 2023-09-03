@@ -20,6 +20,7 @@ public:
     void initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
     
     VirtualMachineMacModel * _Nullable virtualMachineMacModel(NSIndexPath *indexPath);
+    void virtualMachineMacModel(NSIndexPath *indexPath, std::function<void (VirtualMachineMacModel * _Nullable)> handler);
     
     VirtualMachinesViewModel(const VirtualMachinesViewModel&) = delete;
     VirtualMachinesViewModel& operator=(const VirtualMachinesViewModel&) = delete;

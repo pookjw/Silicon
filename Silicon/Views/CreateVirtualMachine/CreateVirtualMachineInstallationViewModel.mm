@@ -11,6 +11,7 @@
 #import "VirtualMachineMacModel.hpp"
 #import <Virtualization/Virtualization.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+#import <objc/message.h>
 #import <atomic>
 #import <algorithm>
 #import <cinttypes>
@@ -166,12 +167,6 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
         [networkAttachment release];
         [networkConfiguration autorelease];
         
-        VZMacTrackpadConfiguration *trackpadConfiguration = [[VZMacTrackpadConfiguration alloc] init];
-        [trackpadConfiguration autorelease];
-        
-        VZMacKeyboardConfiguration *keyboardConfiguration = [[VZMacKeyboardConfiguration alloc] init];
-        [keyboardConfiguration autorelease];
-        
         // 8GB
         std::uint64_t memorySize = 8ull * 1024ull * 1024ull * 1024ull;
         memorySize = std::max(memorySize, VZVirtualMachineConfiguration.minimumAllowedMemorySize);
@@ -188,8 +183,6 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
         virtualMachineConfiguration.graphicsDevices = @[graphicsDeviceConfiguration];
         virtualMachineConfiguration.storageDevices = @[storageDeviceConfiguration];
         virtualMachineConfiguration.networkDevices = @[networkConfiguration];
-        virtualMachineConfiguration.pointingDevices = @[trackpadConfiguration];
-        virtualMachineConfiguration.keyboards = @[keyboardConfiguration];
         
         [virtualMachineConfiguration autorelease];
         
@@ -209,6 +202,7 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
             
             if (cancellable.get()->isCancelled()) {
                 [restoreImage.URL stopAccessingSecurityScopedResource];
+                [installer release];
                 completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconUserCancelledError userInfo:nullptr]);
                 return;
             }
@@ -233,14 +227,7 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
                         VirtualMachineMacModel *model = [[VirtualMachineMacModel alloc] initWithContext:context];
                         model.createdDate = [NSDate now];
                         model.bundleURL = virtualMachineURL;
-                        model.hardwareModel = hardwareModel;
-                        model.axiliaryStorageURL = auxiliaryStorageURL;
-                        model.machineIdentifier = machineIdentifier;
-                        model.diskImageURL = diskImageURL;
-                        model.displayWidthInPixels = @(graphicsDisplayConfiguration.widthInPixels);
-                        model.displayHeightInPixels = @(graphicsDisplayConfiguration.heightInPixels);
-                        model.displayPixelsForInch = @(graphicsDisplayConfiguration.pixelsPerInch);
-                        model.MACAddress = MACAddress;
+                        [model setPropertiesFromVirtualMachineConfiguration:virtualMachineConfiguration];
                         
                         NSError * _Nullable error = nullptr;
                         [context save:&error];

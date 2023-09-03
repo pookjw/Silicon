@@ -18,6 +18,8 @@
 		4F59BE472AA480E0003E6F07 /* VirtualMachinesCollectionViewItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE462AA480E0003E6F07 /* VirtualMachinesCollectionViewItem.mm */; };
 		4F59BE4B2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE4A2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm */; };
 		4F59BE4E2AA48DFE003E6F07 /* VirtualMachineWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE4D2AA48DFE003E6F07 /* VirtualMachineWindow.mm */; };
+		4F59BE512AA4A756003E6F07 /* VirtualMachineViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE502AA4A756003E6F07 /* VirtualMachineViewController.mm */; };
+		4F59BE542AA4C495003E6F07 /* VirtualMachineViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE522AA4C495003E6F07 /* VirtualMachineViewModel.mm */; };
 		4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D0E2A9DAE2200DBB7EB /* RestoreImagesViewModel.mm */; };
 		4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D122A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm */; };
 		4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */; };
@@ -73,6 +75,10 @@
 		4F59BE4A2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BookmarkURLValueTransformer.mm; sourceTree = "<group>"; };
 		4F59BE4C2AA48DFE003E6F07 /* VirtualMachineWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMachineWindow.hpp; sourceTree = "<group>"; };
 		4F59BE4D2AA48DFE003E6F07 /* VirtualMachineWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachineWindow.mm; sourceTree = "<group>"; };
+		4F59BE4F2AA4A756003E6F07 /* VirtualMachineViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMachineViewController.hpp; sourceTree = "<group>"; };
+		4F59BE502AA4A756003E6F07 /* VirtualMachineViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachineViewController.mm; sourceTree = "<group>"; };
+		4F59BE522AA4C495003E6F07 /* VirtualMachineViewModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachineViewModel.mm; sourceTree = "<group>"; };
+		4F59BE532AA4C495003E6F07 /* VirtualMachineViewModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMachineViewModel.hpp; sourceTree = "<group>"; };
 		4F607D0E2A9DAE2200DBB7EB /* RestoreImagesViewModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImagesViewModel.mm; sourceTree = "<group>"; };
 		4F607D0F2A9DAE2200DBB7EB /* RestoreImagesViewModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesViewModel.hpp; sourceTree = "<group>"; };
 		4F607D112A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImagesViewModelDelegate.hpp; sourceTree = "<group>"; };
@@ -154,6 +160,10 @@
 			children = (
 				4F59BE4C2AA48DFE003E6F07 /* VirtualMachineWindow.hpp */,
 				4F59BE4D2AA48DFE003E6F07 /* VirtualMachineWindow.mm */,
+				4F59BE4F2AA4A756003E6F07 /* VirtualMachineViewController.hpp */,
+				4F59BE502AA4A756003E6F07 /* VirtualMachineViewController.mm */,
+				4F59BE532AA4C495003E6F07 /* VirtualMachineViewModel.hpp */,
+				4F59BE522AA4C495003E6F07 /* VirtualMachineViewModel.mm */,
 			);
 			path = VirtualMachine;
 			sourceTree = "<group>";
@@ -421,6 +431,7 @@
 				4F59BE472AA480E0003E6F07 /* VirtualMachinesCollectionViewItem.mm in Sources */,
 				4F66B1512A9EE66D00D188F0 /* CreateVirtualMachineViewController.mm in Sources */,
 				4F59BE3E2AA468B0003E6F07 /* VZMACAddressValueTransformer.mm in Sources */,
+				4F59BE512AA4A756003E6F07 /* VirtualMachineViewController.mm in Sources */,
 				4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */,
 				4F59BE4B2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm in Sources */,
 				4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */,
@@ -449,6 +460,7 @@
 				4F59BE442AA47BA0003E6F07 /* VirtualMachinesViewModelDelegate.mm in Sources */,
 				4FFF2CAC2AA3189200B22FEA /* CreateVirtualMachineInstallationViewModel.mm in Sources */,
 				4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */,
+				4F59BE542AA4C495003E6F07 /* VirtualMachineViewModel.mm in Sources */,
 				4F7ECC822AA0245F00781951 /* NavigationController.mm in Sources */,
 				4FFD77882A9B62C100D11F88 /* VirtualMachinesWindow.mm in Sources */,
 				4FE8DDDD2A9C6903003B11C1 /* SettingsWindow.mm in Sources */,

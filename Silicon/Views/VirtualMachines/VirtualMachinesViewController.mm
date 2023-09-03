@@ -8,6 +8,7 @@
 #import "VirtualMachinesViewController.hpp"
 #import "VirtualMachinesViewModel.hpp"
 #import "VirtualMachinesCollectionViewItem.hpp"
+#import "VirtualMachineWindow.hpp"
 #import <memory>
 
 namespace _VirtualMachinesViewController {
@@ -132,6 +133,20 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Virt
     }];
     
     return [dataSource autorelease];
+}
+
+#pragma mark - NSCollectionViewDelegate
+
+- (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, BOOL * _Nonnull stop) {
+        self.viewModel.get()->virtualMachineMacModel(obj, ^(VirtualMachineMacModel * _Nullable virtualMachineMacModel) {
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                VirtualMachineWindow *window = [[VirtualMachineWindow alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
+                [window makeKeyAndOrderFront:nullptr];
+                [window release];
+            }];
+        });
+    }];
 }
 
 @end

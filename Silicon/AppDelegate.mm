@@ -16,7 +16,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    PersistentDataManager::getInstance().initialize([](NSError * _Nullable error) {
+    PersistentDataManager::getInstance().initialize(^(NSError * _Nullable error) {
         NSLog(@"%@", error);
     });
     
