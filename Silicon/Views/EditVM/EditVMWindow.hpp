@@ -1,8 +1,8 @@
 //
-//  VirtualMachineWindow.hpp
+//  EditVMWindow.hpp
 //  Silicon
 //
-//  Created by Jinwoo Kim on 9/3/23.
+//  Created by Jinwoo Kim on 9/4/23.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -10,7 +10,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface VirtualMachineWindow : NSWindow
+@interface EditVMWindow : NSWindow
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel;
 @end
 

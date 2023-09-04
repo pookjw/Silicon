@@ -28,6 +28,7 @@
 		4F7ECC822AA0245F00781951 /* NavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7ECC812AA0245F00781951 /* NavigationController.mm */; };
 		4F7ECC842AA0618700781951 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F7ECC832AA0618700781951 /* View.xib */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
+		4F8934012AA61DE10066B3EC /* EditVMWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8934002AA61DE10066B3EC /* EditVMWindow.mm */; };
 		4FA1D8552AA5674300485112 /* SVTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1D8542AA5674300485112 /* SVTextField.mm */; };
 		4FD4CD4B2AA5525200075DF1 /* CreateVirtualMachineDiskConfigurationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4CD4A2AA5525200075DF1 /* CreateVirtualMachineDiskConfigurationViewController.mm */; };
 		4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */; };
@@ -95,6 +96,8 @@
 		4F7ECC832AA0618700781951 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
+		4F8933FF2AA61DE10066B3EC /* EditVMWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMWindow.hpp; sourceTree = "<group>"; };
+		4F8934002AA61DE10066B3EC /* EditVMWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMWindow.mm; sourceTree = "<group>"; };
 		4FA1D8532AA5674300485112 /* SVTextField.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVTextField.hpp; sourceTree = "<group>"; };
 		4FA1D8542AA5674300485112 /* SVTextField.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVTextField.mm; sourceTree = "<group>"; };
 		4FD4CD492AA5525200075DF1 /* CreateVirtualMachineDiskConfigurationViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateVirtualMachineDiskConfigurationViewController.hpp; sourceTree = "<group>"; };
@@ -200,6 +203,15 @@
 				4FFF2CA02AA21FEA00B22FEA /* Test */,
 			);
 			path = NavigationController;
+			sourceTree = "<group>";
+		};
+		4F8933FE2AA61D970066B3EC /* EditVM */ = {
+			isa = PBXGroup;
+			children = (
+				4F8933FF2AA61DE10066B3EC /* EditVMWindow.hpp */,
+				4F8934002AA61DE10066B3EC /* EditVMWindow.mm */,
+			);
+			path = EditVM;
 			sourceTree = "<group>";
 		};
 		4FA1D8522AA5671B00485112 /* SVTextField */ = {
@@ -328,6 +340,7 @@
 				4FE8DDE22A9C6CCC003B11C1 /* RestoreImages */,
 				4FFD77842A9B62A800D11F88 /* VirtualMachines */,
 				4F66B1552A9EE8E300D188F0 /* CreateVirtualMachine */,
+				4F8933FE2AA61D970066B3EC /* EditVM */,
 				4F59BE482AA485E2003E6F07 /* VirtualMachine */,
 			);
 			path = Views;
@@ -473,6 +486,7 @@
 				4F59BE442AA47BA0003E6F07 /* VirtualMachinesViewModelDelegate.mm in Sources */,
 				4FFF2CAC2AA3189200B22FEA /* CreateVirtualMachineInstallationViewModel.mm in Sources */,
 				4FFD77B72A9B78BE00D11F88 /* Cancellable.cc in Sources */,
+				4F8934012AA61DE10066B3EC /* EditVMWindow.mm in Sources */,
 				4F59BE542AA4C495003E6F07 /* VirtualMachineViewModel.mm in Sources */,
 				4F7ECC822AA0245F00781951 /* NavigationController.mm in Sources */,
 				4FFD77882A9B62C100D11F88 /* VirtualMachinesWindow.mm in Sources */,
