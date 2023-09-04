@@ -17,9 +17,9 @@
 
 @implementation CreateVirtualMachineInstallationViewController
 
-- (instancetype)initWithIPSWURL:(NSURL *)ipswURL {
+- (instancetype)initWithIPSWURL:(NSURL *)ipswURL storageSize:(std::uint64_t)storageSize {
     if (self = [self init]) {
-        _viewModel = std::make_shared<CreateVirtualMachineInstallationViewModel>(ipswURL);
+        _viewModel = std::make_shared<CreateVirtualMachineInstallationViewModel>(ipswURL, storageSize);
     }
     
     return self;

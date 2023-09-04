@@ -16,7 +16,7 @@
 #import <algorithm>
 #import <cinttypes>
 
-CreateVirtualMachineInstallationViewModel::CreateVirtualMachineInstallationViewModel(NSURL *ipswURL) : _ipswURL([ipswURL copy]) {
+CreateVirtualMachineInstallationViewModel::CreateVirtualMachineInstallationViewModel(NSURL *ipswURL, std::uint64_t storageSize) : _ipswURL([ipswURL copy]), _storageSize(storageSize) {
     NSOperationQueue *queue = [NSOperationQueue new];
     queue.qualityOfService = NSOperationQualityOfServiceUtility;
     queue.maxConcurrentOperationCount = 1;
@@ -36,6 +36,7 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
     });
     
     NSURL *ipswURL = _ipswURL;
+    std::uint64_t storageSize = _storageSize;
     
     [_queue addOperationWithBlock:^{
         __block VZMacOSRestoreImage * _Nullable restoreImage = nullptr;
@@ -114,7 +115,7 @@ std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startIns
             return;
         }
         
-        int ft = ftruncate(fd, 128ull * 1024ull * 1024ull * 1024ull);
+        int ft = ftruncate(fd, storageSize);
         if (ft) {
             completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconFileIOError userInfo:nullptr]);
             return;

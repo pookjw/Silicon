@@ -10,17 +10,23 @@
 #import "NavigationItem.hpp"
 #import "CreateVirtualMachineLocationViewController.hpp"
 #import "RestoreImagesViewController.hpp"
+#import "CreateVirtualMachineDiskConfigurationViewController.hpp"
 #import "CreateVirtualMachineInstallationViewController.hpp"
 #import <objc/runtime.h>
+#import <optional>
+#import <cinttypes>
 
 namespace _CreateVirtualMachineWindow {
 namespace identifiers {
 static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtualMachineWindow.locationNextItem";
+static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"CreateVirtualMachineWindow.diskConfigurationNextItem";
 }
 }
 
-@interface CreateVirtualMachineWindow () <RestoreImagesViewControllerDelegate>
+@interface CreateVirtualMachineWindow () <RestoreImagesViewControllerDelegate, CreateVirtualMachineDiskConfigurationViewControllerDelegate>
 @property (retain) NavigationController *navigationController;
+@property (retain) RestoreImageModel * _Nullable restoreImageModel;
+@property (assign) std::optional<std::uint64_t> storageSize;
 @end
 
 @implementation CreateVirtualMachineWindow
@@ -46,16 +52,17 @@ static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtua
 
 - (void)dealloc {
     [_navigationController release];
+    [_restoreImageModel release];
     [super dealloc];
 }
 
 - (void)pushToLocationViewController {
     CreateVirtualMachineLocationViewController *locationViewContrller = [CreateVirtualMachineLocationViewController new];
     
-    NSToolbarItem *locationNextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier];
-    locationNextItem.title = @"Next";
-    locationNextItem.target = self;
-    locationNextItem.action = @selector(didTriggerLocationNextItem:);
+    NSToolbarItem *nextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier];
+    nextItem.title = @"Next";
+    nextItem.target = self;
+    nextItem.action = @selector(didTriggerLocationNextItem:);
     
     NavigationItem *navigationItem = [NavigationItem new];
     navigationItem.itemIdentifiers = @[
@@ -63,13 +70,13 @@ static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtua
     ];
     navigationItem.toolbarItemHandler = ^NSToolbarItem * _Nullable (NSToolbarIdentifier identifier) {
         if ([identifier isEqualToString:_CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier]) {
-            return locationNextItem;
+            return nextItem;
         } else {
             return nullptr;
         }
     };
     
-    [locationNextItem release];
+    [nextItem release];
     
     objc_setAssociatedObject(locationViewContrller, NavigationController.navigationItemAssociationKey, navigationItem, OBJC_ASSOCIATION_RETAIN);
     
@@ -86,8 +93,44 @@ static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtua
     [viewController release];
 }
 
-- (void)pushToInstallationViewControllerWithIPSWURL:(NSURL *)ipswURL {
-    CreateVirtualMachineInstallationViewController *viewController = [[CreateVirtualMachineInstallationViewController alloc] initWithIPSWURL:ipswURL];
+- (void)pushToDiskConfigurationViewController {
+    CreateVirtualMachineDiskConfigurationViewController *viewController = [CreateVirtualMachineDiskConfigurationViewController new];
+    viewController.delegate = self;
+    self.storageSize = viewController.storageSize;
+    
+    //
+    
+    NSToolbarItem *nextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::diskConfigurationNextItemIdentifier];
+    nextItem.title = @"Next";
+    nextItem.target = self;
+    nextItem.action = @selector(didTriggerDiskConfigurationNextItem:);
+    
+    NavigationItem *navigationItem = [NavigationItem new];
+    navigationItem.itemIdentifiers = @[
+        _CreateVirtualMachineWindow::identifiers::diskConfigurationNextItemIdentifier
+    ];
+    navigationItem.toolbarItemHandler = ^NSToolbarItem * _Nullable (NSToolbarIdentifier identifier) {
+        if ([identifier isEqualToString:_CreateVirtualMachineWindow::identifiers::diskConfigurationNextItemIdentifier]) {
+            return nextItem;
+        } else {
+            return nullptr;
+        }
+    };
+    
+    [nextItem release];
+    
+    objc_setAssociatedObject(viewController, NavigationController.navigationItemAssociationKey, navigationItem, OBJC_ASSOCIATION_RETAIN);
+    
+    [navigationItem release];
+    
+    //
+    
+    [self.navigationController pushViewController:viewController completionHandler:nullptr];
+    [viewController release];
+}
+
+- (void)pushToInstallationViewControllerWithIPSWURL:(NSURL *)ipswURL storageSize:(std::uint64_t)storageSize {
+    CreateVirtualMachineInstallationViewController *viewController = [[CreateVirtualMachineInstallationViewController alloc] initWithIPSWURL:ipswURL storageSize:storageSize];
     [self.navigationController pushViewController:viewController completionHandler:nullptr];
     [viewController release];
 }
@@ -96,16 +139,33 @@ static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtua
     [self pushToRestoreImagesViewController];
 }
 
+- (void)didTriggerDiskConfigurationNextItem:(NSToolbarItem *)sender {
+    if (!self.storageSize.has_value()) {
+        NSLog(@"No Storage Size.");
+        return;
+    }
+    
+    NSURL *ipswURL = self.restoreImageModel.URL;
+    std::uint64_t storageSize = self.storageSize.value();
+    
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        [self pushToInstallationViewControllerWithIPSWURL:ipswURL storageSize:storageSize];
+    }];
+}
+
 #pragma mark - RestoreImagesViewControllerDelegate
 
 - (void)restoreImagesViewController:(RestoreImagesViewController *)viewControoler didSelectRestoreImageModel:(RestoreImageModel *)restoreImageModel {
-    [restoreImageModel.managedObjectContext performBlock:^{
-        NSURL *ipswURL = restoreImageModel.URL;
-        
-        [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            [self pushToInstallationViewControllerWithIPSWURL:ipswURL];
-        }];
+    self.restoreImageModel = restoreImageModel;
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        [self pushToDiskConfigurationViewController];
     }];
+}
+
+#pragma mark - CreateVirtualMachineDiskConfigurationViewControllerDelegate
+
+- (void)createVirtualMachineDiskConfigurationViewController:(CreateVirtualMachineDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize {
+    self.storageSize = storageSize;
 }
 
 @end

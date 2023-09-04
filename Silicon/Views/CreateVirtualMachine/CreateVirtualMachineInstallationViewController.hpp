@@ -6,6 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <cinttypes>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -14,7 +15,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(nullable NSNibName)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_UNAVAILABLE;
-- (instancetype)initWithIPSWURL:(NSURL *)ipswURL;
+- (instancetype)initWithIPSWURL:(NSURL *)ipswURL storageSize:(std::uint64_t)storageSize;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
