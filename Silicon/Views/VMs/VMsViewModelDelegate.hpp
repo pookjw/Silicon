@@ -1,5 +1,5 @@
 //
-//  VirtualMachinesViewModelDelegate.hpp
+//  VMsViewModelDelegate.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
@@ -10,7 +10,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface VirtualMachinesViewModelDelegate : NSObject <NSFetchedResultsControllerDelegate>
+@interface VMsViewModelDelegate : NSObject <NSFetchedResultsControllerDelegate>
 @property (assign) std::function<void (NSFetchedResultsController *controller, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *snapshot)> controllerDidChangeContentWithSnapshot;
 @end
 

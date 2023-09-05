@@ -1,14 +1,14 @@
 //
-//  VirtualMachinesViewController.mm
+//  VMsViewController.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 8/27/23.
 //
 
-#import "VirtualMachinesViewController.hpp"
-#import "VirtualMachinesViewModel.hpp"
-#import "VirtualMachinesCollectionViewItem.hpp"
-#import "VirtualMachineWindow.hpp"
+#import "VMsViewController.hpp"
+#import "VMsViewModel.hpp"
+#import "VMsCollectionViewItem.hpp"
+#import "VMWindow.hpp"
 #import <memory>
 
 namespace _VirtualMachinesViewController {
@@ -17,13 +17,13 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Virt
 }
 }
 
-@interface VirtualMachinesViewController () <NSCollectionViewDelegate>
+@interface VMsViewController () <NSCollectionViewDelegate>
 @property (retain) NSScrollView *scrollView;
 @property (retain) NSCollectionView *collectionView;
-@property (assign) std::shared_ptr<VirtualMachinesViewModel> viewModel;
+@property (assign) std::shared_ptr<VMsViewModel> viewModel;
 @end
 
-@implementation VirtualMachinesViewController
+@implementation VMsViewController
 
 - (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -48,7 +48,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Virt
 }
 
 - (void)VirtualMachinesViewController_commonInit {
-    _viewModel = std::make_shared<VirtualMachinesViewModel>();
+    _viewModel = std::make_shared<VMsViewModel>();
 }
 
 - (void)viewDidLoad {
@@ -87,7 +87,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Virt
     collectionView.allowsEmptySelection = YES;
     collectionView.delegate = self;
     
-    [collectionView registerClass:VirtualMachinesCollectionViewItem.class forItemWithIdentifier:_VirtualMachinesViewController::identifiers::collectionViewItemIdentifier];
+    [collectionView registerClass:VMsCollectionViewItem.class forItemWithIdentifier:_VirtualMachinesViewController::identifiers::collectionViewItemIdentifier];
     
     self.scrollView.documentView = collectionView;
     self.collectionView = collectionView;
@@ -124,7 +124,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Virt
     __block decltype(self) unretainedSelf = self;
     
     NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource = [[NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> alloc] initWithCollectionView:self.collectionView itemProvider:^NSCollectionViewItem * _Nullable(NSCollectionView * _Nonnull collectionView, NSIndexPath * _Nonnull indexPath, NSManagedObjectID * _Nonnull itemIdentifier) {
-        VirtualMachinesCollectionViewItem *item = [collectionView makeItemWithIdentifier:_VirtualMachinesViewController::identifiers::collectionViewItemIdentifier forIndexPath:indexPath];
+        VMsCollectionViewItem *item = [collectionView makeItemWithIdentifier:_VirtualMachinesViewController::identifiers::collectionViewItemIdentifier forIndexPath:indexPath];
         VirtualMachineMacModel *virtualMachineMacModel = unretainedSelf.viewModel.get()->virtualMachineMacModel(indexPath);
         
         [item configureWithVirtualMachineMacModel:virtualMachineMacModel];
@@ -141,7 +141,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Virt
     [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, BOOL * _Nonnull stop) {
         self.viewModel.get()->virtualMachineMacModel(obj, ^(VirtualMachineMacModel * _Nullable virtualMachineMacModel) {
             [NSOperationQueue.mainQueue addOperationWithBlock:^{
-                VirtualMachineWindow *window = [[VirtualMachineWindow alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
+                VMWindow *window = [[VMWindow alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
                 [window makeKeyAndOrderFront:nullptr];
                 [window release];
             }];

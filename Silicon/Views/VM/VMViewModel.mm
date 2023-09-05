@@ -1,14 +1,14 @@
 //
-//  VirtualMachineViewModel.mm
+//  VMViewModel.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
 //
 
-#import "VirtualMachineViewModel.hpp"
+#import "VMViewModel.hpp"
 #import "constants.hpp"
 
-VirtualMachineViewModel::VirtualMachineViewModel(VirtualMachineMacModel *virtualMachineMacModel) : _virtualMachineMacModel([virtualMachineMacModel retain]) {
+VMViewModel::VMViewModel(VirtualMachineMacModel *virtualMachineMacModel) : _virtualMachineMacModel([virtualMachineMacModel retain]) {
     NSOperationQueue *queue = [NSOperationQueue new];
     queue.qualityOfService = NSOperationQualityOfServiceUtility;
     queue.maxConcurrentOperationCount = 1;
@@ -17,14 +17,14 @@ VirtualMachineViewModel::VirtualMachineViewModel(VirtualMachineMacModel *virtual
     [queue release];
 }
 
-VirtualMachineViewModel::~VirtualMachineViewModel() {
+VMViewModel::~VMViewModel() {
     [_queue cancelAllOperations];
     [_virtualMachineMacModel release];
     [_virtualMachine release];
     [_queue release];
 }
 
-void VirtualMachineViewModel::virtualMachine(std::function<void (VZVirtualMachine * _Nullable, NSError * _Nullable)> completionHandler) {
+void VMViewModel::virtualMachine(std::function<void (VZVirtualMachine * _Nullable, NSError * _Nullable)> completionHandler) {
     VirtualMachineMacModel *virtualMachineMacModel = _virtualMachineMacModel;
     
     [_queue addOperationWithBlock:^{

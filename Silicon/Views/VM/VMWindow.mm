@@ -1,12 +1,12 @@
 //
-//  VirtualMachineWindow.mm
+//  VMWindow.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
 //
 
-#import "VirtualMachineWindow.hpp"
-#import "VirtualMachineViewController.hpp"
+#import "VMWindow.hpp"
+#import "VMViewController.hpp"
 
 namespace _VirtualMachineWindow {
     namespace identifiers {
@@ -14,10 +14,10 @@ namespace _VirtualMachineWindow {
     }
 }
 
-@interface VirtualMachineWindow () <NSToolbarDelegate>
+@interface VMWindow () <NSToolbarDelegate>
 @end
 
-@implementation VirtualMachineWindow
+@implementation VMWindow
 
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel {
     if (self = [super init]) {
@@ -28,7 +28,7 @@ namespace _VirtualMachineWindow {
         self.titlebarAppearsTransparent = NO;
         self.contentMinSize = NSMakeSize(400.f, 400.f);
         
-        VirtualMachineViewController *contentViewController = [[VirtualMachineViewController alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
+        VMViewController *contentViewController = [[VMViewController alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
         self.contentViewController = contentViewController;
         [contentViewController release];
     }

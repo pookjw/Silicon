@@ -1,5 +1,5 @@
 //
-//  VirtualMachinesWindow.hpp
+//  VMsViewController.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 8/27/23.
@@ -9,7 +9,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface VirtualMachinesWindow : NSWindow
+@interface VMsViewController : NSViewController
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

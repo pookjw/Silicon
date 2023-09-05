@@ -1,25 +1,25 @@
 //
-//  CreateVirtualMachineLoadingViewController.mm
+//  CreateVMInstallationViewController.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/2/23.
 //
 
-#import "CreateVirtualMachineInstallationViewController.hpp"
-#import "CreateVirtualMachineInstallationViewModel.hpp"
+#import "CreateVMInstallationViewController.hpp"
+#import "CreateVMInstallationViewModel.hpp"
 #import <memory>
 
-@interface CreateVirtualMachineInstallationViewController ()
+@interface CreateVMInstallationViewController ()
 @property (retain) NSProgressIndicator *progressIndicator;
-@property (assign) std::shared_ptr<CreateVirtualMachineInstallationViewModel> viewModel;
+@property (assign) std::shared_ptr<CreateVMInstallationViewModel> viewModel;
 @property (assign) std::shared_ptr<Cancellable> installationCancellable;
 @end
 
-@implementation CreateVirtualMachineInstallationViewController
+@implementation CreateVMInstallationViewController
 
 - (instancetype)initWithIPSWURL:(NSURL *)ipswURL storageSize:(std::uint64_t)storageSize {
     if (self = [self init]) {
-        _viewModel = std::make_shared<CreateVirtualMachineInstallationViewModel>(ipswURL, storageSize);
+        _viewModel = std::make_shared<CreateVMInstallationViewModel>(ipswURL, storageSize);
     }
     
     return self;

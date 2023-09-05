@@ -1,5 +1,5 @@
 //
-//  VirtualMachineWindow.hpp
+//  VMWindow.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
@@ -10,7 +10,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface VirtualMachineWindow : NSWindow
+@interface VMWindow : NSWindow
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel;
 @end
 

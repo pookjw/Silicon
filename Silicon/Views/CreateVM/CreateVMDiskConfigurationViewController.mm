@@ -1,15 +1,15 @@
 //
-//  CreateVirtualMachineDiskConfigurationViewController.mm
+//  CreateVMDiskConfigurationViewController.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/4/23.
 //
 
-#import "CreateVirtualMachineDiskConfigurationViewController.hpp"
+#import "CreateVMDiskConfigurationViewController.hpp"
 #import "SVTextField.hpp"
 #import <cmath>
 
-@interface CreateVirtualMachineDiskConfigurationViewController () <SVTextFieldDelegate>
+@interface CreateVMDiskConfigurationViewController () <SVTextFieldDelegate>
 @property (readonly, nonatomic) NSArray<NSUnitInformationStorage *> *storageUnits;
 @property (copy, nonatomic) NSUnitInformationStorage *selectedStorageUnit;
 @property (retain) NSStackView *stackView;
@@ -19,7 +19,7 @@
 @property (retain) NSNumberFormatter *numberFormatter;
 @end
 
-@implementation CreateVirtualMachineDiskConfigurationViewController
+@implementation CreateVMDiskConfigurationViewController
 
 - (instancetype)initWithNibName:(nullable NSNibName)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {

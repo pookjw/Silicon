@@ -1,20 +1,20 @@
 //
-//  CreateVirtualMachineLocationViewController.mm
+//  CreateVMLocationViewController.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 8/30/23.
 //
 
-#import "CreateVirtualMachineLocationViewController.hpp"
+#import "CreateVMLocationViewController.hpp"
 #import "NSTextField+LabelStyle.hpp"
 
-@interface CreateVirtualMachineLocationViewController () <NSToolbarDelegate>
+@interface CreateVMLocationViewController () <NSToolbarDelegate>
 @property (retain) NSStackView *stackView;
 @property (retain) NSButton *createNewButton;
 @property (retain) NSButton *addExistingButton;
 @end
 
-@implementation CreateVirtualMachineLocationViewController
+@implementation CreateVMLocationViewController
 
 - (void)dealloc {
     [_stackView release];

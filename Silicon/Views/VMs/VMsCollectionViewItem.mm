@@ -1,18 +1,18 @@
 //
-//  VirtualMachinesCollectionViewItem.mm
+//  VMsCollectionViewItem.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
 //
 
-#import "VirtualMachinesCollectionViewItem.hpp"
+#import "VMsCollectionViewItem.hpp"
 #import "NSTextField+LabelStyle.hpp"
 
-@interface VirtualMachinesCollectionViewItem ()
+@interface VMsCollectionViewItem ()
 @property (retain) VirtualMachineMacModel *virtualMachineMacModel;
 @end
 
-@implementation VirtualMachinesCollectionViewItem
+@implementation VMsCollectionViewItem
 
 - (void)dealloc {
     [_virtualMachineMacModel release];

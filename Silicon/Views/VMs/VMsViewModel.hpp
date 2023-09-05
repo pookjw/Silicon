@@ -1,5 +1,5 @@
 //
-//  VirtualMachinesViewModel.hpp
+//  VMsViewModel.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
@@ -8,27 +8,27 @@
 #import <Cocoa/Cocoa.h>
 #import <functional>
 #import "VirtualMachineMacModel.hpp"
-#import "VirtualMachinesViewModelDelegate.hpp"
+#import "VMsViewModelDelegate.hpp"
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-class VirtualMachinesViewModel {
+class VMsViewModel {
 public:
-    VirtualMachinesViewModel();
-    ~VirtualMachinesViewModel();
+    VMsViewModel();
+    ~VMsViewModel();
     
     void initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
     
     VirtualMachineMacModel * _Nullable virtualMachineMacModel(NSIndexPath *indexPath);
     void virtualMachineMacModel(NSIndexPath *indexPath, std::function<void (VirtualMachineMacModel * _Nullable)> handler);
     
-    VirtualMachinesViewModel(const VirtualMachinesViewModel&) = delete;
-    VirtualMachinesViewModel& operator=(const VirtualMachinesViewModel&) = delete;
+    VMsViewModel(const VMsViewModel&) = delete;
+    VMsViewModel& operator=(const VMsViewModel&) = delete;
 private:
     NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *_dataSource;
     NSFetchedResultsController<VirtualMachineMacModel *> *_fetchedResultsController;
     NSOperationQueue *_queue;
-    VirtualMachinesViewModelDelegate *_delegate;
+    VMsViewModelDelegate *_delegate;
     bool _isInitialized = false;
 };
 

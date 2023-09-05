@@ -1,5 +1,5 @@
 //
-//  CreateVirtualMachineLocationViewController.hpp
+//  CreateVMLocationViewController.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 8/30/23.
@@ -9,7 +9,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface CreateVirtualMachineLocationViewController : NSViewController
+@interface CreateVMLocationViewController : NSViewController
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

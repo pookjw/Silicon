@@ -1,17 +1,17 @@
 //
-//  CreateVirtualMachineWindow.mm
+//  CreateVMWindow.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/2/23.
 //
 
-#import "CreateVirtualMachineWindow.hpp"
+#import "CreateVMWindow.hpp"
 #import "NavigationController.hpp"
 #import "NavigationItem.hpp"
-#import "CreateVirtualMachineLocationViewController.hpp"
+#import "CreateVMLocationViewController.hpp"
 #import "RestoreImagesViewController.hpp"
-#import "CreateVirtualMachineDiskConfigurationViewController.hpp"
-#import "CreateVirtualMachineInstallationViewController.hpp"
+#import "CreateVMDiskConfigurationViewController.hpp"
+#import "CreateVMInstallationViewController.hpp"
 #import <objc/runtime.h>
 #import <optional>
 #import <cinttypes>
@@ -23,13 +23,13 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 }
 }
 
-@interface CreateVirtualMachineWindow () <RestoreImagesViewControllerDelegate, CreateVirtualMachineDiskConfigurationViewControllerDelegate>
+@interface CreateVMWindow () <RestoreImagesViewControllerDelegate, CreateVirtualMachineDiskConfigurationViewControllerDelegate>
 @property (retain) NavigationController *navigationController;
 @property (retain) RestoreImageModel * _Nullable restoreImageModel;
 @property (assign) std::optional<std::uint64_t> storageSize;
 @end
 
-@implementation CreateVirtualMachineWindow
+@implementation CreateVMWindow
 
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)backingStoreType defer:(BOOL)flag {
     if (self = [super initWithContentRect:contentRect styleMask:style backing:backingStoreType defer:flag]) {
@@ -57,7 +57,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 }
 
 - (void)pushToLocationViewController {
-    CreateVirtualMachineLocationViewController *locationViewContrller = [CreateVirtualMachineLocationViewController new];
+    CreateVMLocationViewController *locationViewContrller = [CreateVMLocationViewController new];
     
     NSToolbarItem *nextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::locationNextItemIdentifier];
     nextItem.title = @"Next";
@@ -94,7 +94,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 }
 
 - (void)pushToDiskConfigurationViewController {
-    CreateVirtualMachineDiskConfigurationViewController *viewController = [CreateVirtualMachineDiskConfigurationViewController new];
+    CreateVMDiskConfigurationViewController *viewController = [CreateVMDiskConfigurationViewController new];
     viewController.delegate = self;
     self.storageSize = viewController.storageSize;
     
@@ -130,7 +130,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 }
 
 - (void)pushToInstallationViewControllerWithIPSWURL:(NSURL *)ipswURL storageSize:(std::uint64_t)storageSize {
-    CreateVirtualMachineInstallationViewController *viewController = [[CreateVirtualMachineInstallationViewController alloc] initWithIPSWURL:ipswURL storageSize:storageSize];
+    CreateVMInstallationViewController *viewController = [[CreateVMInstallationViewController alloc] initWithIPSWURL:ipswURL storageSize:storageSize];
     [self.navigationController pushViewController:viewController completionHandler:nullptr];
     [viewController release];
 }
@@ -164,7 +164,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 
 #pragma mark - CreateVirtualMachineDiskConfigurationViewControllerDelegate
 
-- (void)createVirtualMachineDiskConfigurationViewController:(CreateVirtualMachineDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize {
+- (void)createVirtualMachineDiskConfigurationViewController:(CreateVMDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize {
     self.storageSize = storageSize;
 }
 

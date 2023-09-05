@@ -1,15 +1,15 @@
 //
-//  VirtualMachinesViewModel.mm
+//  VMsViewModel.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
 //
 
-#import "VirtualMachinesViewModel.hpp"
+#import "VMsViewModel.hpp"
 #import "PersistentDataManager.hpp"
 #import "constants.hpp"
 
-VirtualMachinesViewModel::VirtualMachinesViewModel() {
+VMsViewModel::VMsViewModel() {
     NSOperationQueue *queue = [NSOperationQueue new];
     queue.qualityOfService = NSOperationQualityOfServiceUtility;
     queue.maxConcurrentOperationCount = 1;
@@ -17,13 +17,13 @@ VirtualMachinesViewModel::VirtualMachinesViewModel() {
     _queue = [queue retain];
     [queue release];
     
-    VirtualMachinesViewModelDelegate *delegate = [VirtualMachinesViewModelDelegate new];
+    VMsViewModelDelegate *delegate = [VMsViewModelDelegate new];
     [_delegate release];
     _delegate = [delegate retain];
     [delegate release];
 }
 
-VirtualMachinesViewModel::~VirtualMachinesViewModel() {
+VMsViewModel::~VMsViewModel() {
     _delegate.controllerDidChangeContentWithSnapshot = nullptr;
     [_queue cancelAllOperations];
     [_dataSource release];
@@ -32,7 +32,7 @@ VirtualMachinesViewModel::~VirtualMachinesViewModel() {
     [_delegate release];
 }
 
-void VirtualMachinesViewModel::initialize(NSCollectionViewDiffableDataSource<NSString *,NSManagedObjectID *> * _Nonnull dataSource, std::function<void (NSError * _Nullable)> completionHandler) {
+void VMsViewModel::initialize(NSCollectionViewDiffableDataSource<NSString *,NSManagedObjectID *> * _Nonnull dataSource, std::function<void (NSError * _Nullable)> completionHandler) {
     [_queue addOperationWithBlock:^{
         if (_isInitialized) {
             completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconAlreadyInitializedError userInfo:nullptr]);
@@ -88,11 +88,11 @@ void VirtualMachinesViewModel::initialize(NSCollectionViewDiffableDataSource<NSS
     }];
 }
 
-VirtualMachineMacModel * _Nullable VirtualMachinesViewModel::virtualMachineMacModel(NSIndexPath * _Nonnull indexPath) {
+VirtualMachineMacModel * _Nullable VMsViewModel::virtualMachineMacModel(NSIndexPath * _Nonnull indexPath) {
     return [_fetchedResultsController objectAtIndexPath:indexPath];
 }
 
-void VirtualMachinesViewModel::virtualMachineMacModel(NSIndexPath *indexPath, std::function<void (VirtualMachineMacModel * _Nullable)> handler) {
+void VMsViewModel::virtualMachineMacModel(NSIndexPath *indexPath, std::function<void (VirtualMachineMacModel * _Nullable)> handler) {
     [_queue addOperationWithBlock:^{
         handler([_fetchedResultsController objectAtIndexPath:indexPath]);
     }];

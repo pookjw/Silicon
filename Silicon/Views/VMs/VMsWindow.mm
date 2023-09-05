@@ -1,13 +1,13 @@
 //
-//  VirtualMachinesWindow.mm
+//  VMsWindow.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 8/27/23.
 //
 
-#import "VirtualMachinesWindow.hpp"
-#import "VirtualMachinesViewController.hpp"
-#import "CreateVirtualMachineWindow.hpp"
+#import "VMsWindow.hpp"
+#import "VMsViewController.hpp"
+#import "CreateVMWindow.hpp"
 
 namespace _VirtualMachinesWindow {
 namespace identifiers {
@@ -16,10 +16,10 @@ static NSToolbarItemIdentifier const createVirtualMachineItemIdentifier = @"Virt
 }
 }
 
-@interface VirtualMachinesWindow () <NSToolbarDelegate>
+@interface VMsWindow () <NSToolbarDelegate>
 @end
 
-@implementation VirtualMachinesWindow
+@implementation VMsWindow
 
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)backingStoreType defer:(BOOL)flag {
     if (self = [super initWithContentRect:contentRect styleMask:style backing:backingStoreType defer:flag]) {
@@ -37,7 +37,7 @@ static NSToolbarItemIdentifier const createVirtualMachineItemIdentifier = @"Virt
         self.toolbar = toolbar;
         [toolbar release];
         
-        VirtualMachinesViewController *contentViewController = [VirtualMachinesViewController new];
+        VMsViewController *contentViewController = [VMsViewController new];
         self.contentViewController = contentViewController;
         [contentViewController release];
     }
@@ -46,7 +46,7 @@ static NSToolbarItemIdentifier const createVirtualMachineItemIdentifier = @"Virt
 }
 
 - (void)didTriggerCreateVirtualMachineItem:(NSToolbarItem *)sender {
-    CreateVirtualMachineWindow *window = [CreateVirtualMachineWindow new];
+    CreateVMWindow *window = [CreateVMWindow new];
     [window makeKeyAndOrderFront:nullptr];
     [window release];
 }

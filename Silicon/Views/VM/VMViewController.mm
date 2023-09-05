@@ -1,25 +1,25 @@
 //
-//  VirtualMachineViewController.mm
+//  VMViewController.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
 //
 
-#import "VirtualMachineViewController.hpp"
-#import "VirtualMachineViewModel.hpp"
+#import "VMViewController.hpp"
+#import "VMViewModel.hpp"
 #import <Virtualization/Virtualization.h>
 #import <memory>
 
-@interface VirtualMachineViewController () <VZVirtualMachineDelegate>
+@interface VMViewController () <VZVirtualMachineDelegate>
 @property (retain) VZVirtualMachineView *virtualMachineView;
-@property (assign) std::shared_ptr<VirtualMachineViewModel> viewModel;
+@property (assign) std::shared_ptr<VMViewModel> viewModel;
 @end
 
-@implementation VirtualMachineViewController
+@implementation VMViewController
 
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel {
     if (self = [super initWithNibName:nullptr bundle:nullptr]) {
-        _viewModel = std::make_shared<VirtualMachineViewModel>(virtualMachineMacModel);
+        _viewModel = std::make_shared<VMViewModel>(virtualMachineMacModel);
     }
     
     return self;

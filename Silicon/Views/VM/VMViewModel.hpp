@@ -1,5 +1,5 @@
 //
-//  VirtualMachineViewModel.hpp
+//  VMViewModel.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
@@ -11,15 +11,15 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-class VirtualMachineViewModel {
+class VMViewModel {
 public:
-    VirtualMachineViewModel(VirtualMachineMacModel *virtualMachineMacModel);
-    ~VirtualMachineViewModel();
+    VMViewModel(VirtualMachineMacModel *virtualMachineMacModel);
+    ~VMViewModel();
     
     void virtualMachine(std::function<void (VZVirtualMachine * _Nullable, NSError * _Nullable)>completionHandler);
     
-    VirtualMachineViewModel(const VirtualMachineViewModel&) = delete;
-    VirtualMachineViewModel& operator=(const VirtualMachineViewModel&) = delete;
+    VMViewModel(const VMViewModel&) = delete;
+    VMViewModel& operator=(const VMViewModel&) = delete;
 private:
     VirtualMachineMacModel *_virtualMachineMacModel;
     VZVirtualMachine *_virtualMachine;

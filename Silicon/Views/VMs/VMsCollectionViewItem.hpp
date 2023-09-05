@@ -1,5 +1,5 @@
 //
-//  VirtualMachinesCollectionViewItem.hpp
+//  VMsCollectionViewItem.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/3/23.
@@ -10,7 +10,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface VirtualMachinesCollectionViewItem : NSCollectionViewItem
+@interface VMsCollectionViewItem : NSCollectionViewItem
 - (void)configureWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel;
 @end
 

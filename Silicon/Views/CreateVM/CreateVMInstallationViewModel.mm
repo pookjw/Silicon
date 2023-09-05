@@ -1,11 +1,11 @@
 //
-//  CreateVirtualMachineLoadingViewModel.mm
+//  CreateVMInstallationViewModel.mm
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/2/23.
 //
 
-#import "CreateVirtualMachineInstallationViewModel.hpp"
+#import "CreateVMInstallationViewModel.hpp"
 #import "constants.hpp"
 #import "PersistentDataManager.hpp"
 #import "VirtualMachineMacModel.hpp"
@@ -16,7 +16,7 @@
 #import <algorithm>
 #import <cinttypes>
 
-CreateVirtualMachineInstallationViewModel::CreateVirtualMachineInstallationViewModel(NSURL *ipswURL, std::uint64_t storageSize) : _ipswURL([ipswURL copy]), _storageSize(storageSize) {
+CreateVMInstallationViewModel::CreateVMInstallationViewModel(NSURL *ipswURL, std::uint64_t storageSize) : _ipswURL([ipswURL copy]), _storageSize(storageSize) {
     NSOperationQueue *queue = [NSOperationQueue new];
     queue.qualityOfService = NSOperationQualityOfServiceUtility;
     queue.maxConcurrentOperationCount = 1;
@@ -25,11 +25,11 @@ CreateVirtualMachineInstallationViewModel::CreateVirtualMachineInstallationViewM
     [queue release];
 };
 
-CreateVirtualMachineInstallationViewModel::~CreateVirtualMachineInstallationViewModel() {
+CreateVMInstallationViewModel::~CreateVMInstallationViewModel() {
     [_ipswURL release];
 }
 
-std::shared_ptr<Cancellable> CreateVirtualMachineInstallationViewModel::startInstallation(std::function<void (NSProgress * _Nonnull)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler) {
+std::shared_ptr<Cancellable> CreateVMInstallationViewModel::startInstallation(std::function<void (NSProgress * _Nonnull)> progressHandler, std::function<void (NSError * _Nullable)> completionHandler) {
     std::shared_ptr<std::atomic<NSProgress * _Nullable>> progress = std::make_shared<std::atomic<NSProgress * _Nullable>>(nullptr);
     std::shared_ptr<Cancellable> cancellable = std::make_shared<Cancellable>([progress]() {
         [progress.get()->load() cancel];

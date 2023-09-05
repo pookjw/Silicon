@@ -1,5 +1,5 @@
 //
-//  CreateVirtualMachineDiskConfigurationViewController.hpp
+//  CreateVMDiskConfigurationViewController.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/4/23.
@@ -10,12 +10,12 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class CreateVirtualMachineDiskConfigurationViewController;
+@class CreateVMDiskConfigurationViewController;
 @protocol CreateVirtualMachineDiskConfigurationViewControllerDelegate <NSObject>
-- (void)createVirtualMachineDiskConfigurationViewController:(CreateVirtualMachineDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize;
+- (void)createVirtualMachineDiskConfigurationViewController:(CreateVMDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize;
 @end
 
-@interface CreateVirtualMachineDiskConfigurationViewController : NSViewController
+@interface CreateVMDiskConfigurationViewController : NSViewController
 @property (nonatomic) std::uint64_t storageSize;
 @property (assign) id<CreateVirtualMachineDiskConfigurationViewControllerDelegate> delegate;
 @end

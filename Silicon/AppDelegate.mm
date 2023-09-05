@@ -6,7 +6,7 @@
 //
 
 #import "AppDelegate.hpp"
-#import "VirtualMachinesWindow.hpp"
+#import "VMsWindow.hpp"
 #import "BaseMenu.hpp"
 #import "PersistentDataManager.hpp"
 
@@ -20,7 +20,7 @@
         NSLog(@"%@", error);
     });
     
-    VirtualMachinesWindow *window = [VirtualMachinesWindow new];
+    VMsWindow *window = [VMsWindow new];
     [window makeKeyAndOrderFront:nullptr];
     [window release];
     
