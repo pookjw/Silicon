@@ -76,11 +76,11 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 
 - (void)RestoreImagesViewController_commonInit {
     _selectionIndexPathsContext = std::make_shared<std::uint8_t>();
+    self.title = @"Restore Images";
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupAttributes];
     [self setupScrollView];
     [self setupCollectionView];
     [self setupAddButton];
@@ -91,10 +91,6 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     self.viewModel.get()->initialize([self makeDataSource], [](NSError * _Nullable error) {
         NSLog(@"%@", error);
     });
-}
-
-- (void)setupAttributes {
-    self.title = @"Restore Images";
 }
 
 - (void)setupScrollView {

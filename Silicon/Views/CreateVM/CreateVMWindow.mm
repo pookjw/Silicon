@@ -96,7 +96,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 - (void)pushToDiskConfigurationViewController {
     CreateVMDiskConfigurationViewController *viewController = [CreateVMDiskConfigurationViewController new];
     viewController.delegate = self;
-    self.storageSize = viewController.storageSize;
+    _storageSize = viewController.storageSize;
     
     //
     
@@ -140,13 +140,13 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 }
 
 - (void)didTriggerDiskConfigurationNextItem:(NSToolbarItem *)sender {
-    if (!self.storageSize.has_value()) {
+    if (!_storageSize.has_value()) {
         NSLog(@"No Storage Size.");
         return;
     }
     
     NSURL *ipswURL = self.restoreImageModel.URL;
-    std::uint64_t storageSize = self.storageSize.value();
+    std::uint64_t storageSize = _storageSize.value();
     
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         [self pushToInstallationViewControllerWithIPSWURL:ipswURL storageSize:storageSize];
@@ -165,7 +165,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 #pragma mark - CreateVirtualMachineDiskConfigurationViewControllerDelegate
 
 - (void)createVirtualMachineDiskConfigurationViewController:(CreateVMDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize {
-    self.storageSize = storageSize;
+    _storageSize = storageSize;
 }
 
 @end

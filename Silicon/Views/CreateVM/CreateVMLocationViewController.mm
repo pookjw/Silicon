@@ -16,6 +16,22 @@
 
 @implementation CreateVMLocationViewController
 
+- (instancetype)initWithNibName:(NSNibName)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        [self CreateVMLocationViewController_commonInit];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if (self = [super initWithCoder:coder]) {
+        [self CreateVMLocationViewController_commonInit];
+    }
+    
+    return self;
+}
+
 - (void)dealloc {
     [_stackView release];
     [_createNewButton release];
@@ -25,13 +41,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupAttributes];
     [self setupStackView];
     [self setupCreateNewButton];
     [self setupAddExistingButton];
 }
 
-- (void)setupAttributes {
+- (void)CreateVMLocationViewController_commonInit {
     self.title = @"Location";
 }
 

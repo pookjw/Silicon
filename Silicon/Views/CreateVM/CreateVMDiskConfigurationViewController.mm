@@ -23,11 +23,15 @@
 
 - (instancetype)initWithNibName:(nullable NSNibName)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        _storageSize = 128ull * 1000ull * 1000ull * 1000ull;
-        _selectedStorageUnit = [NSUnitInformationStorage.gigabytes retain];
-        
-        _numberFormatter = [NSNumberFormatter new];
-        _numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        [self CreateVMDiskConfigurationViewController_commonInit];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if (self = [super initWithCoder:coder]) {
+        [self CreateVMDiskConfigurationViewController_commonInit];
     }
     
     return self;
@@ -45,7 +49,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupAttributes];
     [self setupStackView];
     [self setupSlider];
     [self setupTextField];
@@ -55,7 +58,13 @@
     [self setSelectedStorageUnit:self.selectedStorageUnit];
 }
 
-- (void)setupAttributes {
+- (void)CreateVMDiskConfigurationViewController_commonInit {
+    _storageSize = 128ull * 1000ull * 1000ull * 1000ull;
+    _selectedStorageUnit = [NSUnitInformationStorage.gigabytes retain];
+    
+    _numberFormatter = [NSNumberFormatter new];
+    _numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
     self.title = @"Configure Disk";
 }
 
