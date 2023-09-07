@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F23E0E92AA06F3B00A12F7B /* NavigationContentView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F23E0E82AA06F3B00A12F7B /* NavigationContentView.mm */; };
 		4F4E13C52A9DCB0600FC6305 /* NSTextField+LabelStyle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */; };
+		4F528C442AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F528C432AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm */; };
 		4F55C8F52A9E2566009CADBD /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */; };
 		4F59BE382AA464F1003E6F07 /* VZMacHardwareModelValueTransformer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE372AA464F1003E6F07 /* VZMacHardwareModelValueTransformer.mm */; };
 		4F59BE3B2AA465E5003E6F07 /* VZMacMachineIdentifierValueTransformer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F59BE3A2AA465E5003E6F07 /* VZMacMachineIdentifierValueTransformer.mm */; };
@@ -64,6 +65,8 @@
 		4F23E0E82AA06F3B00A12F7B /* NavigationContentView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NavigationContentView.mm; sourceTree = "<group>"; };
 		4F4E13C32A9DCB0600FC6305 /* NSTextField+LabelStyle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "NSTextField+LabelStyle.hpp"; sourceTree = "<group>"; };
 		4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSTextField+LabelStyle.mm"; sourceTree = "<group>"; };
+		4F528C422AA9A5FB0058B5B0 /* EditVMSidebarItemModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMSidebarItemModel.hpp; sourceTree = "<group>"; };
+		4F528C432AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMSidebarItemModel.mm; sourceTree = "<group>"; };
 		4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		4F59BE362AA464F1003E6F07 /* VZMacHardwareModelValueTransformer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VZMacHardwareModelValueTransformer.hpp; sourceTree = "<group>"; };
 		4F59BE372AA464F1003E6F07 /* VZMacHardwareModelValueTransformer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VZMacHardwareModelValueTransformer.mm; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				4F7A7CBF2AA6F6BF00919300 /* EditVMSidebarViewModel.mm */,
 				4F70CC6A2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.hpp */,
 				4F70CC6B2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm */,
+				4F528C422AA9A5FB0058B5B0 /* EditVMSidebarItemModel.hpp */,
+				4F528C432AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm */,
 			);
 			path = EditVM;
 			sourceTree = "<group>";
@@ -497,6 +502,7 @@
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,
 				4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */,
 				4FE8DDDA2A9C65EE003B11C1 /* AppMenuItem.mm in Sources */,
+				4F528C442AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm in Sources */,
 				4F7A7CC12AA6F6BF00919300 /* EditVMSidebarViewModel.mm in Sources */,
 				4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */,
 				4FD4CD4B2AA5525200075DF1 /* CreateVMDiskConfigurationViewController.mm in Sources */,
