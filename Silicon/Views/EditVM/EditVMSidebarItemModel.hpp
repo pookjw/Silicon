@@ -5,8 +5,7 @@
 //  Created by Jinwoo Kim on 9/7/23.
 //
 
-#import <Foundation/Foundation.h>
-#import <memory>
+#import <Cocoa/Cocoa.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -25,6 +24,8 @@ typedef NS_ENUM(NSUInteger, EditVMSidebarItemModelType) {
 
 @interface EditVMSidebarItemModel : NSObject
 @property (readonly, assign) EditVMSidebarItemModelType itemType;
+@property (readonly, nonatomic) NSImage *image;
+@property (readonly, nonatomic) NSString *text;
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithItemType:(EditVMSidebarItemModelType)itemType NS_DESIGNATED_INITIALIZER;

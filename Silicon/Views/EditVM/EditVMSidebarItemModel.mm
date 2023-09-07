@@ -21,4 +21,10 @@
     return self;
 }
 
+- (NSImage *)image {
+    
+}
+
+- (NSString *)text
+
 @end
