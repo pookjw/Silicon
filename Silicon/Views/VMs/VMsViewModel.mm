@@ -32,7 +32,7 @@ VMsViewModel::~VMsViewModel() {
     [_delegate release];
 }
 
-void VMsViewModel::initialize(NSCollectionViewDiffableDataSource<NSString *,NSManagedObjectID *> * _Nonnull dataSource, std::function<void (NSError * _Nullable)> completionHandler) {
+void VMsViewModel::initialize(DataSource * _Nonnull dataSource, std::function<void (NSError * _Nullable)> completionHandler) {
     [_queue addOperationWithBlock:^{
         if (_isInitialized) {
             completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconAlreadyInitializedError userInfo:nullptr]);
@@ -43,7 +43,7 @@ void VMsViewModel::initialize(NSCollectionViewDiffableDataSource<NSString *,NSMa
         _dataSource = [dataSource retain];
         
         NSOperationQueue *queue = _queue;
-        void (^handler)(NSFetchedResultsController *, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *) = [^(NSFetchedResultsController *controller, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *snapshot) {
+        void (^handler)(NSFetchedResultsController *, Snapshot *) = [^(NSFetchedResultsController *controller, Snapshot *snapshot) {
             [queue addOperationWithBlock:^{
                 [dataSource applySnapshot:snapshot animatingDifferences:YES];
             }];

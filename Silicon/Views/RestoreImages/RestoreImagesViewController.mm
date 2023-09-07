@@ -246,10 +246,10 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     return [collectionViewLayout autorelease];
 }
 
-- (NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *)makeDataSource {
+- (RestoreImagesViewModel::DataSource *)makeDataSource {
     __block decltype(self) unretainedSelf = self;
     
-    NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource = [[NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> alloc] initWithCollectionView:self.collectionView itemProvider:^NSCollectionViewItem * _Nullable(NSCollectionView * _Nonnull collectionView, NSIndexPath * _Nonnull indexPath, NSManagedObjectID * _Nonnull itemIdentifier) {
+    RestoreImagesViewModel::DataSource *dataSource = [[RestoreImagesViewModel::DataSource alloc] initWithCollectionView:self.collectionView itemProvider:^NSCollectionViewItem * _Nullable(NSCollectionView * _Nonnull collectionView, NSIndexPath * _Nonnull indexPath, NSManagedObjectID * _Nonnull itemIdentifier) {
         RestoreImagesCollectionViewItem *item = [collectionView makeItemWithIdentifier:_RestoreImagesViewController::identifiers::collectionViewItemIdentifier forIndexPath:indexPath];
         RestoreImageModel *restoreImageModel = unretainedSelf.viewModel.get()->restoreImageModel(indexPath);
         

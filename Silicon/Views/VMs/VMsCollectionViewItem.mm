@@ -6,6 +6,7 @@
 //
 
 #import "VMsCollectionViewItem.hpp"
+#import "EditVMWindow.hpp"
 #import "NSTextField+LabelStyle.hpp"
 
 @interface VMsCollectionViewItem ()
@@ -59,6 +60,27 @@
     
     self.textField = textField;
     [textField release];
+}
+
+- (void)rightMouseDown:(NSEvent *)event {
+    [super rightMouseDown:event];
+    
+    NSMenu *menu = [NSMenu new];
+    
+    NSMenuItem *editItem = [[NSMenuItem alloc] initWithTitle:@"Edit" action:@selector(didTriggerEditItem:) keyEquivalent:[NSString string]];
+    editItem.target = self;
+    
+    [menu addItem:editItem];
+    [editItem release];
+    
+    [NSMenu popUpContextMenu:menu withEvent:event forView:self.view];
+    [menu release];
+}
+
+- (void)didTriggerEditItem:(NSMenuItem *)sender {
+    EditVMWindow *window = [[EditVMWindow alloc] initWithVirtualMachineMacModel:self.virtualMachineMacModel];
+    [window makeKeyAndOrderFront:nullptr];
+    [window release];
 }
 
 @end

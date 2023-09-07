@@ -6,6 +6,7 @@
 //
 
 #import "EditVMWindow.hpp"
+#import "EditVMViewController.hpp"
 
 @interface EditVMWindow () <NSToolbarDelegate>
 
@@ -21,6 +22,10 @@
         self.releasedWhenClosed = NO;
         self.titlebarAppearsTransparent = NO;
         self.contentMinSize = NSMakeSize(400.f, 400.f);
+        
+        EditVMViewController *contentViewController = [[EditVMViewController alloc] initWithVirtualMachineMacModel:virtualMachineMacModel];
+        self.contentViewController = contentViewController;
+        [contentViewController release];
     }
     
     return self;

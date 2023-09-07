@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F23E0E92AA06F3B00A12F7B /* NavigationContentView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F23E0E82AA06F3B00A12F7B /* NavigationContentView.mm */; };
+		4F249AB22AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F249AB12AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm */; };
 		4F4E13C52A9DCB0600FC6305 /* NSTextField+LabelStyle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */; };
 		4F528C442AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F528C432AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm */; };
 		4F55C8F52A9E2566009CADBD /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */; };
@@ -63,6 +64,8 @@
 /* Begin PBXFileReference section */
 		4F23E0E72AA06F3B00A12F7B /* NavigationContentView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NavigationContentView.hpp; sourceTree = "<group>"; };
 		4F23E0E82AA06F3B00A12F7B /* NavigationContentView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NavigationContentView.mm; sourceTree = "<group>"; };
+		4F249AB02AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMSidebarCollectionViewItem.hpp; sourceTree = "<group>"; };
+		4F249AB12AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMSidebarCollectionViewItem.mm; sourceTree = "<group>"; };
 		4F4E13C32A9DCB0600FC6305 /* NSTextField+LabelStyle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "NSTextField+LabelStyle.hpp"; sourceTree = "<group>"; };
 		4F4E13C42A9DCB0600FC6305 /* NSTextField+LabelStyle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSTextField+LabelStyle.mm"; sourceTree = "<group>"; };
 		4F528C422AA9A5FB0058B5B0 /* EditVMSidebarItemModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMSidebarItemModel.hpp; sourceTree = "<group>"; };
@@ -176,6 +179,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F249AAF2AAA1C320017879D /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				4F7A7CBC2AA6ED9E00919300 /* EditVMSidebarViewController.hpp */,
+				4F7A7CBD2AA6ED9E00919300 /* EditVMSidebarViewController.mm */,
+				4F7A7CC02AA6F6BF00919300 /* EditVMSidebarViewModel.hpp */,
+				4F7A7CBF2AA6F6BF00919300 /* EditVMSidebarViewModel.mm */,
+				4F70CC6A2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.hpp */,
+				4F70CC6B2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm */,
+				4F528C422AA9A5FB0058B5B0 /* EditVMSidebarItemModel.hpp */,
+				4F528C432AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm */,
+				4F249AB02AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.hpp */,
+				4F249AB12AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
 		4F59BE482AA485E2003E6F07 /* VM */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,14 +247,7 @@
 				4F8934002AA61DE10066B3EC /* EditVMWindow.mm */,
 				4F7A7CB92AA6EBF700919300 /* EditVMViewController.hpp */,
 				4F7A7CBA2AA6EBF700919300 /* EditVMViewController.mm */,
-				4F7A7CBC2AA6ED9E00919300 /* EditVMSidebarViewController.hpp */,
-				4F7A7CBD2AA6ED9E00919300 /* EditVMSidebarViewController.mm */,
-				4F7A7CC02AA6F6BF00919300 /* EditVMSidebarViewModel.hpp */,
-				4F7A7CBF2AA6F6BF00919300 /* EditVMSidebarViewModel.mm */,
-				4F70CC6A2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.hpp */,
-				4F70CC6B2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm */,
-				4F528C422AA9A5FB0058B5B0 /* EditVMSidebarItemModel.hpp */,
-				4F528C432AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm */,
+				4F249AAF2AAA1C320017879D /* Sidebar */,
 			);
 			path = EditVM;
 			sourceTree = "<group>";
@@ -512,6 +525,7 @@
 				4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */,
 				4FFF2CA92AA316AF00B22FEA /* CreateVMWindow.mm in Sources */,
 				4FFF2CA32AA2200600B22FEA /* TestNavigationViewController.mm in Sources */,
+				4F249AB22AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm in Sources */,
 				4FFD778B2A9B63D400D11F88 /* VMsViewController.mm in Sources */,
 				4F59BE442AA47BA0003E6F07 /* VMsViewModelDelegate.mm in Sources */,
 				4FFF2CAC2AA3189200B22FEA /* CreateVMInstallationViewModel.mm in Sources */,

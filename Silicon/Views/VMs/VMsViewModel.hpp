@@ -14,10 +14,12 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 class VMsViewModel {
 public:
+    typedef NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> DataSource;
+    
     VMsViewModel();
     ~VMsViewModel();
     
-    void initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
+    void initialize(DataSource *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
     
     VirtualMachineMacModel * _Nullable virtualMachineMacModel(NSIndexPath *indexPath);
     void virtualMachineMacModel(NSIndexPath *indexPath, std::function<void (VirtualMachineMacModel * _Nullable)> handler);
@@ -25,7 +27,9 @@ public:
     VMsViewModel(const VMsViewModel&) = delete;
     VMsViewModel& operator=(const VMsViewModel&) = delete;
 private:
-    NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *_dataSource;
+    typedef NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> Snapshot;
+    
+    DataSource *_dataSource;
     NSFetchedResultsController<VirtualMachineMacModel *> *_fetchedResultsController;
     NSOperationQueue *_queue;
     VMsViewModelDelegate *_delegate;

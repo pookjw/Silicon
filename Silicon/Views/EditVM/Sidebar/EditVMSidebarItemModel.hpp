@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, EditVMSidebarItemModelType) {
 @interface EditVMSidebarItemModel : NSObject
 @property (readonly, assign) EditVMSidebarItemModelType itemType;
 @property (readonly, nonatomic) NSImage *image;
+@property (readonly, nonatomic) NSImage *selectedImage;
 @property (readonly, nonatomic) NSString *text;
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

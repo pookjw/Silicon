@@ -34,7 +34,7 @@ RestoreImagesViewModel::~RestoreImagesViewModel() {
     [_delegate release];
 }
 
-void RestoreImagesViewModel::initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable)> completionHandler) {
+void RestoreImagesViewModel::initialize(DataSource *dataSource, std::function<void (NSError * _Nullable)> completionHandler) {
     [_queue addOperationWithBlock:^{
         if (_isInitialized) {
             completionHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconAlreadyInitializedError userInfo:nullptr]);
@@ -45,7 +45,7 @@ void RestoreImagesViewModel::initialize(NSCollectionViewDiffableDataSource<NSStr
         _dataSource = [dataSource retain];
         
         NSOperationQueue *queue = _queue;
-        void (^handler)(NSFetchedResultsController *, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *) = [^(NSFetchedResultsController *controller, NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> *snapshot) {
+        void (^handler)(NSFetchedResultsController *, Snapshot *) = [^(NSFetchedResultsController *controller, Snapshot *snapshot) {
             [queue addOperationWithBlock:^{
                 [dataSource applySnapshot:snapshot animatingDifferences:YES];
             }];

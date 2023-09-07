@@ -16,10 +16,12 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 class RestoreImagesViewModel {
 public:
+    typedef NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> DataSource;
+    
     RestoreImagesViewModel();
     ~RestoreImagesViewModel();
     
-    void initialize(NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
+    void initialize(DataSource *dataSource, std::function<void (NSError * _Nullable error)> completionHandler);
     
     RestoreImageModel * _Nullable restoreImageModel(NSIndexPath *indexPath);
     void restoreImageModel(NSIndexPath *indexPath, std::function<void (RestoreImageModel * _Nullable)> completionHandler);
@@ -30,7 +32,9 @@ public:
     RestoreImagesViewModel(const RestoreImagesViewModel&) = delete;
     RestoreImagesViewModel& operator=(const RestoreImagesViewModel&) = delete;
 private:
-    NSCollectionViewDiffableDataSource<NSString *, NSManagedObjectID *> *_dataSource;
+    typedef NSDiffableDataSourceSnapshot<NSString *, NSManagedObjectID *> Snapshot;
+    
+    DataSource *_dataSource;
     NSFetchedResultsController<RestoreImageModel *> *_fetchedResultsController;
     NSOperationQueue *_queue;
     RestoreImagesViewModelDelegate *_delegate;
