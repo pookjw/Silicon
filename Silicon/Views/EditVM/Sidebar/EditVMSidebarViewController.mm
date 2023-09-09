@@ -9,6 +9,7 @@
 #import "EditVMSidebarViewModel.hpp"
 #import "EditVMSidebarCollectionViewItem.hpp"
 #import <memory>
+#import <cinttypes>
 
 namespace _EditVMSidebarViewController {
 namespace identifiers {
@@ -17,9 +18,11 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Edit
 }
 
 @interface EditVMSidebarViewController () <NSCollectionViewDelegate>
+@property (retain) EditVMSidebarItemModel *selectedItemModel;
 @property (retain) NSScrollView *scrollView;
 @property (retain) NSCollectionView *collectionView;
 @property (assign) std::shared_ptr<EditVMSidebarViewModel> viewModel;
+@property (assign) std::shared_ptr<std::uint8_t> selectionIndexPathsContext;
 @end
 
 @implementation EditVMSidebarViewController
@@ -41,13 +44,31 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Edit
 }
 
 - (void)dealloc {
+    [_selectedItemModel release];
     [_scrollView release];
+    [_collectionView removeObserver:self forKeyPath:@"selectionIndexPaths" context:_selectionIndexPathsContext.get()];
     [_collectionView release];
     [super dealloc];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == _selectionIndexPathsContext.get()) {
+        NSSet<NSIndexPath *> *selectionIndexPaths = static_cast<NSCollectionView *>(object).selectionIndexPaths;
+        NSIndexPath * _Nullable firstIndexPath = selectionIndexPaths.allObjects.firstObject;
+        if (!firstIndexPath) return;
+        
+        self.viewModel.get()->itemModel(firstIndexPath, ^(EditVMSidebarItemModel * _Nullable itemModel) {
+            self.selectedItemModel = itemModel;
+            [self.delegate editVMSidebarViewController:self didSelectItemModel:itemModel];
+        });
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 - (void)EditVMSidebarViewController_commonInit {
     _viewModel = std::make_shared<EditVMSidebarViewModel>();
+    _selectionIndexPathsContext = std::make_shared<std::uint8_t>();
 }
 
 - (void)viewDidLoad {
@@ -80,6 +101,8 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Edit
 - (void)setupCollectionView {
     NSCollectionViewCompositionalLayout *collectionViewLayout = [self makeCollectionViewLayout];
     NSCollectionView *collectionView = [NSCollectionView new];
+    
+    [collectionView addObserver:self forKeyPath:@"selectionIndexPaths" options:NSKeyValueObservingOptionNew context:_selectionIndexPathsContext.get()];
     
     collectionView.collectionViewLayout = collectionViewLayout;
     collectionView.backgroundColors = @[NSColor.clearColor];

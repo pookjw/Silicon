@@ -1,8 +1,8 @@
 //
-//  EditVMViewController.hpp
+//  EditVMMemoryViewController.hpp
 //  Silicon
 //
-//  Created by Jinwoo Kim on 9/5/23.
+//  Created by Jinwoo Kim on 9/9/23.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -10,7 +10,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface EditVMViewController : NSViewController
+@interface EditVMMemoryViewController : NSViewController
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(nullable NSNibName)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;

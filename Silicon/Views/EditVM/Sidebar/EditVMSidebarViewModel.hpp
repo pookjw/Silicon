@@ -20,6 +20,7 @@ public:
     ~EditVMSidebarViewModel();
     
     void load(DataSource *dataSource, std::function<void ()> completionHandler);
+    void itemModel(NSIndexPath *indexPath, std::function<void (EditVMSidebarItemModel * _Nullable)> completionHandler);
     
     EditVMSidebarViewModel(const EditVMSidebarViewModel&) = delete;
     EditVMSidebarViewModel& operator=(const EditVMSidebarViewModel&) = delete;

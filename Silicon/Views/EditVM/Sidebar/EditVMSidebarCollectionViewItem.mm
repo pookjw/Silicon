@@ -7,23 +7,24 @@
 
 #import "EditVMSidebarCollectionViewItem.hpp"
 #import "NSTextField+LabelStyle.hpp"
+#import <objc/message.h>
 
 @interface EditVMSidebarCollectionViewItem ()
-@property (retain) NSBox *box;
+@property (retain) NSVisualEffectView *visualEffectView;
 @property (retain) NSStackView *stackView;
 @end
 
 @implementation EditVMSidebarCollectionViewItem
 
 - (void)dealloc {
-    [_box release];
+    [_visualEffectView release];
     [_stackView release];
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupBox];
+    [self setupVisualEffectView];
     [self setupStackView];
     [self setupImageView];
     [self setupTextField];
@@ -31,10 +32,13 @@
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
+    [self updateVisualEffectView];
+//    self.textField.textColor = selected ? NSColor.alternateSelectedControlTextColor : NSColor.controlTextColor;
 }
 
 - (void)setHighlightState:(NSCollectionViewItemHighlightState)highlightState {
     [super setHighlightState:highlightState];
+    [self updateVisualEffectView];
 }
 
 - (void)prepareForReuse {
@@ -48,20 +52,18 @@
     self.textField.stringValue = itemModel.text;
 }
 
-- (void)setupBox {
-    NSBox *box = [NSBox new];
-    box.translatesAutoresizingMaskIntoConstraints = NO;
+- (void)setupVisualEffectView {
+    NSVisualEffectView *visualEffectView = [[NSVisualEffectView alloc] initWithFrame:self.view.bounds];
+    visualEffectView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+    visualEffectView.emphasized = YES;
+    visualEffectView.material = NSVisualEffectMaterialSelection;
+    visualEffectView.wantsLayer = YES;
+    visualEffectView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    visualEffectView.hidden = !self.isSelected;
     
-    [self.view addSubview:box];
-    [NSLayoutConstraint activateConstraints:@[
-        [box.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [box.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [box.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [box.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
-    ]];
-    
-    self.box = box;
-    [box release];
+    [self.view addSubview:visualEffectView];
+    self.visualEffectView = visualEffectView;
+    [visualEffectView release];
 }
 
 - (void)setupStackView {
@@ -71,7 +73,7 @@
     stackView.alignment = NSLayoutAttributeCenterY;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self.box addSubview:stackView];
+    [self.view addSubview:stackView];
     [NSLayoutConstraint activateConstraints:@[
         [stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
         [stackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
@@ -94,12 +96,40 @@
 
 - (void)setupTextField {
     NSTextField *textField = [NSTextField new];
+    reinterpret_cast<void (*)(id, SEL, NSUInteger)>(objc_msgSend)(textField, NSSelectorFromString(@"_setSemanticContext:"), 5);
     [textField setContentHuggingPriority:NSLayoutPriorityDefaultLow forOrientation:NSLayoutConstraintOrientationHorizontal];
     
+    textField.textColor = NSColor.controlTextColor;
     [textField applyLabelStyle];
     [self.stackView addArrangedSubview:textField];
     self.textField = textField;
     [textField release];
+}
+
+- (void)updateVisualEffectView {
+    BOOL isSelected = self.isSelected;
+    NSCollectionViewItemHighlightState highlightState = self.highlightState;
+    
+    BOOL isHidden;
+    if (isSelected) {
+        isHidden = NO;
+    } else if (highlightState != NSCollectionViewItemHighlightNone) {
+        isHidden = NO;
+    } else {
+        isHidden = YES;
+    }
+    
+    CGFloat opacity;
+    if (isSelected) {
+        opacity = 1.f;
+    } else if (highlightState != NSCollectionViewItemHighlightNone) {
+        opacity = 0.4f;
+    } else {
+        opacity = 1.f;
+    }
+    
+    self.visualEffectView.hidden = isHidden;
+    self.visualEffectView.layer.opacity = opacity;
 }
 
 @end

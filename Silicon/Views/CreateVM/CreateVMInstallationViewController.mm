@@ -18,7 +18,7 @@
 @implementation CreateVMInstallationViewController
 
 - (instancetype)initWithIPSWURL:(NSURL *)ipswURL storageSize:(std::uint64_t)storageSize {
-    if (self = [self init]) {
+    if (self = [super initWithNibName:nullptr bundle:nullptr]) {
         _viewModel = std::make_shared<CreateVMInstallationViewModel>(ipswURL, storageSize);
     }
     

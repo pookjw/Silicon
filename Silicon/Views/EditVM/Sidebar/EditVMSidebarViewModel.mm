@@ -52,3 +52,11 @@ void EditVMSidebarViewModel::load(DataSource *dataSource, std::function<void ()>
         [snapshot release];
     }];
 }
+
+void EditVMSidebarViewModel::itemModel(NSIndexPath * _Nonnull indexPath, std::function<void (EditVMSidebarItemModel * _Nullable)> completionHandler) {
+    DataSource *dataSource = _dataSource;
+    
+    [_queue addOperationWithBlock:^{
+        completionHandler([dataSource itemIdentifierForIndexPath:indexPath]);
+    }];
+}

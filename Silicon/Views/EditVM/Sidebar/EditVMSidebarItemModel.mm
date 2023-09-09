@@ -33,6 +33,8 @@
             return [NSImage imageWithSystemSymbolName:@"computermouse" accessibilityDescription:nullptr];
         case EditVMSidebarItemModelTypeMemory:
             return [NSImage imageWithSystemSymbolName:@"memorychip" accessibilityDescription:nullptr];
+        case EditVMSidebarItemModelTypeNetwork:
+            return [NSImage imageWithSystemSymbolName:@"network" accessibilityDescription:nullptr];
         case EditVMSidebarItemModelTypeSharedDirectory:
             return [NSImage imageWithSystemSymbolName:@"folder" accessibilityDescription:nullptr];
         case EditVMSidebarItemModelTypeStorage:
@@ -58,6 +60,8 @@
             return [NSImage imageWithSystemSymbolName:@"computermouse.fill" accessibilityDescription:nullptr];
         case EditVMSidebarItemModelTypeMemory:
             return [NSImage imageWithSystemSymbolName:@"memorychip.fill" accessibilityDescription:nullptr];
+        case EditVMSidebarItemModelTypeNetwork:
+            return [NSImage imageWithSystemSymbolName:@"network" accessibilityDescription:nullptr];
         case EditVMSidebarItemModelTypeSharedDirectory:
             return [NSImage imageWithSystemSymbolName:@"folder.fill" accessibilityDescription:nullptr];
         case EditVMSidebarItemModelTypeStorage:
@@ -83,6 +87,8 @@
             return @"Mouse";
         case EditVMSidebarItemModelTypeMemory:
             return @"Memory";
+        case EditVMSidebarItemModelTypeNetwork:
+            return @"Network";
         case EditVMSidebarItemModelTypeSharedDirectory:
             return @"Shared Folder";
         case EditVMSidebarItemModelTypeStorage:

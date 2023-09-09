@@ -7,8 +7,9 @@
 
 #import "EditVMViewController.hpp"
 #import "EditVMSidebarViewController.hpp"
+#import "EditVMMemoryViewController.hpp"
 
-@interface EditVMViewController ()
+@interface EditVMViewController () <EditVMSidebarViewControllerDelegate>
 @property (retain) NSSplitViewController *splitViewController;
 @property (retain) NSSplitViewItem *sidebarItem;
 @property (retain) EditVMSidebarViewController *sidebarViewController;
@@ -18,7 +19,7 @@
 @implementation EditVMViewController
 
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel {
-    if (self = [self init]) {
+    if (self = [super initWithNibName:nullptr bundle:nullptr]) {
         self.model = virtualMachineMacModel;
     }
     
@@ -59,14 +60,48 @@
 
 - (void)setupSidebarViewController {
     EditVMSidebarViewController *sidebarViewController = [EditVMSidebarViewController new];
+    sidebarViewController.delegate = self;
+    
     NSSplitViewItem *sidebarItem = [NSSplitViewItem sidebarWithViewController:sidebarViewController];
-    
-    sidebarItem.canCollapse = NO;
-    [self.splitViewController addSplitViewItem:sidebarItem];
-    
+
+    [self.splitViewController addSplitViewItem:sidebarItem];    
     self.sidebarItem = sidebarItem;
     self.sidebarViewController = sidebarViewController;
     [sidebarViewController release];
+}
+
+- (void)presentMemoryViewController {
+    EditVMMemoryViewController *memoryViewController = [[EditVMMemoryViewController alloc] initWithVirtualMachineMacModel:self.model];
+    NSSplitViewItem *contentListItem = [NSSplitViewItem contentListWithViewController:memoryViewController];
+    [memoryViewController release];
+    [self.splitViewController addSplitViewItem:contentListItem];
+}
+
+#pragma mark - EditVMSidebarViewControllerDelegate
+
+- (void)editVMSidebarViewController:(EditVMSidebarViewController *)viewController didSelectItemModel:(EditVMSidebarItemModel * _Nullable)itemModel {
+    switch (itemModel.itemType) {
+        case EditVMSidebarItemModelTypeMemory:
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                [self presentMemoryViewController];
+            }];
+            break;
+        default:
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                __block NSSplitViewItem * _Nullable contentListItem = nullptr;
+                [self.splitViewController.splitViewItems enumerateObjectsUsingBlock:^(__kindof NSSplitViewItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if (obj.behavior == NSSplitViewItemBehaviorContentList) {
+                        contentListItem = obj;
+                        *stop = YES;
+                    }
+                }];
+                
+                if (contentListItem) {
+                    [self.splitViewController removeSplitViewItem:contentListItem];
+                }
+            }];
+            break;
+    }
 }
 
 @end

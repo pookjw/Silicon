@@ -6,11 +6,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EditVMSidebarItemModel.hpp"
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface EditVMSidebarViewController : NSViewController
+@class EditVMSidebarViewController;
+@protocol EditVMSidebarViewControllerDelegate <NSObject>
+- (void)editVMSidebarViewController:(EditVMSidebarViewController *)viewController didSelectItemModel:(EditVMSidebarItemModel * _Nullable)itemModel;
+@end
 
+@interface EditVMSidebarViewController : NSViewController
+@property (readonly, retain) EditVMSidebarItemModel *selectedItemModel;
+@property (assign) id<EditVMSidebarViewControllerDelegate> delegate;
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

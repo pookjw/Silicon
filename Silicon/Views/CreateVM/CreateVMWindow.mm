@@ -10,7 +10,7 @@
 #import "NavigationItem.hpp"
 #import "CreateVMLocationViewController.hpp"
 #import "RestoreImagesViewController.hpp"
-#import "CreateVMDiskConfigurationViewController.hpp"
+#import "CreateVMStorageSizeViewController.hpp"
 #import "CreateVMInstallationViewController.hpp"
 #import <objc/runtime.h>
 #import <optional>
@@ -19,11 +19,11 @@
 namespace _CreateVirtualMachineWindow {
 namespace identifiers {
 static NSToolbarItemIdentifier const locationNextItemIdentifier = @"CreateVirtualMachineWindow.locationNextItem";
-static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"CreateVirtualMachineWindow.diskConfigurationNextItem";
+static NSToolbarItemIdentifier const storageSizeNextItemIdentifier = @"CreateVirtualMachineWindow.storageSizeNextItem";
 }
 }
 
-@interface CreateVMWindow () <RestoreImagesViewControllerDelegate, CreateVirtualMachineDiskConfigurationViewControllerDelegate>
+@interface CreateVMWindow () <RestoreImagesViewControllerDelegate, CreateVirtualMachineStorageSizeViewControllerDelegate>
 @property (retain) NavigationController *navigationController;
 @property (retain) RestoreImageModel * _Nullable restoreImageModel;
 @property (assign) std::optional<std::uint64_t> storageSize;
@@ -93,24 +93,24 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
     [viewController release];
 }
 
-- (void)pushToDiskConfigurationViewController {
-    CreateVMDiskConfigurationViewController *viewController = [CreateVMDiskConfigurationViewController new];
+- (void)pushToStorageSizeViewController {
+    CreateVMStorageSizeViewController *viewController = [CreateVMStorageSizeViewController new];
     viewController.delegate = self;
     _storageSize = viewController.storageSize;
     
     //
     
-    NSToolbarItem *nextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::diskConfigurationNextItemIdentifier];
+    NSToolbarItem *nextItem = [[NSToolbarItem alloc] initWithItemIdentifier:_CreateVirtualMachineWindow::identifiers::storageSizeNextItemIdentifier];
     nextItem.title = @"Next";
     nextItem.target = self;
-    nextItem.action = @selector(didTriggerDiskConfigurationNextItem:);
+    nextItem.action = @selector(didTriggerStorageSizeNextItem:);
     
     NavigationItem *navigationItem = [NavigationItem new];
     navigationItem.itemIdentifiers = @[
-        _CreateVirtualMachineWindow::identifiers::diskConfigurationNextItemIdentifier
+        _CreateVirtualMachineWindow::identifiers::storageSizeNextItemIdentifier
     ];
     navigationItem.toolbarItemHandler = ^NSToolbarItem * _Nullable (NSToolbarIdentifier identifier) {
-        if ([identifier isEqualToString:_CreateVirtualMachineWindow::identifiers::diskConfigurationNextItemIdentifier]) {
+        if ([identifier isEqualToString:_CreateVirtualMachineWindow::identifiers::storageSizeNextItemIdentifier]) {
             return nextItem;
         } else {
             return nullptr;
@@ -139,7 +139,7 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
     [self pushToRestoreImagesViewController];
 }
 
-- (void)didTriggerDiskConfigurationNextItem:(NSToolbarItem *)sender {
+- (void)didTriggerStorageSizeNextItem:(NSToolbarItem *)sender {
     if (!_storageSize.has_value()) {
         NSLog(@"No Storage Size.");
         return;
@@ -158,13 +158,13 @@ static NSToolbarItemIdentifier const diskConfigurationNextItemIdentifier = @"Cre
 - (void)restoreImagesViewController:(RestoreImagesViewController *)viewControoler didSelectRestoreImageModel:(RestoreImageModel *)restoreImageModel {
     self.restoreImageModel = restoreImageModel;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        [self pushToDiskConfigurationViewController];
+        [self pushToStorageSizeViewController];
     }];
 }
 
-#pragma mark - CreateVirtualMachineDiskConfigurationViewControllerDelegate
+#pragma mark - CreateVirtualMachineStorageSizeViewControllerDelegate
 
-- (void)createVirtualMachineDiskConfigurationViewController:(CreateVMDiskConfigurationViewController *)diskConfigurationViewController didChangeStorageSize:(std::uint64_t)storageSize {
+- (void)createVirtualMachineStorageSizeViewController:(CreateVMStorageSizeViewController *)viewController didChangeStorageSize:(std::uint64_t)storageSize {
     _storageSize = storageSize;
 }
 

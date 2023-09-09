@@ -33,10 +33,15 @@
 		4F7A7CC12AA6F6BF00919300 /* EditVMSidebarViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A7CBF2AA6F6BF00919300 /* EditVMSidebarViewModel.mm */; };
 		4F7ECC822AA0245F00781951 /* NavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7ECC812AA0245F00781951 /* NavigationController.mm */; };
 		4F7ECC842AA0618700781951 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F7ECC832AA0618700781951 /* View.xib */; };
+		4F83C37D2AAC42E000D99C1F /* EditVMMemoryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C37C2AAC42E000D99C1F /* EditVMMemoryViewController.mm */; };
+		4F83C3852AAC49D000D99C1F /* SVStorageSizeEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C3842AAC49D000D99C1F /* SVStorageSizeEditor.mm */; };
+		4F83C3882AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C3872AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm */; };
+		4F83C38C2AAC766700D99C1F /* SVSliderCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C38B2AAC766700D99C1F /* SVSliderCell.mm */; };
+		4F83C38F2AAC987000D99C1F /* EditVMMemoryViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C38E2AAC987000D99C1F /* EditVMMemoryViewModel.mm */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4F8934012AA61DE10066B3EC /* EditVMWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8934002AA61DE10066B3EC /* EditVMWindow.mm */; };
 		4FA1D8552AA5674300485112 /* SVTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1D8542AA5674300485112 /* SVTextField.mm */; };
-		4FD4CD4B2AA5525200075DF1 /* CreateVMDiskConfigurationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4CD4A2AA5525200075DF1 /* CreateVMDiskConfigurationViewController.mm */; };
+		4FD4CD4B2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4CD4A2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm */; };
 		4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */; };
 		4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD979E32A9CAAB6004CD11C /* CoreData.framework */; };
 		4FE8DDD62A9C656D003B11C1 /* BaseMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE8DDD52A9C656D003B11C1 /* BaseMenu.mm */; };
@@ -112,14 +117,24 @@
 		4F7ECC802AA0245F00781951 /* NavigationController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NavigationController.hpp; sourceTree = "<group>"; };
 		4F7ECC812AA0245F00781951 /* NavigationController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NavigationController.mm; sourceTree = "<group>"; };
 		4F7ECC832AA0618700781951 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
+		4F83C37B2AAC42E000D99C1F /* EditVMMemoryViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMMemoryViewController.hpp; sourceTree = "<group>"; };
+		4F83C37C2AAC42E000D99C1F /* EditVMMemoryViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMMemoryViewController.mm; sourceTree = "<group>"; };
+		4F83C3832AAC49D000D99C1F /* SVStorageSizeEditor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVStorageSizeEditor.hpp; sourceTree = "<group>"; };
+		4F83C3842AAC49D000D99C1F /* SVStorageSizeEditor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVStorageSizeEditor.mm; sourceTree = "<group>"; };
+		4F83C3862AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVStorageSizeEditorMenuItem.hpp; sourceTree = "<group>"; };
+		4F83C3872AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVStorageSizeEditorMenuItem.mm; sourceTree = "<group>"; };
+		4F83C38A2AAC766700D99C1F /* SVSliderCell.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVSliderCell.hpp; sourceTree = "<group>"; };
+		4F83C38B2AAC766700D99C1F /* SVSliderCell.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVSliderCell.mm; sourceTree = "<group>"; };
+		4F83C38D2AAC987000D99C1F /* EditVMMemoryViewModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMMemoryViewModel.hpp; sourceTree = "<group>"; };
+		4F83C38E2AAC987000D99C1F /* EditVMMemoryViewModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMMemoryViewModel.mm; sourceTree = "<group>"; };
 		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4F8933FF2AA61DE10066B3EC /* EditVMWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMWindow.hpp; sourceTree = "<group>"; };
 		4F8934002AA61DE10066B3EC /* EditVMWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMWindow.mm; sourceTree = "<group>"; };
 		4FA1D8532AA5674300485112 /* SVTextField.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVTextField.hpp; sourceTree = "<group>"; };
 		4FA1D8542AA5674300485112 /* SVTextField.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVTextField.mm; sourceTree = "<group>"; };
-		4FD4CD492AA5525200075DF1 /* CreateVMDiskConfigurationViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateVMDiskConfigurationViewController.hpp; sourceTree = "<group>"; };
-		4FD4CD4A2AA5525200075DF1 /* CreateVMDiskConfigurationViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CreateVMDiskConfigurationViewController.mm; sourceTree = "<group>"; };
+		4FD4CD492AA5525200075DF1 /* CreateVMStorageSizeViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateVMStorageSizeViewController.hpp; sourceTree = "<group>"; };
+		4FD4CD4A2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CreateVMStorageSizeViewController.mm; sourceTree = "<group>"; };
 		4FD979E02A9CAA7A004CD11C /* PersistentDataManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PersistentDataManager.hpp; sourceTree = "<group>"; };
 		4FD979E12A9CAA7A004CD11C /* PersistentDataManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PersistentDataManager.mm; sourceTree = "<group>"; };
 		4FD979E32A9CAAB6004CD11C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -216,8 +231,8 @@
 				4FFF2CA82AA316AF00B22FEA /* CreateVMWindow.mm */,
 				4F66B1562A9EE94C00D188F0 /* CreateVMLocationViewController.hpp */,
 				4F66B1572A9EE94C00D188F0 /* CreateVMLocationViewController.mm */,
-				4FD4CD492AA5525200075DF1 /* CreateVMDiskConfigurationViewController.hpp */,
-				4FD4CD4A2AA5525200075DF1 /* CreateVMDiskConfigurationViewController.mm */,
+				4FD4CD492AA5525200075DF1 /* CreateVMStorageSizeViewController.hpp */,
+				4FD4CD4A2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm */,
 				4FFF2CA42AA314D900B22FEA /* CreateVMInstallationViewController.hpp */,
 				4FFF2CA52AA314D900B22FEA /* CreateVMInstallationViewController.mm */,
 				4FFF2CAB2AA3189200B22FEA /* CreateVMInstallationViewModel.hpp */,
@@ -240,6 +255,37 @@
 			path = NavigationController;
 			sourceTree = "<group>";
 		};
+		4F83C37A2AAC42BF00D99C1F /* Memory */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C37B2AAC42E000D99C1F /* EditVMMemoryViewController.hpp */,
+				4F83C37C2AAC42E000D99C1F /* EditVMMemoryViewController.mm */,
+				4F83C38D2AAC987000D99C1F /* EditVMMemoryViewModel.hpp */,
+				4F83C38E2AAC987000D99C1F /* EditVMMemoryViewModel.mm */,
+			);
+			path = Memory;
+			sourceTree = "<group>";
+		};
+		4F83C3822AAC495A00D99C1F /* SVStorageSizeEditor */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C3832AAC49D000D99C1F /* SVStorageSizeEditor.hpp */,
+				4F83C3842AAC49D000D99C1F /* SVStorageSizeEditor.mm */,
+				4F83C3862AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.hpp */,
+				4F83C3872AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm */,
+			);
+			path = SVStorageSizeEditor;
+			sourceTree = "<group>";
+		};
+		4F83C3892AAC764C00D99C1F /* SVSliderCell */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C38A2AAC766700D99C1F /* SVSliderCell.hpp */,
+				4F83C38B2AAC766700D99C1F /* SVSliderCell.mm */,
+			);
+			path = SVSliderCell;
+			sourceTree = "<group>";
+		};
 		4F8933FE2AA61D970066B3EC /* EditVM */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +294,7 @@
 				4F7A7CB92AA6EBF700919300 /* EditVMViewController.hpp */,
 				4F7A7CBA2AA6EBF700919300 /* EditVMViewController.mm */,
 				4F249AAF2AAA1C320017879D /* Sidebar */,
+				4F83C37A2AAC42BF00D99C1F /* Memory */,
 			);
 			path = EditVM;
 			sourceTree = "<group>";
@@ -371,6 +418,8 @@
 		4FFD77852A9B62AF00D11F88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4F83C3892AAC764C00D99C1F /* SVSliderCell */,
+				4F83C3822AAC495A00D99C1F /* SVStorageSizeEditor */,
 				4FA1D8522AA5671B00485112 /* SVTextField */,
 				4F7ECC7F2AA023BE00781951 /* NavigationController */,
 				4FE8DDD32A9C655F003B11C1 /* BaseMenu */,
@@ -496,6 +545,7 @@
 				4F59BE472AA480E0003E6F07 /* VMsCollectionViewItem.mm in Sources */,
 				4F59BE3E2AA468B0003E6F07 /* VZMACAddressValueTransformer.mm in Sources */,
 				4F59BE512AA4A756003E6F07 /* VMViewController.mm in Sources */,
+				4F83C3882AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm in Sources */,
 				4F607D102A9DAE2200DBB7EB /* RestoreImagesViewModel.mm in Sources */,
 				4F59BE4B2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm in Sources */,
 				4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */,
@@ -506,19 +556,23 @@
 				4F607D132A9DBC8900DBB7EB /* RestoreImagesViewModelDelegate.mm in Sources */,
 				4F59BE382AA464F1003E6F07 /* VZMacHardwareModelValueTransformer.mm in Sources */,
 				4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */,
+				4F83C38F2AAC987000D99C1F /* EditVMMemoryViewModel.mm in Sources */,
 				4F59BE3B2AA465E5003E6F07 /* VZMacMachineIdentifierValueTransformer.mm in Sources */,
 				4FFF2CA62AA314D900B22FEA /* CreateVMInstallationViewController.mm in Sources */,
 				4F66B1542A9EE6FD00D188F0 /* VirtualMachineMacModel.mm in Sources */,
 				4FFAB68B2AA1FE7400DC71AA /* NavigationItem.mm in Sources */,
 				4FE8DDE02A9C69AE003B11C1 /* SettingsViewController.mm in Sources */,
 				4F66B1582A9EE94C00D188F0 /* CreateVMLocationViewController.mm in Sources */,
+				4F83C3852AAC49D000D99C1F /* SVStorageSizeEditor.mm in Sources */,
 				4FFD77782A9B619F00D11F88 /* main.mm in Sources */,
+				4F83C38C2AAC766700D99C1F /* SVSliderCell.mm in Sources */,
+				4F83C37D2AAC42E000D99C1F /* EditVMMemoryViewController.mm in Sources */,
 				4FFD776E2A9B619E00D11F88 /* AppDelegate.mm in Sources */,
 				4FE8DDDA2A9C65EE003B11C1 /* AppMenuItem.mm in Sources */,
 				4F528C442AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm in Sources */,
 				4F7A7CC12AA6F6BF00919300 /* EditVMSidebarViewModel.mm in Sources */,
 				4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */,
-				4FD4CD4B2AA5525200075DF1 /* CreateVMDiskConfigurationViewController.mm in Sources */,
+				4FD4CD4B2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm in Sources */,
 				4F23E0E92AA06F3B00A12F7B /* NavigationContentView.mm in Sources */,
 				4F7A7CBE2AA6ED9E00919300 /* EditVMSidebarViewController.mm in Sources */,
 				4F70CC6C2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm in Sources */,
