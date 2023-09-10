@@ -112,10 +112,6 @@
         return;
     }
     
-    xpc_session_set_incoming_message_handler(session, ^(xpc_object_t message) {
-        NSLog(@"%@", message);
-    });
-    
     bool result = xpc_session_activate(session, &error);
     NSLog(@"%d", result);
     
@@ -139,8 +135,12 @@
         xpc_release(object);
     });
     
-    bool result_2 = xpc_session_send_message(session, dictionary);
-    NSLog(@"%d", result_2);
+//    bool result_2 = xpc_session_send_message(session, dictionary);
+    xpc_session_send_message_with_reply_async(session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+        const char *desc = xpc_copy_description(reply);
+        NSLog(@"%s", desc);
+        delete desc;
+    });
     
     xpc_release(error);
     xpc_release(dictionary);
