@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+// debugging https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...

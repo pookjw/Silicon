@@ -7,7 +7,7 @@
 
 #import "SettingsViewController.hpp"
 #import "RestoreImagesViewController.hpp"
-#import "DeamonViewController.hpp"
+#import "DaemonViewController.hpp"
 
 @interface SettingsViewController ()
 @property (retain) NSTabViewController *tabViewController;
@@ -24,7 +24,7 @@
     [super viewDidLoad];
     [self setupTabViewController];
     [self setupRestoreImagesViewController];
-    [self setupDeamonViewController];
+    [self setupDaemonViewController];
 }
 
 - (void)setupTabViewController {
@@ -58,12 +58,12 @@
     [self.tabViewController addTabViewItem:tabViewItem];
 }
 
-- (void)setupDeamonViewController {
-    DeamonViewController *deamonViewController = [DeamonViewController new];
-    NSTabViewItem *tabViewItem = [NSTabViewItem tabViewItemWithViewController:deamonViewController];
-    [deamonViewController release];
+- (void)setupDaemonViewController {
+    DaemonViewController *daemonViewController = [DaemonViewController new];
+    NSTabViewItem *tabViewItem = [NSTabViewItem tabViewItemWithViewController:daemonViewController];
+    [daemonViewController release];
     
-    tabViewItem.label = @"Deamon";
+    tabViewItem.label = @"Daemon";
     tabViewItem.image = [NSImage imageWithSystemSymbolName:@"ant" accessibilityDescription:nullptr];
     
     [self.tabViewController addTabViewItem:tabViewItem];

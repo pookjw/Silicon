@@ -1,5 +1,5 @@
 //
-//  DeamonViewController.hpp
+//  DaemonViewController.hpp
 //  Silicon
 //
 //  Created by Jinwoo Kim on 9/10/23.
@@ -9,7 +9,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@interface DeamonViewController : NSViewController
+@interface DaemonViewController : NSViewController
 
 @end
 

@@ -41,12 +41,13 @@
 		4F83C3932AAC9BBE00D99C1F /* EditVMStorageViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C3922AAC9BBE00D99C1F /* EditVMStorageViewController.mm */; };
 		4F83C45F2AAD8CD300D99C1F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C45E2AAD8CD300D99C1F /* main.mm */; };
 		4F83C4642AAD8CD400D99C1F /* SiliconXPCService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 4F83C45C2AAD8CD300D99C1F /* SiliconXPCService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4F83C46C2AAD8D4F00D99C1F /* DeamonViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C46B2AAD8D4F00D99C1F /* DeamonViewController.mm */; };
+		4F83C46C2AAD8D4F00D99C1F /* DaemonViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C46B2AAD8D4F00D99C1F /* DaemonViewController.mm */; };
 		4F83C4762AAD964E00D99C1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C4752AAD964E00D99C1F /* main.m */; };
 		4F83C47C2AAD976500D99C1F /* com.pookjw.SiliconHelper-Launchd.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F83C47A2AAD970D00D99C1F /* com.pookjw.SiliconHelper-Launchd.plist */; };
 		4F83C47F2AAD977A00D99C1F /* SiliconHelper in Resources */ = {isa = PBXBuildFile; fileRef = 4F83C4732AAD964D00D99C1F /* SiliconHelper */; };
 		4F83C4802AAD979A00D99C1F /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F83C46D2AAD92DC00D99C1F /* ServiceManagement.framework */; };
 		4F83C4822AAD97A000D99C1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F83C4812AAD97A000D99C1F /* Foundation.framework */; };
+		4F83C4872AAE088F00D99C1F /* SVService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C4852AAE088F00D99C1F /* SVService.mm */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4F8934012AA61DE10066B3EC /* EditVMWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8934002AA61DE10066B3EC /* EditVMWindow.mm */; };
 		4FA1D8552AA5674300485112 /* SVTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1D8542AA5674300485112 /* SVTextField.mm */; };
@@ -192,14 +193,16 @@
 		4F83C45E2AAD8CD300D99C1F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		4F83C4602AAD8CD300D99C1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F83C4612AAD8CD300D99C1F /* SiliconXPCService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiliconXPCService.entitlements; sourceTree = "<group>"; };
-		4F83C46A2AAD8D4F00D99C1F /* DeamonViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DeamonViewController.hpp; sourceTree = "<group>"; };
-		4F83C46B2AAD8D4F00D99C1F /* DeamonViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DeamonViewController.mm; sourceTree = "<group>"; };
+		4F83C46A2AAD8D4F00D99C1F /* DaemonViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DaemonViewController.hpp; sourceTree = "<group>"; };
+		4F83C46B2AAD8D4F00D99C1F /* DaemonViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DaemonViewController.mm; sourceTree = "<group>"; };
 		4F83C46D2AAD92DC00D99C1F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		4F83C4732AAD964D00D99C1F /* SiliconHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SiliconHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F83C4752AAD964E00D99C1F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F83C47A2AAD970D00D99C1F /* com.pookjw.SiliconHelper-Launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "com.pookjw.SiliconHelper-Launchd.plist"; sourceTree = "<group>"; };
 		4F83C4812AAD97A000D99C1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4F83C4832AAD97D300D99C1F /* libxpc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxpc.tbd; path = usr/lib/system/libxpc.tbd; sourceTree = SDKROOT; };
+		4F83C4852AAE088F00D99C1F /* SVService.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVService.mm; sourceTree = "<group>"; };
+		4F83C4862AAE088F00D99C1F /* SVService.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVService.hpp; sourceTree = "<group>"; };
 		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4F8933FF2AA61DE10066B3EC /* EditVMWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMWindow.hpp; sourceTree = "<group>"; };
@@ -388,26 +391,28 @@
 			isa = PBXGroup;
 			children = (
 				4F83C45E2AAD8CD300D99C1F /* main.mm */,
+				4F83C4862AAE088F00D99C1F /* SVService.hpp */,
+				4F83C4852AAE088F00D99C1F /* SVService.mm */,
 				4F83C4602AAD8CD300D99C1F /* Info.plist */,
 				4F83C4612AAD8CD300D99C1F /* SiliconXPCService.entitlements */,
 			);
 			path = SiliconXPCService;
 			sourceTree = "<group>";
 		};
-		4F83C4692AAD8D0200D99C1F /* Deamon */ = {
+		4F83C4692AAD8D0200D99C1F /* Daemon */ = {
 			isa = PBXGroup;
 			children = (
-				4F83C46A2AAD8D4F00D99C1F /* DeamonViewController.hpp */,
-				4F83C46B2AAD8D4F00D99C1F /* DeamonViewController.mm */,
+				4F83C46A2AAD8D4F00D99C1F /* DaemonViewController.hpp */,
+				4F83C46B2AAD8D4F00D99C1F /* DaemonViewController.mm */,
 			);
-			path = Deamon;
+			path = Daemon;
 			sourceTree = "<group>";
 		};
 		4F83C4742AAD964E00D99C1F /* SiliconHelper */ = {
 			isa = PBXGroup;
 			children = (
-				4F83C4752AAD964E00D99C1F /* main.m */,
 				4F83C47A2AAD970D00D99C1F /* com.pookjw.SiliconHelper-Launchd.plist */,
+				4F83C4752AAD964E00D99C1F /* main.m */,
 			);
 			path = SiliconHelper;
 			sourceTree = "<group>";
@@ -559,7 +564,7 @@
 				4FE8DDD32A9C655F003B11C1 /* BaseMenu */,
 				4FE8DDD22A9C6470003B11C1 /* Settings */,
 				4FE8DDE22A9C6CCC003B11C1 /* RestoreImages */,
-				4F83C4692AAD8D0200D99C1F /* Deamon */,
+				4F83C4692AAD8D0200D99C1F /* Daemon */,
 				4FFD77842A9B62A800D11F88 /* VMs */,
 				4F66B1552A9EE8E300D188F0 /* CreateVM */,
 				4F8933FE2AA61D970066B3EC /* EditVM */,
@@ -728,6 +733,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F83C4872AAE088F00D99C1F /* SVService.mm in Sources */,
 				4F83C45F2AAD8CD300D99C1F /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -786,7 +792,7 @@
 				4FFF2CA92AA316AF00B22FEA /* CreateVMWindow.mm in Sources */,
 				4FFF2CA32AA2200600B22FEA /* TestNavigationViewController.mm in Sources */,
 				4F249AB22AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm in Sources */,
-				4F83C46C2AAD8D4F00D99C1F /* DeamonViewController.mm in Sources */,
+				4F83C46C2AAD8D4F00D99C1F /* DaemonViewController.mm in Sources */,
 				4FFD778B2A9B63D400D11F88 /* VMsViewController.mm in Sources */,
 				4F59BE442AA47BA0003E6F07 /* VMsViewModelDelegate.mm in Sources */,
 				4FFF2CAC2AA3189200B22FEA /* CreateVMInstallationViewModel.mm in Sources */,
