@@ -190,9 +190,23 @@
         return nullptr;
     }
     
-    VZVirtioBlockDeviceConfiguration *storageDeviceConfiguration = [[VZVirtioBlockDeviceConfiguration alloc] initWithAttachment:storageDeviceAttachment];
-    virtualMachineConfiguration.storageDevices = @[storageDeviceConfiguration];
-    [storageDeviceConfiguration release];
+    VZVirtioBlockDeviceConfiguration *storageDeviceConfiguration = [[[VZVirtioBlockDeviceConfiguration alloc] initWithAttachment:storageDeviceAttachment] autorelease];
+    
+    //
+    
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:[NSURL fileURLWithPath:@"/dev/rdisk27"] error:error];
+    if (*error) {
+        return nullptr;
+    }
+    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:NO synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
+    if (*error) {
+        return nullptr;
+    }
+    VZNVMExpressControllerDeviceConfiguration *tmp_storageDeviceConfiguration = [[[VZNVMExpressControllerDeviceConfiguration alloc] initWithAttachment:tmp_storageDeviceAttachment] autorelease];
+    
+    //
+    
+    virtualMachineConfiguration.storageDevices = @[storageDeviceConfiguration, tmp_storageDeviceConfiguration];
     
     //
     

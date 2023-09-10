@@ -77,6 +77,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
 - (void)RestoreImagesViewController_commonInit {
     _selectionIndexPathsContext = std::make_shared<std::uint8_t>();
     self.title = @"Restore Images";
+    self.preferredContentSize = NSMakeSize(400.f, 400.f);
 }
 
 - (void)viewDidLoad {

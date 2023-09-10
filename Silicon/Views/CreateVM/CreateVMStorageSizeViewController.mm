@@ -71,6 +71,7 @@
 }
 
 - (std::uint64_t)storageSize {
+    [self loadViewIfNeeded];
     return self.storageSizeEditor.storageSize;
 }
 

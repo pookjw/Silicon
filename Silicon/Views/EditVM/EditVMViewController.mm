@@ -8,6 +8,7 @@
 #import "EditVMViewController.hpp"
 #import "EditVMSidebarViewController.hpp"
 #import "EditVMMemoryViewController.hpp"
+#import "EditVMStorageViewController.hpp"
 
 @interface EditVMViewController () <EditVMSidebarViewControllerDelegate>
 @property (retain) NSSplitViewController *splitViewController;
@@ -77,6 +78,13 @@
     [self.splitViewController addSplitViewItem:contentListItem];
 }
 
+- (void)presentStorageViewController {
+    EditVMStorageViewController *memoryViewController = [[EditVMStorageViewController alloc] initWithVirtualMachineMacModel:self.model];
+    NSSplitViewItem *contentListItem = [NSSplitViewItem contentListWithViewController:memoryViewController];
+    [memoryViewController release];
+    [self.splitViewController addSplitViewItem:contentListItem];
+}
+
 #pragma mark - EditVMSidebarViewControllerDelegate
 
 - (void)editVMSidebarViewController:(EditVMSidebarViewController *)viewController didSelectItemModel:(EditVMSidebarItemModel * _Nullable)itemModel {
@@ -86,6 +94,10 @@
                 [self presentMemoryViewController];
             }];
             break;
+        case EditVMSidebarItemModelTypeStorage:
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                [self presentStorageViewController];
+            }];
         default:
             [NSOperationQueue.mainQueue addOperationWithBlock:^{
                 __block NSSplitViewItem * _Nullable contentListItem = nullptr;

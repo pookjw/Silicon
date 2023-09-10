@@ -38,6 +38,15 @@
 		4F83C3882AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C3872AAC69BE00D99C1F /* SVStorageSizeEditorMenuItem.mm */; };
 		4F83C38C2AAC766700D99C1F /* SVSliderCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C38B2AAC766700D99C1F /* SVSliderCell.mm */; };
 		4F83C38F2AAC987000D99C1F /* EditVMMemoryViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C38E2AAC987000D99C1F /* EditVMMemoryViewModel.mm */; };
+		4F83C3932AAC9BBE00D99C1F /* EditVMStorageViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C3922AAC9BBE00D99C1F /* EditVMStorageViewController.mm */; };
+		4F83C45F2AAD8CD300D99C1F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C45E2AAD8CD300D99C1F /* main.mm */; };
+		4F83C4642AAD8CD400D99C1F /* SiliconXPCService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 4F83C45C2AAD8CD300D99C1F /* SiliconXPCService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4F83C46C2AAD8D4F00D99C1F /* DeamonViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C46B2AAD8D4F00D99C1F /* DeamonViewController.mm */; };
+		4F83C4762AAD964E00D99C1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C4752AAD964E00D99C1F /* main.m */; };
+		4F83C47C2AAD976500D99C1F /* com.pookjw.SiliconHelper-Launchd.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F83C47A2AAD970D00D99C1F /* com.pookjw.SiliconHelper-Launchd.plist */; };
+		4F83C47F2AAD977A00D99C1F /* SiliconHelper in Resources */ = {isa = PBXBuildFile; fileRef = 4F83C4732AAD964D00D99C1F /* SiliconHelper */; };
+		4F83C4802AAD979A00D99C1F /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F83C46D2AAD92DC00D99C1F /* ServiceManagement.framework */; };
+		4F83C4822AAD97A000D99C1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F83C4812AAD97A000D99C1F /* Foundation.framework */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4F8934012AA61DE10066B3EC /* EditVMWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8934002AA61DE10066B3EC /* EditVMWindow.mm */; };
 		4FA1D8552AA5674300485112 /* SVTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1D8542AA5674300485112 /* SVTextField.mm */; };
@@ -65,6 +74,56 @@
 		4FFF2CA92AA316AF00B22FEA /* CreateVMWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFF2CA82AA316AF00B22FEA /* CreateVMWindow.mm */; };
 		4FFF2CAC2AA3189200B22FEA /* CreateVMInstallationViewModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FFF2CAA2AA3189200B22FEA /* CreateVMInstallationViewModel.mm */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4F83C4622AAD8CD400D99C1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FFD77612A9B619E00D11F88 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F83C45B2AAD8CD300D99C1F;
+			remoteInfo = SiliconXPCService;
+		};
+		4F83C47D2AAD977000D99C1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FFD77612A9B619E00D11F88 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F83C4722AAD964D00D99C1F;
+			remoteInfo = SiliconHelper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4F83C4652AAD8CD400D99C1F /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				4F83C4642AAD8CD400D99C1F /* SiliconXPCService.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F83C4712AAD964D00D99C1F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		4F83C47B2AAD975800D99C1F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchDaemons;
+			dstSubfolderSpec = 1;
+			files = (
+				4F83C47C2AAD976500D99C1F /* com.pookjw.SiliconHelper-Launchd.plist in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4F23E0E72AA06F3B00A12F7B /* NavigationContentView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NavigationContentView.hpp; sourceTree = "<group>"; };
@@ -127,6 +186,20 @@
 		4F83C38B2AAC766700D99C1F /* SVSliderCell.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVSliderCell.mm; sourceTree = "<group>"; };
 		4F83C38D2AAC987000D99C1F /* EditVMMemoryViewModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMMemoryViewModel.hpp; sourceTree = "<group>"; };
 		4F83C38E2AAC987000D99C1F /* EditVMMemoryViewModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMMemoryViewModel.mm; sourceTree = "<group>"; };
+		4F83C3912AAC9BBE00D99C1F /* EditVMStorageViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMStorageViewController.hpp; sourceTree = "<group>"; };
+		4F83C3922AAC9BBE00D99C1F /* EditVMStorageViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMStorageViewController.mm; sourceTree = "<group>"; };
+		4F83C45C2AAD8CD300D99C1F /* SiliconXPCService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = SiliconXPCService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F83C45E2AAD8CD300D99C1F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		4F83C4602AAD8CD300D99C1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F83C4612AAD8CD300D99C1F /* SiliconXPCService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiliconXPCService.entitlements; sourceTree = "<group>"; };
+		4F83C46A2AAD8D4F00D99C1F /* DeamonViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DeamonViewController.hpp; sourceTree = "<group>"; };
+		4F83C46B2AAD8D4F00D99C1F /* DeamonViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DeamonViewController.mm; sourceTree = "<group>"; };
+		4F83C46D2AAD92DC00D99C1F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		4F83C4732AAD964D00D99C1F /* SiliconHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SiliconHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F83C4752AAD964E00D99C1F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F83C47A2AAD970D00D99C1F /* com.pookjw.SiliconHelper-Launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "com.pookjw.SiliconHelper-Launchd.plist"; sourceTree = "<group>"; };
+		4F83C4812AAD97A000D99C1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4F83C4832AAD97D300D99C1F /* libxpc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxpc.tbd; path = usr/lib/system/libxpc.tbd; sourceTree = SDKROOT; };
 		4F83F75C2A9CD27900777BF6 /* RestoreImageModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RestoreImageModel.hpp; sourceTree = "<group>"; };
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4F8933FF2AA61DE10066B3EC /* EditVMWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMWindow.hpp; sourceTree = "<group>"; };
@@ -180,6 +253,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F83C4592AAD8CD300D99C1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F83C4802AAD979A00D99C1F /* ServiceManagement.framework in Frameworks */,
+				4F83C4822AAD97A000D99C1F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F83C4702AAD964D00D99C1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FFD77662A9B619E00D11F88 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,6 +375,43 @@
 			path = SVSliderCell;
 			sourceTree = "<group>";
 		};
+		4F83C3902AAC9BA500D99C1F /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C3912AAC9BBE00D99C1F /* EditVMStorageViewController.hpp */,
+				4F83C3922AAC9BBE00D99C1F /* EditVMStorageViewController.mm */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		4F83C45D2AAD8CD300D99C1F /* SiliconXPCService */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C45E2AAD8CD300D99C1F /* main.mm */,
+				4F83C4602AAD8CD300D99C1F /* Info.plist */,
+				4F83C4612AAD8CD300D99C1F /* SiliconXPCService.entitlements */,
+			);
+			path = SiliconXPCService;
+			sourceTree = "<group>";
+		};
+		4F83C4692AAD8D0200D99C1F /* Deamon */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C46A2AAD8D4F00D99C1F /* DeamonViewController.hpp */,
+				4F83C46B2AAD8D4F00D99C1F /* DeamonViewController.mm */,
+			);
+			path = Deamon;
+			sourceTree = "<group>";
+		};
+		4F83C4742AAD964E00D99C1F /* SiliconHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4F83C4752AAD964E00D99C1F /* main.m */,
+				4F83C47A2AAD970D00D99C1F /* com.pookjw.SiliconHelper-Launchd.plist */,
+			);
+			path = SiliconHelper;
+			sourceTree = "<group>";
+		};
 		4F8933FE2AA61D970066B3EC /* EditVM */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +421,7 @@
 				4F7A7CBA2AA6EBF700919300 /* EditVMViewController.mm */,
 				4F249AAF2AAA1C320017879D /* Sidebar */,
 				4F83C37A2AAC42BF00D99C1F /* Memory */,
+				4F83C3902AAC9BA500D99C1F /* Storage */,
 			);
 			path = EditVM;
 			sourceTree = "<group>";
@@ -357,6 +484,8 @@
 			isa = PBXGroup;
 			children = (
 				4FFD776B2A9B619E00D11F88 /* Silicon */,
+				4F83C45D2AAD8CD300D99C1F /* SiliconXPCService */,
+				4F83C4742AAD964E00D99C1F /* SiliconHelper */,
 				4FFD776A2A9B619E00D11F88 /* Products */,
 				4FFD777F2A9B622100D11F88 /* Frameworks */,
 			);
@@ -366,6 +495,8 @@
 			isa = PBXGroup;
 			children = (
 				4FFD77692A9B619E00D11F88 /* Silicon.app */,
+				4F83C45C2AAD8CD300D99C1F /* SiliconXPCService.xpc */,
+				4F83C4732AAD964D00D99C1F /* SiliconHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -390,6 +521,9 @@
 		4FFD777F2A9B622100D11F88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F83C4832AAD97D300D99C1F /* libxpc.tbd */,
+				4F83C4812AAD97A000D99C1F /* Foundation.framework */,
+				4F83C46D2AAD92DC00D99C1F /* ServiceManagement.framework */,
 				4F55C8F42A9E2566009CADBD /* UniformTypeIdentifiers.framework */,
 				4FD979E32A9CAAB6004CD11C /* CoreData.framework */,
 				4FFD77822A9B622500D11F88 /* Virtualization.framework */,
@@ -425,6 +559,7 @@
 				4FE8DDD32A9C655F003B11C1 /* BaseMenu */,
 				4FE8DDD22A9C6470003B11C1 /* Settings */,
 				4FE8DDE22A9C6CCC003B11C1 /* RestoreImages */,
+				4F83C4692AAD8D0200D99C1F /* Deamon */,
 				4FFD77842A9B62A800D11F88 /* VMs */,
 				4F66B1552A9EE8E300D188F0 /* CreateVM */,
 				4F8933FE2AA61D970066B3EC /* EditVM */,
@@ -473,6 +608,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F83C45B2AAD8CD300D99C1F /* SiliconXPCService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F83C4682AAD8CD400D99C1F /* Build configuration list for PBXNativeTarget "SiliconXPCService" */;
+			buildPhases = (
+				4F83C4582AAD8CD300D99C1F /* Sources */,
+				4F83C4592AAD8CD300D99C1F /* Frameworks */,
+				4F83C45A2AAD8CD300D99C1F /* Resources */,
+				4F83C47B2AAD975800D99C1F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F83C47E2AAD977000D99C1F /* PBXTargetDependency */,
+			);
+			name = SiliconXPCService;
+			productName = SiliconXPCService;
+			productReference = 4F83C45C2AAD8CD300D99C1F /* SiliconXPCService.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
+		4F83C4722AAD964D00D99C1F /* SiliconHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F83C4772AAD964E00D99C1F /* Build configuration list for PBXNativeTarget "SiliconHelper" */;
+			buildPhases = (
+				4F83C46F2AAD964D00D99C1F /* Sources */,
+				4F83C4702AAD964D00D99C1F /* Frameworks */,
+				4F83C4712AAD964D00D99C1F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SiliconHelper;
+			productName = SiliconHelper;
+			productReference = 4F83C4732AAD964D00D99C1F /* SiliconHelper */;
+			productType = "com.apple.product-type.tool";
+		};
 		4FFD77682A9B619E00D11F88 /* Silicon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FFD777C2A9B619F00D11F88 /* Build configuration list for PBXNativeTarget "Silicon" */;
@@ -480,10 +651,12 @@
 				4FFD77652A9B619E00D11F88 /* Sources */,
 				4FFD77662A9B619E00D11F88 /* Frameworks */,
 				4FFD77672A9B619E00D11F88 /* Resources */,
+				4F83C4652AAD8CD400D99C1F /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4F83C4632AAD8CD400D99C1F /* PBXTargetDependency */,
 			);
 			name = Silicon;
 			productName = Silicon;
@@ -499,6 +672,12 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					4F83C45B2AAD8CD300D99C1F = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					4F83C4722AAD964D00D99C1F = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					4FFD77682A9B619E00D11F88 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -518,11 +697,21 @@
 			projectRoot = "";
 			targets = (
 				4FFD77682A9B619E00D11F88 /* Silicon */,
+				4F83C45B2AAD8CD300D99C1F /* SiliconXPCService */,
+				4F83C4722AAD964D00D99C1F /* SiliconHelper */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F83C45A2AAD8CD300D99C1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F83C47F2AAD977A00D99C1F /* SiliconHelper in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FFD77672A9B619E00D11F88 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -535,6 +724,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F83C4582AAD8CD300D99C1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F83C45F2AAD8CD300D99C1F /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F83C46F2AAD964D00D99C1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F83C4762AAD964E00D99C1F /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FFD77652A9B619E00D11F88 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -572,6 +777,7 @@
 				4F528C442AA9A5FB0058B5B0 /* EditVMSidebarItemModel.mm in Sources */,
 				4F7A7CC12AA6F6BF00919300 /* EditVMSidebarViewModel.mm in Sources */,
 				4FE8DDE52A9C6D06003B11C1 /* RestoreImagesViewController.mm in Sources */,
+				4F83C3932AAC9BBE00D99C1F /* EditVMStorageViewController.mm in Sources */,
 				4FD4CD4B2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm in Sources */,
 				4F23E0E92AA06F3B00A12F7B /* NavigationContentView.mm in Sources */,
 				4F7A7CBE2AA6ED9E00919300 /* EditVMSidebarViewController.mm in Sources */,
@@ -580,6 +786,7 @@
 				4FFF2CA92AA316AF00B22FEA /* CreateVMWindow.mm in Sources */,
 				4FFF2CA32AA2200600B22FEA /* TestNavigationViewController.mm in Sources */,
 				4F249AB22AAA1C4C0017879D /* EditVMSidebarCollectionViewItem.mm in Sources */,
+				4F83C46C2AAD8D4F00D99C1F /* DeamonViewController.mm in Sources */,
 				4FFD778B2A9B63D400D11F88 /* VMsViewController.mm in Sources */,
 				4F59BE442AA47BA0003E6F07 /* VMsViewModelDelegate.mm in Sources */,
 				4FFF2CAC2AA3189200B22FEA /* CreateVMInstallationViewModel.mm in Sources */,
@@ -595,7 +802,92 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4F83C4632AAD8CD400D99C1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F83C45B2AAD8CD300D99C1F /* SiliconXPCService */;
+			targetProxy = 4F83C4622AAD8CD400D99C1F /* PBXContainerItemProxy */;
+		};
+		4F83C47E2AAD977000D99C1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F83C4722AAD964D00D99C1F /* SiliconHelper */;
+			targetProxy = 4F83C47D2AAD977000D99C1F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4F83C4662AAD8CD400D99C1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SiliconXPCService/SiliconXPCService.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P53D29U9LJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SiliconXPCService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SiliconXPCService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pookjw.Silicon.XPCService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		4F83C4672AAD8CD400D99C1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SiliconXPCService/SiliconXPCService.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P53D29U9LJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SiliconXPCService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SiliconXPCService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pookjw.Silicon.XPCService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		4F83C4782AAD964E00D99C1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P53D29U9LJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4F83C4792AAD964E00D99C1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P53D29U9LJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		4FFD777A2A9B619F00D11F88 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -766,6 +1058,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F83C4682AAD8CD400D99C1F /* Build configuration list for PBXNativeTarget "SiliconXPCService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F83C4662AAD8CD400D99C1F /* Debug */,
+				4F83C4672AAD8CD400D99C1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F83C4772AAD964E00D99C1F /* Build configuration list for PBXNativeTarget "SiliconHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F83C4782AAD964E00D99C1F /* Debug */,
+				4F83C4792AAD964E00D99C1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4FFD77642A9B619E00D11F88 /* Build configuration list for PBXProject "Silicon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
