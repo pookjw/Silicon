@@ -99,7 +99,7 @@
 }
 
 - (void)setupVerifyButton {
-    NSButton *verifyButton = [NSButton buttonWithTitle:@"Verify" target:self action:@selector(didTriggerUninstallButton:)];
+    NSButton *verifyButton = [NSButton buttonWithTitle:@"Verify" target:self action:@selector(didTriggerVerifyButton:)];
     verifyButton.bezelStyle = NSBezelStylePush;
     
     [self.stackView addArrangedSubview:verifyButton];
@@ -107,15 +107,15 @@
 }
 
 - (void)didTriggerInstallButton:(NSButton *)sender {
-    [self sendMessagWithFunction:"installDaemon"];
+    [self sendMessagWithFunction:"installDaemon" isReplyNeeded:YES];
 }
 
 - (void)didTriggerUninstallButton:(NSButton *)sender {
-    [self sendMessagWithFunction:"uninstallDaemon"];
+    [self sendMessagWithFunction:"uninstallDaemon" isReplyNeeded:YES];
 }
 
 - (void)didTriggerVerifyButton:(NSButton *)sender {
-    
+    [self sendMessagWithFunction:"ping" isReplyNeeded:NO];
 }
 
 - (xpc_session_t)session {
@@ -136,7 +136,7 @@
     return session;
 }
 
-- (void)sendMessagWithFunction:(const char *)function {
+- (void)sendMessagWithFunction:(const char *)function isReplyNeeded:(BOOL)flag {
     xpc_object_t functionObject = xpc_string_create(function);
     const char *keys [1] = {"function"};
     xpc_object_t values [1] = {functionObject};
@@ -144,12 +144,18 @@
     xpc_object_t dictionary = xpc_dictionary_create(keys, values, 1);
     xpc_release(functionObject);
     
-    xpc_session_send_message_with_reply_async(self.session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+    if (flag) {
+        xpc_session_send_message_with_reply_async(self.session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+            assert(!error);
+            const char *desc = xpc_copy_description(reply);
+            NSLog(@"%s", desc);
+            delete desc;
+        });
+    } else {
+        xpc_rich_error_t error = xpc_session_send_message(self.session, dictionary);
         assert(!error);
-        const char *desc = xpc_copy_description(reply);
-        NSLog(@"%s", desc);
-        delete desc;
-    });
+        xpc_release(error);
+    }
     
     xpc_release(dictionary);
 }

@@ -3,12 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.pookjw.SiliconHelper-Launchd</string>
+	<string>com.pookjw.Silicon.Helper-Launchd</string>
 	<key>BundleProgram</key>
 	<string>Contents/Resources/SiliconHelper</string>
+	<key>StandardOutPath</key>
+	<string>/var/log/job.log</string>
+	<key>StandardErrorPath</key>
+	<string>/var/log/job.log</string>
+	<key>Debug</key>
+	<true/>
 	<key>MachServices</key>
 	<dict>
-		<key>com.pookjw.SiliconHelper-Launchd</key>
+		<key>com.pookjw.Silicon.Helper-Launchd</key>
 		<true/>
 	</dict>
 </dict>

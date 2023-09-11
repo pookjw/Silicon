@@ -19,16 +19,27 @@ SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) {
     },
                                     error);
     
-    _appService = [[SMAppService daemonServiceWithPlistName:@"com.pookjw.SiliconHelper-Launchd.plist"] retain];
+    if (*error) {
+        return;
+    }
+    
+    _daemonSession = xpc_session_create_mach_service("com.pookjw.Silicon.Helper-Launchd",
+                                                     nullptr,
+                                                     XPC_SESSION_CREATE_INACTIVE,
+                                                     error);
     
     if (*error) {
         return;
     }
+    
+    _appService = [[SMAppService daemonServiceWithPlistName:@"com.pookjw.Silicon.Helper-Launchd.plist"] retain];
 }
 
 SVService::~SVService() {
     xpc_listener_cancel(_listener);
     [_listener release];
+    xpc_session_cancel(_daemonSession);
+    xpc_release(_daemonSession);
     [_appService release];
 }
 
@@ -37,6 +48,12 @@ void SVService::run(xpc_rich_error_t _Nullable * _Nullable error) {
     if (*error) {
         return;
     }
+    
+//    xpc_session_activate(_daemonSession, error);
+//    if (*error) {
+//        return;
+//    }
+    
     dispatch_main();
 }
 
@@ -47,10 +64,27 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
         NSError * _Nullable error = nullptr;
         installDaemon(&error);
         sendCompletionWithError(error, peer, message);
+        
+        // TODO: Error Handling
+        xpc_session_activate(_daemonSession, nullptr);
     } else if (function == "uninstallDaemon") {
         uninstallDaemon(^(NSError * _Nullable error) {
             sendCompletionWithError(error, peer, message);
         });
+    } else if (function == "ping") {
+        xpc_object_t functionObject = xpc_string_create("ping");
+        const char *keys [1] = {"function"};
+        xpc_object_t values [1] = {functionObject};
+        
+        xpc_object_t dictionary = xpc_dictionary_create(keys, values, 1);
+        xpc_release(functionObject);
+        xpc_session_send_message_with_reply_async(_daemonSession, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+            const char *description = xpc_copy_description(reply);
+            NSLog(@"%s", description);
+            delete description;
+        });
+        
+        xpc_release(dictionary);
     }
 }
 

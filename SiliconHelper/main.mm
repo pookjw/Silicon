@@ -1,12 +1,12 @@
 //
-//  main.c
-//  SiliconXPCService
+//  main.mm
+//  SiliconHelper
 //
 //  Created by Jinwoo Kim on 9/10/23.
 //
 
-#import <xpc/xpc.h>
-#import "SVService.hpp"
+#import <Foundation/Foundation.h>
+#import "SVHelper.hpp"
 
 void handleError(xpc_rich_error_t error) {
     if (!error) return;
@@ -17,15 +17,17 @@ void handleError(xpc_rich_error_t error) {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:descriptionString userInfo:nullptr];
 }
 
-int main(int argc, const char *argv[]) {
+int main(int argc, const char * argv[]) {
+    printf("Hello World!");
+    NSLog(@"Hello World!");
     xpc_rich_error_t error = NULL;
     
-    SVService service {&error};
+    SVHelper helper {&error};
     handleError(error);
     xpc_release(error);
     error = NULL;
     
-    service.run(&error);
+    helper.run(&error);
     handleError(error);
     xpc_release(error);
     error = NULL;

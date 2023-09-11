@@ -23,6 +23,7 @@ public:
     SVService& operator=(const SVService&) = delete;
 private:
     xpc_listener_t _listener;
+    xpc_session_t _daemonSession;
     SMAppService *_appService;
     
     void handle(xpc_session_t peer, xpc_object_t message);
