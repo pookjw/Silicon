@@ -23,16 +23,7 @@ SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) {
         return;
     }
     
-    _daemonSession = xpc_session_create_mach_service("com.pookjw.Silicon.Helper-Launchd",
-                                                     nullptr,
-                                                     XPC_SESSION_CREATE_INACTIVE,
-                                                     error);
-    
-    if (*error) {
-        return;
-    }
-    
-    _appService = [[SMAppService daemonServiceWithPlistName:@"com.pookjw.Silicon.Helper-Launchd.plist"] retain];
+    _appService = [[SMAppService daemonServiceWithPlistName:@"com.pookjw.Silicon.Helper.plist"] retain];
 }
 
 SVService::~SVService() {
@@ -49,11 +40,6 @@ void SVService::run(xpc_rich_error_t _Nullable * _Nullable error) {
         return;
     }
     
-//    xpc_session_activate(_daemonSession, error);
-//    if (*error) {
-//        return;
-//    }
-    
     dispatch_main();
 }
 
@@ -63,10 +49,18 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
     if (function == "installDaemon") {
         NSError * _Nullable error = nullptr;
         installDaemon(&error);
-        sendCompletionWithError(error, peer, message);
         
-        // TODO: Error Handling
-        xpc_session_activate(_daemonSession, nullptr);
+        if (error) {
+            sendCompletionWithError(error, peer, message);
+            return;
+        }
+        
+        xpc_rich_error_t richError = NULL;
+        _daemonSession = xpc_session_create_mach_service("com.pookjw.Silicon.Helper",
+                                                         nullptr,
+                                                         XPC_SESSION_CREATE_MACH_PRIVILEGED,
+                                                         &richError);
+        sendCompletionWithError(richError, peer, message);
     } else if (function == "uninstallDaemon") {
         uninstallDaemon(^(NSError * _Nullable error) {
             sendCompletionWithError(error, peer, message);
@@ -88,23 +82,19 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
     }
 }
 
-void SVService::sendCompletionWithError(NSError * _Nullable error, xpc_session_t peer, xpc_object_t message) {
-    xpc_object_t dictionary = xpc_dictionary_create_reply(message);
-    if (!dictionary) return;
+void SVService::sendCompletionWithError(std::variant<NSError * _Nullable, xpc_rich_error_t _Nullable, std::nullopt_t> error, xpc_session_t peer, xpc_object_t message) {
+    xpc_object_t result = NULL;
     
-    if (error) {
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:error requiringSecureCoding:YES error:&error];
-        assert(data);
+    if (auto nsError = *std::get_if<NSError * _Nullable>(&error)) {
         
-        xpc_dictionary_set_data(dictionary, "error", data.bytes, data.length);
-    } else {
-        xpc_object_t nullObject = xpc_null_create();
-        xpc_dictionary_set_value(dictionary, "error", nullObject);
-        xpc_release(nullObject);
+    } else if (auto xpcRichError = *std::get_if<xpc_rich_error_t _Nullable>(&error)) {
+        
+    } else if (std::holds_alternative<std::nullopt_t>(error)) {
+        
     }
     
-    xpc_rich_error_t resultError = xpc_session_send_message(peer, dictionary);
-    xpc_release(dictionary);
+    xpc_rich_error_t resultError = xpc_session_send_message(peer, result);
+    xpc_release(result);
     if (resultError) {
         const char *description = xpc_rich_error_copy_description(resultError);
         xpc_release(resultError);

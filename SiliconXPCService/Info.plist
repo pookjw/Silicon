@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SMPrivilegedExecutables</key>
+	<dict>
+		<key>com.example.apple-samplecode.EBAS.HelperTool</key>
+		<string>anchor apple generic and identifier &quot;com.pookjw.Silicon.Helper&quot; and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = PME55Q67VP)</string>
+	</dict>
 	<key>XPCService</key>
 	<dict>
 		<key>JoinExistingSession</key>

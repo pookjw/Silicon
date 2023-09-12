@@ -9,7 +9,7 @@
 #import <string>
 
 SVHelper::SVHelper(xpc_rich_error_t _Nullable * _Nullable error) {
-    _listener = xpc_listener_create("com.pookjw.Silicon.Helper-Launchd",
+    _listener = xpc_listener_create("com.pookjw.Silicon.Helper",
                                     nullptr,
                                     XPC_LISTENER_CREATE_INACTIVE,
                                     ^(xpc_session_t  _Nonnull peer) {

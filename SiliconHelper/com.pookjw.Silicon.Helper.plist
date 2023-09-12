@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.pookjw.Silicon.Helper-Launchd</string>
+	<string>com.pookjw.Silicon.Helper</string>
 	<key>BundleProgram</key>
 	<string>Contents/Resources/SiliconHelper</string>
 	<key>StandardOutPath</key>
@@ -14,7 +14,7 @@
 	<true/>
 	<key>MachServices</key>
 	<dict>
-		<key>com.pookjw.Silicon.Helper-Launchd</key>
+		<key>com.pookjw.Silicon.Helper</key>
 		<true/>
 	</dict>
 </dict>

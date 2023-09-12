@@ -9,6 +9,8 @@
 #import <xpc/xpc.h>
 #import <ServiceManagement/ServiceManagement.h>
 #import <functional>
+#import <variant>
+#import <cstddef>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -27,7 +29,7 @@ private:
     SMAppService *_appService;
     
     void handle(xpc_session_t peer, xpc_object_t message);
-    void sendCompletionWithError(NSError * _Nullable error, xpc_session_t peer, xpc_object_t message);
+    void sendCompletionWithError(std::variant<NSError * _Nullable, xpc_rich_error_t _Nullable, std::nullopt_t> error, xpc_session_t peer, xpc_object_t message);
     void installDaemon(NSError * _Nullable * error);
     void uninstallDaemon(std::function<void (NSError * _Nullable)> completionHandler);
 };
