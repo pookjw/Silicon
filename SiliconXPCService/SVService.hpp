@@ -8,8 +8,10 @@
 #import <Foundation/Foundation.h>
 #import <xpc/xpc.h>
 #import <ServiceManagement/ServiceManagement.h>
+#import <Security/Security.h>
 #import <functional>
 #import <string>
+#import <mutex>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -24,8 +26,13 @@ public:
     SVService& operator=(const SVService&) = delete;
 private:
     xpc_listener_t _listener;
-    xpc_session_t _daemonSession;
+    xpc_session_t _Nullable _daemonSession;
     SMAppService *_appService;
+    
+    AuthorizationRef _authRef;
+    NSData *_authorization;
+    
+    std::mutex _mtx;
     
     void handle(xpc_session_t peer, xpc_object_t message);
     void installDaemon(NSError * _Nullable * error);

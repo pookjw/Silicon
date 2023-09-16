@@ -34,10 +34,8 @@ private:
     
     xpc_session_t _session;
     
-    AuthorizationRef _authRef;
-    NSData *_authorization;
-    
     BOOL handleErrorIfNeeded(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error, std::function<void (NSError * _Nullable)> errorHandler);
+    void sendMessageAndReleaseValues(std::unordered_map<std::string, xpc_object_t> message, std::function<void (xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error)> completionHandler);
 };
 
 NS_HEADER_AUDIT_END(nullability, sendability)

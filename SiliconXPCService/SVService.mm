@@ -9,9 +9,11 @@
 #import "XPCCommon.hpp"
 #import <dlfcn.h>
 
-SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) {
+SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) : _daemonSession(nullptr) {
+    dispatch_queue_t queue = dispatch_queue_create("com.pookjw.Silicon.Helper", DISPATCH_QUEUE_SERIAL);
+    
     _listener = xpc_listener_create("com.pookjw.Silicon.XPCService",
-                                    nullptr,
+                                    queue,
                                     XPC_LISTENER_CREATE_INACTIVE,
                                     ^(xpc_session_t  _Nonnull peer) {
         xpc_session_set_incoming_message_handler(peer, ^(xpc_object_t  _Nonnull message) {
@@ -20,11 +22,24 @@ SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) {
     },
                                     error);
     
+    dispatch_release(queue);
+    
     if (*error) {
         return;
     }
     
     _appService = [[SMAppService daemonServiceWithPlistName:@"com.pookjw.Silicon.Helper.plist"] retain];
+    
+    //
+    
+    OSStatus status_1 = AuthorizationCreate(nullptr, nullptr, 0, &_authRef);
+    assert(status_1 == errAuthorizationSuccess);
+    
+    AuthorizationExternalForm extForm;
+    OSStatus status_2 = AuthorizationMakeExternalForm(_authRef, &extForm);
+    assert(status_2 == errAuthorizationSuccess);
+    
+    _authorization = [[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)];
 }
 
 SVService::~SVService() {
@@ -33,6 +48,8 @@ SVService::~SVService() {
     xpc_session_cancel(_daemonSession);
     xpc_release(_daemonSession);
     [_appService release];
+    AuthorizationFree(_authRef, 0);
+    [_authorization release];
 }
 
 void SVService::run(xpc_rich_error_t _Nullable * _Nullable error) {
@@ -48,48 +65,61 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
     std::string function = xpc_dictionary_get_string(message, "function");
     
     if (function == "installDaemon") {
+        _mtx.lock();
+        
+        if (_daemonSession) {
+            XPCCommon::sendReply({}, peer, message);
+            _mtx.unlock();
+            return;
+        }
+        
         NSError * _Nullable error = nullptr;
         installDaemon(&error);
         
         if (error) {
-            XPCCommon::sendReplyWithNSError(error, peer, message);
+            XPCCommon::sendReply(error, peer, message);
+            _mtx.unlock();
             return;
         }
         
         xpc_rich_error_t richError = NULL;
+        
         _daemonSession = xpc_session_create_mach_service("com.pookjw.Silicon.Helper",
                                                          nullptr,
                                                          XPC_SESSION_CREATE_MACH_PRIVILEGED,
                                                          &richError);
         
         if (richError) {
-            XPCCommon::sendReplyWithRichError(richError, peer, message);
+            XPCCommon::sendReply(richError, peer, message);
         } else {
-            XPCCommon::sendReplyWithNull(peer, message);
+            XPCCommon::sendReply({}, peer, message);
         }
+        
+        _mtx.unlock();
     } else if (function == "uninstallDaemon") {
+        _mtx.lock();
+        
+        if (!_daemonSession) {
+            XPCCommon::sendReply({}, peer, message);
+            _mtx.unlock();
+            return;
+        }
+        
         uninstallDaemon(^(NSError * _Nullable error) {
+            xpc_session_cancel(_daemonSession);
+            xpc_release(_daemonSession);
+            _daemonSession = nullptr;
+            
             if (error) {
-                XPCCommon::sendReplyWithNSError(error, peer, message);
-                NS_VOIDRETURN;
+                XPCCommon::sendReply(error, peer, message);
+            } else {
+                XPCCommon::sendReply({}, peer, message);
             }
             
-            XPCCommon::sendReplyWithNull(peer, message);
+            _mtx.lock();
         });
-    } else if (function == "ping") {
-        xpc_object_t functionObject = xpc_string_create("ping");
-        const char *keys [1] = {"function"};
-        xpc_object_t values [1] = {functionObject};
-        
-        xpc_object_t dictionary = xpc_dictionary_create(keys, values, 1);
-        xpc_release(functionObject);
-        xpc_session_send_message_with_reply_async(_daemonSession, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
-            const char *description = xpc_copy_description(reply);
-            NSLog(@"%s", description);
-            delete description;
-        });
-        
-        xpc_release(dictionary);
+    } else if (function == "openFile") {
+        std::string filePath = xpc_dictionary_get_string(message, "filePath");
     }
 }
 

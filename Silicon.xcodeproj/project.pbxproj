@@ -28,8 +28,8 @@
 		4F66B1542A9EE6FD00D188F0 /* VirtualMachineMacModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1532A9EE6FD00D188F0 /* VirtualMachineMacModel.mm */; };
 		4F66B1582A9EE94C00D188F0 /* CreateVMLocationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1572A9EE94C00D188F0 /* CreateVMLocationViewController.mm */; };
 		4F6F4BFE2AB4AB620060147F /* XPCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F952ABE2AB344D400F3B694 /* XPCCommon.mm */; };
-		4F6F4BFF2AB4ABA90060147F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F952AFD2AB3E4CE00F3B694 /* Security.framework */; };
 		4F6F4C022AB5C85E0060147F /* XPCManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F4C002AB5C85E0060147F /* XPCManager.mm */; };
+		4F6F4C032AB5EC800060147F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F952AFD2AB3E4CE00F3B694 /* Security.framework */; };
 		4F70CC6C2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F70CC6B2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm */; };
 		4F7A7CBB2AA6EBF700919300 /* EditVMViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A7CBA2AA6EBF700919300 /* EditVMViewController.mm */; };
 		4F7A7CBE2AA6ED9E00919300 /* EditVMSidebarViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A7CBD2AA6ED9E00919300 /* EditVMSidebarViewController.mm */; };
@@ -278,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F83C4802AAD979A00D99C1F /* ServiceManagement.framework in Frameworks */,
+				4F6F4C032AB5EC800060147F /* Security.framework in Frameworks */,
 				4F83C4822AAD97A000D99C1F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,7 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F55C8F52A9E2566009CADBD /* UniformTypeIdentifiers.framework in Frameworks */,
-				4F6F4BFF2AB4ABA90060147F /* Security.framework in Frameworks */,
 				4FFD77812A9B622100D11F88 /* Cocoa.framework in Frameworks */,
 				4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */,
 				4FFD77832A9B622500D11F88 /* Virtualization.framework in Frameworks */,

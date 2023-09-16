@@ -45,7 +45,7 @@ void SVHelper::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull messa
         
         authorize(authData, authDataLength, ^(NSError * _Nullable authError) {
             if (authError) {
-                XPCCommon::sendReplyWithNSError(authError, peer, message);
+                XPCCommon::sendReply(authError, peer, message);
                 return;
             }
             
@@ -55,7 +55,7 @@ void SVHelper::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull messa
             
             if (error) {
                 xpc_release(fd);
-                XPCCommon::sendReplyWithNSError(error, peer, message);
+                XPCCommon::sendReply(error, peer, message);
                 return;
             }
             

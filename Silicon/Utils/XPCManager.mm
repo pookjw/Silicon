@@ -8,8 +8,12 @@
 #import "XPCManager.hpp"
 #import "XPCCommon.hpp"
 #import "constants.hpp"
+#import <unordered_map>
+#import <ranges>
+#import <vector>
+#import <algorithm>
 
-XPCManager::XPCManager() : _session(xpc_null_create()), _authRef(nullptr), _authorization(nullptr) {
+XPCManager::XPCManager() : _session(xpc_null_create()) {
     xpc_rich_error_t error = nullptr;
     xpc_session_t session = xpc_session_create_xpc_service("com.pookjw.Silicon.XPCService", nullptr, XPC_SESSION_CREATE_INACTIVE, &error);
     assert(!error);
@@ -18,17 +22,6 @@ XPCManager::XPCManager() : _session(xpc_null_create()), _authRef(nullptr), _auth
     assert(!error);
     
     _session = session;
-    
-    //
-    
-    OSStatus status_1 = AuthorizationCreate(nullptr, nullptr, 0, &_authRef);
-    assert(status_1 == errAuthorizationSuccess);
-    
-    AuthorizationExternalForm extForm;
-    OSStatus status_2 = AuthorizationMakeExternalForm(_authRef, &extForm);
-    assert(status_2 == errAuthorizationSuccess);
-    
-    _authorization = [[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)];
 }
 
 XPCManager::~XPCManager() {
@@ -36,36 +29,61 @@ XPCManager::~XPCManager() {
         xpc_session_cancel(_session);
     }
     xpc_release(_session);
-    
-    AuthorizationFree(_authRef, 0);
-    [_authorization release];
 }
 
 void XPCManager::installDaemon(std::function<void (NSError * _Nullable)> completionHandler) {
-    const char *key = "function";
-    xpc_object_t function = xpc_string_create("installDaemon");
+    std::unordered_map<std::string, xpc_object_t> input {
+        {"function", xpc_string_create("installDaemon")}
+    };
     
-    xpc_object_t dictionary = xpc_dictionary_create(&key, &function, 1);
-    xpc_release(function);
-    
-    xpc_session_send_message_with_reply_async(_session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+    sendMessageAndReleaseValues(input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
         if (handleErrorIfNeeded(reply, error, completionHandler)) return;
         completionHandler(nullptr);
     });
-    
-    xpc_release(dictionary);
 }
 
 void XPCManager::uninstallDaemon(std::function<void (NSError * _Nullable)> completionHandler) {
-    const char *key = "function";
-    xpc_object_t function = xpc_string_create("uninstallDaemon");
+    std::unordered_map<std::string, xpc_object_t> input {
+        {"function", xpc_string_create("uninstallDaemon")}
+    };
     
-    xpc_object_t dictionary = xpc_dictionary_create(&key, &function, 1);
-    xpc_release(function);
-    
-    xpc_session_send_message_with_reply_async(_session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+    sendMessageAndReleaseValues(input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
         if (handleErrorIfNeeded(reply, error, completionHandler)) return;
         completionHandler(nullptr);
+    });
+}
+
+void XPCManager::openFile(std::string path, std::function<void (std::variant<int, NSError *>)> completionHandler) {
+    std::unordered_map<std::string, xpc_object_t> input {
+        {"function", xpc_string_create("openFile")},
+        {"filePath", xpc_string_create(path.data())}
+    };
+    
+    sendMessageAndReleaseValues(input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
+        
+    });
+}
+
+void XPCManager::sendMessageAndReleaseValues(std::unordered_map<std::string, xpc_object_t> message, std::function<void (xpc_object_t _Nullable, xpc_rich_error_t _Nullable)> completionHandler) {
+    auto keys = message | std::views::transform([](std::pair<std::string, xpc_object_t> pair) {
+        return pair.first.data();
+    });
+    
+    auto values = message | std::views::transform([](std::pair<std::string, xpc_object_t> pair) {
+        return pair.second;
+    });
+    
+    std::vector<const char *> keysArr {keys.begin(), keys.end()};
+    std::vector<xpc_object_t> valuesArr {values.begin(), values.end()};
+    
+    xpc_object_t dictionary = xpc_dictionary_create(keysArr.data(), valuesArr.data(), keysArr.size());
+    
+    std::for_each(values.begin(), values.end(), [](xpc_object_t object) {
+        xpc_release(object);
+    });
+    
+    xpc_session_send_message_with_reply_async(_session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
+        completionHandler(reply, error);
     });
     
     xpc_release(dictionary);

@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import <xpc/xpc.h>
 #import <string>
+#import <variant>
+#import <optional>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -16,9 +18,7 @@ public:
     XPCCommon() = delete;
     
     static std::string authRightName();
-    static void sendReplyWithRichError(xpc_rich_error_t error, xpc_session_t peer, xpc_object_t message);
-    static void sendReplyWithNSError(NSError *error, xpc_session_t peer, xpc_object_t message);
-    static void sendReplyWithNull(xpc_session_t peer, xpc_object_t message);
+    static void sendReply(std::variant<NSError *, xpc_rich_error_t, std::nullptr_t> result, xpc_session_t peer, xpc_object_t message);
 };
 
 NS_HEADER_AUDIT_END(nullability, sendability)

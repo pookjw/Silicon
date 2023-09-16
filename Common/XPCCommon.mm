@@ -11,32 +11,24 @@ std::string XPCCommon::authRightName() {
     return "Silicon.Authorization";
 }
 
-void XPCCommon::sendReplyWithRichError(xpc_rich_error_t error, xpc_session_t peer, xpc_object_t message) {
+void XPCCommon::sendReply(std::variant<NSError *, xpc_rich_error_t, std::nullptr_t> result, xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull message) {
     xpc_object_t reply = xpc_dictionary_create_reply(message);
-    xpc_dictionary_set_value(reply, "richError", error);
     
-    xpc_rich_error_t _Nullable sendError = xpc_session_send_message(peer, reply);
-    xpc_release(reply);
-    assert(!sendError);
-    xpc_release(sendError);
-}
-
-void XPCCommon::sendReplyWithNSError(NSError *error, xpc_session_t peer, xpc_object_t message) {
-    NSError * _Nullable archiveError = nullptr;
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:error requiringSecureCoding:YES error:&archiveError];
-    assert(!archiveError);
+    if (NSError **nsError_p = std::get_if<NSError *>(&result)) {
+        if (NSError *nsError = *nsError_p) {
+            NSError * _Nullable archiveError = nullptr;
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:nsError requiringSecureCoding:YES error:&archiveError];
+            assert(!archiveError);
+            
+            xpc_object_t reply = xpc_dictionary_create_reply(message);
+            xpc_dictionary_set_data(reply, "nsError", data.bytes, data.length);
+        }
+    } else if (xpc_rich_error_t *richError_p = std::get_if<xpc_rich_error_t>(&result)) {
+        if (xpc_rich_error_t richError = *richError_p) {
+            xpc_dictionary_set_value(reply, "richError", richError);
+        }
+    }
     
-    xpc_object_t reply = xpc_dictionary_create_reply(message);
-    xpc_dictionary_set_data(reply, "nsError", data.bytes, data.length);
-    
-    xpc_rich_error_t _Nullable sendError = xpc_session_send_message(peer, reply);
-    xpc_release(reply);
-    assert(!sendError);
-    xpc_release(sendError);
-}
-
-void XPCCommon::sendReplyWithNull(xpc_session_t peer, xpc_object_t message) {
-    xpc_object_t reply = xpc_dictionary_create_reply(message);
     xpc_rich_error_t _Nullable sendError = xpc_session_send_message(peer, reply);
     xpc_release(reply);
     assert(!sendError);

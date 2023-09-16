@@ -12,7 +12,8 @@
 @property (retain) NSStackView *stackView;
 @property (retain) NSButton *installButton;
 @property (retain) NSButton *uninstallButton;
-@property (retain) NSButton *verifyButton;
+@property (retain) NSButton *openFileButton;
+@property (retain) NSButton *closeFileButton;
 @end
 
 @implementation DaemonViewController
@@ -37,7 +38,8 @@
     [_stackView release];
     [_installButton release];
     [_uninstallButton release];
-    [_verifyButton release];
+    [_openFileButton release];
+    [_closeFileButton release];
     [super dealloc];
 }
 
@@ -50,7 +52,8 @@
     [self setupStackView];
     [self setupInstallButton];
     [self setupUninstallButton];
-    [self setupVerifyButton];
+    [self setupOpenFileButton];
+    [self setupCloseFileButton];
 }
 
 - (void)setupStackView {
@@ -87,12 +90,20 @@
     self.uninstallButton = uninstallButton;
 }
 
-- (void)setupVerifyButton {
-    NSButton *verifyButton = [NSButton buttonWithTitle:@"Verify" target:self action:@selector(didTriggerVerifyButton:)];
-    verifyButton.bezelStyle = NSBezelStylePush;
+- (void)setupOpenFileButton {
+    NSButton *openFileButton = [NSButton buttonWithTitle:@"Open file" target:self action:@selector(didTriggerOpenFileButton:)];
+    openFileButton.bezelStyle = NSBezelStylePush;
     
-    [self.stackView addArrangedSubview:verifyButton];
-    self.verifyButton = verifyButton;
+    [self.stackView addArrangedSubview:openFileButton];
+    self.openFileButton = openFileButton;
+}
+
+- (void)setupCloseFileButton {
+    NSButton *closeFileButton = [NSButton buttonWithTitle:@"Close file" target:self action:@selector(didTriggerCloseFileButton:)];
+    closeFileButton.bezelStyle = NSBezelStylePush;
+    
+    [self.stackView addArrangedSubview:closeFileButton];
+    self.closeFileButton = closeFileButton;
 }
 
 - (void)didTriggerInstallButton:(NSButton *)sender {
@@ -107,7 +118,21 @@
     });
 }
 
-- (void)didTriggerVerifyButton:(NSButton *)sender {
+- (void)didTriggerOpenFileButton:(NSButton *)sender {
+    XPCManager::getInstance().openFile("/dev/rdisk7", ^(std::variant<int, NSError *> result) {
+        if (int *np = std::get_if<int>(&result)) {
+            if (int n = *np) {
+                // Int Value
+            }
+        } else if (NSError **error_p = std::get_if<NSError *>(&result)) {
+            if (NSError *error = *error_p) {
+                // Error Value
+            }
+        }
+    });
+}
+
+- (void)didTriggerCloseFileButton:(NSButton *)sender {
 }
 
 @end
