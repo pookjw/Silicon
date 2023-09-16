@@ -6,7 +6,8 @@
 //
 
 #import "SVService.hpp"
-#import <string>
+#import "XPCCommon.hpp"
+#import <dlfcn.h>
 
 SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) {
     _listener = xpc_listener_create("com.pookjw.Silicon.XPCService",
@@ -51,7 +52,7 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
         installDaemon(&error);
         
         if (error) {
-            sendCompletionWithError(error, peer, message);
+            XPCCommon::sendReplyWithNSError(error, peer, message);
             return;
         }
         
@@ -60,10 +61,20 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
                                                          nullptr,
                                                          XPC_SESSION_CREATE_MACH_PRIVILEGED,
                                                          &richError);
-        sendCompletionWithError(richError, peer, message);
+        
+        if (richError) {
+            XPCCommon::sendReplyWithRichError(richError, peer, message);
+        } else {
+            XPCCommon::sendReplyWithNull(peer, message);
+        }
     } else if (function == "uninstallDaemon") {
         uninstallDaemon(^(NSError * _Nullable error) {
-            sendCompletionWithError(error, peer, message);
+            if (error) {
+                XPCCommon::sendReplyWithNSError(error, peer, message);
+                NS_VOIDRETURN;
+            }
+            
+            XPCCommon::sendReplyWithNull(peer, message);
         });
     } else if (function == "ping") {
         xpc_object_t functionObject = xpc_string_create("ping");
@@ -82,27 +93,6 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
     }
 }
 
-void SVService::sendCompletionWithError(std::variant<NSError * _Nullable, xpc_rich_error_t _Nullable, std::nullopt_t> error, xpc_session_t peer, xpc_object_t message) {
-    xpc_object_t result = NULL;
-    
-    if (auto nsError = *std::get_if<NSError * _Nullable>(&error)) {
-        
-    } else if (auto xpcRichError = *std::get_if<xpc_rich_error_t _Nullable>(&error)) {
-        
-    } else if (std::holds_alternative<std::nullopt_t>(error)) {
-        
-    }
-    
-    xpc_rich_error_t resultError = xpc_session_send_message(peer, result);
-    xpc_release(result);
-    if (resultError) {
-        const char *description = xpc_rich_error_copy_description(resultError);
-        xpc_release(resultError);
-        NSLog(@"%s", description);
-        delete description;
-    }
-}
-
 void SVService::installDaemon(NSError * _Nullable * error) {
     [_appService registerAndReturnError:error];
 }
@@ -111,4 +101,8 @@ void SVService::uninstallDaemon(std::function<void (NSError * _Nullable)> comple
     [_appService unregisterWithCompletionHandler:^(NSError * _Nullable error) {
         completionHandler(error);
     }];
+}
+
+void SVService::openFile(std::string path, NSData * _Nullable authData, NSError * _Nullable * _Nullable error) {
+    
 }

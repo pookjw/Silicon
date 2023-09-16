@@ -63,7 +63,7 @@ static NSUserInterfaceItemIdentifier const collectionViewItemIdentifier = @"Rest
     if (context == _selectionIndexPathsContext.get()) {
         NSSet<NSIndexPath *> *selectionIndexPaths = static_cast<NSCollectionView *>(object).selectionIndexPaths;
         NSIndexPath * _Nullable firstIndexPath = selectionIndexPaths.allObjects.firstObject;
-        if (!firstIndexPath) return;
+        if (!firstIndexPath) NS_VOIDRETURN;
         
         self.viewModel.get()->restoreImageModel(firstIndexPath, [self](RestoreImageModel * _Nullable result) {
             self.selectedRestoreImageModel = result;

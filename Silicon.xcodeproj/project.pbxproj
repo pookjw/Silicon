@@ -27,6 +27,9 @@
 		4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F607D152A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm */; };
 		4F66B1542A9EE6FD00D188F0 /* VirtualMachineMacModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1532A9EE6FD00D188F0 /* VirtualMachineMacModel.mm */; };
 		4F66B1582A9EE94C00D188F0 /* CreateVMLocationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F66B1572A9EE94C00D188F0 /* CreateVMLocationViewController.mm */; };
+		4F6F4BFE2AB4AB620060147F /* XPCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F952ABE2AB344D400F3B694 /* XPCCommon.mm */; };
+		4F6F4BFF2AB4ABA90060147F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F952AFD2AB3E4CE00F3B694 /* Security.framework */; };
+		4F6F4C022AB5C85E0060147F /* XPCManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F4C002AB5C85E0060147F /* XPCManager.mm */; };
 		4F70CC6C2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F70CC6B2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm */; };
 		4F7A7CBB2AA6EBF700919300 /* EditVMViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A7CBA2AA6EBF700919300 /* EditVMViewController.mm */; };
 		4F7A7CBE2AA6ED9E00919300 /* EditVMSidebarViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A7CBD2AA6ED9E00919300 /* EditVMSidebarViewController.mm */; };
@@ -50,6 +53,11 @@
 		4F83C4872AAE088F00D99C1F /* SVService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83C4852AAE088F00D99C1F /* SVService.mm */; };
 		4F83F75E2A9CD27900777BF6 /* RestoreImageModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */; };
 		4F8934012AA61DE10066B3EC /* EditVMWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8934002AA61DE10066B3EC /* EditVMWindow.mm */; };
+		4F952AC12AB345DE00F3B694 /* XPCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F952ABE2AB344D400F3B694 /* XPCCommon.mm */; };
+		4F952AC22AB345DE00F3B694 /* XPCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F952ABE2AB344D400F3B694 /* XPCCommon.mm */; };
+		4F952AFB2AB3E4C400F3B694 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F83C4812AAD97A000D99C1F /* Foundation.framework */; };
+		4F952AFC2AB3E4C700F3B694 /* libxpc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F83C4832AAD97D300D99C1F /* libxpc.tbd */; };
+		4F952AFE2AB3E4CE00F3B694 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F952AFD2AB3E4CE00F3B694 /* Security.framework */; };
 		4FA119CB2AAF4AF20042342B /* SVHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FA119C92AAF4AF20042342B /* SVHelper.mm */; };
 		4FA1D8552AA5674300485112 /* SVTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1D8542AA5674300485112 /* SVTextField.mm */; };
 		4FD4CD4B2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4CD4A2AA5525200075DF1 /* CreateVMStorageSizeViewController.mm */; };
@@ -167,6 +175,8 @@
 		4F66B1532A9EE6FD00D188F0 /* VirtualMachineMacModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VirtualMachineMacModel.mm; sourceTree = "<group>"; };
 		4F66B1562A9EE94C00D188F0 /* CreateVMLocationViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreateVMLocationViewController.hpp; sourceTree = "<group>"; };
 		4F66B1572A9EE94C00D188F0 /* CreateVMLocationViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CreateVMLocationViewController.mm; sourceTree = "<group>"; };
+		4F6F4C002AB5C85E0060147F /* XPCManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = XPCManager.mm; sourceTree = "<group>"; };
+		4F6F4C012AB5C85E0060147F /* XPCManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = XPCManager.hpp; sourceTree = "<group>"; };
 		4F70CC6A2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMSidebarSectionModel.hpp; sourceTree = "<group>"; };
 		4F70CC6B2AA8C5AE00DB4555 /* EditVMSidebarSectionModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMSidebarSectionModel.mm; sourceTree = "<group>"; };
 		4F7A7CB92AA6EBF700919300 /* EditVMViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMViewController.hpp; sourceTree = "<group>"; };
@@ -208,6 +218,9 @@
 		4F83F75D2A9CD27900777BF6 /* RestoreImageModel.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RestoreImageModel.mm; sourceTree = "<group>"; };
 		4F8933FF2AA61DE10066B3EC /* EditVMWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditVMWindow.hpp; sourceTree = "<group>"; };
 		4F8934002AA61DE10066B3EC /* EditVMWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EditVMWindow.mm; sourceTree = "<group>"; };
+		4F952ABE2AB344D400F3B694 /* XPCCommon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = XPCCommon.mm; sourceTree = "<group>"; };
+		4F952ABF2AB344D400F3B694 /* XPCCommon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = XPCCommon.hpp; sourceTree = "<group>"; };
+		4F952AFD2AB3E4CE00F3B694 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4FA119C92AAF4AF20042342B /* SVHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SVHelper.mm; sourceTree = "<group>"; };
 		4FA119CA2AAF4AF20042342B /* SVHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SVHelper.hpp; sourceTree = "<group>"; };
 		4FA119CC2AB06E840042342B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -273,6 +286,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F952AFC2AB3E4C700F3B694 /* libxpc.tbd in Frameworks */,
+				4F952AFE2AB3E4CE00F3B694 /* Security.framework in Frameworks */,
+				4F952AFB2AB3E4C400F3B694 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F55C8F52A9E2566009CADBD /* UniformTypeIdentifiers.framework in Frameworks */,
+				4F6F4BFF2AB4ABA90060147F /* Security.framework in Frameworks */,
 				4FFD77812A9B622100D11F88 /* Cocoa.framework in Frameworks */,
 				4FD979E42A9CAAB6004CD11C /* CoreData.framework in Frameworks */,
 				4FFD77832A9B622500D11F88 /* Virtualization.framework in Frameworks */,
@@ -438,6 +455,15 @@
 			path = EditVM;
 			sourceTree = "<group>";
 		};
+		4F952ABD2AB344C100F3B694 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4F952ABF2AB344D400F3B694 /* XPCCommon.hpp */,
+				4F952ABE2AB344D400F3B694 /* XPCCommon.mm */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		4FA1D8522AA5671B00485112 /* SVTextField */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				4FFD776B2A9B619E00D11F88 /* Silicon */,
+				4F952ABD2AB344C100F3B694 /* Common */,
 				4F83C45D2AAD8CD300D99C1F /* SiliconXPCService */,
 				4F83C4742AAD964E00D99C1F /* SiliconHelper */,
 				4FFD776A2A9B619E00D11F88 /* Products */,
@@ -533,6 +560,7 @@
 		4FFD777F2A9B622100D11F88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F952AFD2AB3E4CE00F3B694 /* Security.framework */,
 				4F83C4832AAD97D300D99C1F /* libxpc.tbd */,
 				4F83C4812AAD97A000D99C1F /* Foundation.framework */,
 				4F83C46D2AAD92DC00D99C1F /* ServiceManagement.framework */,
@@ -604,6 +632,8 @@
 				4F59BE3D2AA468B0003E6F07 /* VZMACAddressValueTransformer.mm */,
 				4F59BE492AA48A68003E6F07 /* BookmarkURLValueTransformer.hpp */,
 				4F59BE4A2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm */,
+				4F6F4C012AB5C85E0060147F /* XPCManager.hpp */,
+				4F6F4C002AB5C85E0060147F /* XPCManager.mm */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -740,6 +770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F952AC12AB345DE00F3B694 /* XPCCommon.mm in Sources */,
 				4F83C4872AAE088F00D99C1F /* SVService.mm in Sources */,
 				4F83C45F2AAD8CD300D99C1F /* main.mm in Sources */,
 			);
@@ -749,6 +780,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F952AC22AB345DE00F3B694 /* XPCCommon.mm in Sources */,
 				4FA119CB2AAF4AF20042342B /* SVHelper.mm in Sources */,
 				4F83C4762AAD964E00D99C1F /* main.mm in Sources */,
 			);
@@ -758,6 +790,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F6F4BFE2AB4AB620060147F /* XPCCommon.mm in Sources */,
 				4F7A7CBB2AA6EBF700919300 /* EditVMViewController.mm in Sources */,
 				4FFD77712A9B619E00D11F88 /* ViewController.mm in Sources */,
 				4F59BE4E2AA48DFE003E6F07 /* VMWindow.mm in Sources */,
@@ -769,6 +802,7 @@
 				4F59BE4B2AA48A68003E6F07 /* BookmarkURLValueTransformer.mm in Sources */,
 				4F607D162A9DCA0600DBB7EB /* RestoreImagesCollectionViewItem.mm in Sources */,
 				4F4E13C52A9DCB0600FC6305 /* NSTextField+LabelStyle.mm in Sources */,
+				4F6F4C022AB5C85E0060147F /* XPCManager.mm in Sources */,
 				4FFD778F2A9B68C900D11F88 /* NSObject+Foundation_IvarDescription.mm in Sources */,
 				4FD979E22A9CAA7A004CD11C /* PersistentDataManager.mm in Sources */,
 				4F59BE412AA479DC003E6F07 /* VMsViewModel.mm in Sources */,
@@ -889,6 +923,10 @@
 				DEVELOPMENT_TEAM = P53D29U9LJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/SiliconHelper/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pookjw.Silicon.Helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -901,6 +939,10 @@
 				DEVELOPMENT_TEAM = P53D29U9LJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/SiliconHelper/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pookjw.Silicon.Helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

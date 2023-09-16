@@ -14,5 +14,7 @@ typedef NS_ERROR_ENUM(SiliconErrorDomain, SiliconErrorCode) {
     SiliconAlreadyInitializedError,
     SiliconNotSupportedHardware,
     SiliconFileIOError,
-    SiliconDeletedVirtualMachineModel
+    SiliconDeletedVirtualMachineModel,
+    SiliconInvalidAuthData,
+    SiliconXPCCommonError
 };
