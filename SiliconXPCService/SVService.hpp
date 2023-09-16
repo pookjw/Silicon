@@ -25,6 +25,8 @@ public:
     SVService(const SVService&) = delete;
     SVService& operator=(const SVService&) = delete;
 private:
+    NSOperationQueue *_queue;
+    
     xpc_listener_t _listener;
     xpc_session_t _Nullable _daemonSession;
     SMAppService *_appService;
@@ -37,7 +39,7 @@ private:
     void handle(xpc_session_t peer, xpc_object_t message);
     void installDaemon(NSError * _Nullable * error);
     void uninstallDaemon(std::function<void (NSError * _Nullable)> completionHandler);
-    void openFile(std::string path, NSData * _Nullable authData, NSError * _Nullable * error);
+    void openFile(std::string path, NSError * _Nullable * error);
     void closeFile(xpc_object_t fd, std::function<void (NSError * _Nullable)> completionHandler);
 };
 

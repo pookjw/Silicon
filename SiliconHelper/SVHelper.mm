@@ -12,6 +12,13 @@
 #import <string>
 
 SVHelper::SVHelper(xpc_rich_error_t _Nullable * _Nullable error) {
+    NSOperationQueue *queue = [NSOperationQueue new];
+    queue.qualityOfService = NSOperationQualityOfServiceBackground;
+    queue.maxConcurrentOperationCount = 1;
+    _queue = queue;
+    
+    //
+    
     _listener = xpc_listener_create("com.pookjw.Silicon.Helper",
                                     nullptr,
                                     XPC_LISTENER_CREATE_INACTIVE,
@@ -24,6 +31,9 @@ SVHelper::SVHelper(xpc_rich_error_t _Nullable * _Nullable error) {
 }
 
 SVHelper::~SVHelper() {
+    [_queue cancelAllOperations];
+    [_queue release];
+    
     xpc_listener_cancel(_listener);
     [_listener release];
 }
@@ -37,36 +47,37 @@ void SVHelper::run(xpc_rich_error_t  _Nullable * _Nullable error) {
 }
 
 void SVHelper::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull message) {
-    std::string function = xpc_dictionary_get_string(message, "function");
-    
-    if (function == "openFile") {
-        size_t authDataLength = NULL;
-        const void *authData = xpc_dictionary_get_data(message, "authData", &authDataLength);
+    [_queue addOperationWithBlock:^{
+        std::string function = xpc_dictionary_get_string(message, "function");
         
-        authorize(authData, authDataLength, ^(NSError * _Nullable authError) {
-            if (authError) {
-                XPCCommon::sendReply(authError, peer, message);
-                return;
-            }
+        if (function == "openFile") {
+            size_t authDataLength = NULL;
+            const void *authData = xpc_dictionary_get_data(message, "authData", &authDataLength);
             
-            const char *path = xpc_dictionary_get_string(message, "path");
-            NSError * _Nullable error = nullptr;
-            xpc_object_t fd = openFile(path, &error);
-            
-            if (error) {
+            authorize(authData, authDataLength, ^(NSError * _Nullable authError) {
+                if (authError) {
+                    XPCCommon::sendReply(authError, peer, message);
+                    return;
+                }
+                
+                const char *path = xpc_dictionary_get_string(message, "path");
+                NSError * _Nullable error = nullptr;
+                xpc_object_t fd = openFile(path, &error);
+                
+                if (error) {
+                    xpc_release(fd);
+                    XPCCommon::sendReply(error, peer, message);
+                    return;
+                }
+                
+                xpc_rich_error_t _Nullable xpcError = xpc_session_send_message(peer, fd);
                 xpc_release(fd);
-                XPCCommon::sendReply(error, peer, message);
-                return;
-            }
-            
-            xpc_rich_error_t _Nullable xpcError = xpc_session_send_message(peer, fd);
-            xpc_release(fd);
-            assert(!xpcError);
-            xpc_release(xpcError);
-        });
-    }
+                assert(!xpcError);
+                xpc_release(xpcError);
+            });
+        }
+    }];
 }
-
 
 xpc_object_t SVHelper::openFile(std::string path, NSError * _Nullable * _Nullable error) {
     NSString *string = [[NSString alloc] initWithCString:path.data() encoding:NSUTF8StringEncoding];
