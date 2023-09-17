@@ -10,6 +10,8 @@
 #import "XPCCommon.hpp"
 
 int main(int argc, const char * argv[]) {
+    NSLog(@"Initialized!");
+    
     xpc_rich_error_t error = NULL;
     
     SVHelper helper {&error};

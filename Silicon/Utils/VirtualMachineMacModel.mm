@@ -12,6 +12,16 @@
 
 @implementation VirtualMachineMacModel
 
+static int _fd;
+
++ (int)tmp_fd {
+    return _fd;
+}
+
++ (void)setTmp_fd:(int)tmp_fd {
+    _fd = tmp_fd;
+}
+
 @dynamic createdDate;
 @dynamic bundleURL;
 @dynamic CPUCount;
@@ -194,11 +204,13 @@
     
     //
     
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:[NSURL fileURLWithPath:@"/dev/rdisk27"] error:error];
-    if (*error) {
-        return nullptr;
-    }
-    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:NO synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
+    
+    NSLog(@"%d", VirtualMachineMacModel.tmp_fd);
+    NSFileHandle *fileHandle = [[NSFileHandle alloc] initWithFileDescriptor:VirtualMachineMacModel.tmp_fd];
+
+    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:YES synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
+    [fileHandle release];
+    
     if (*error) {
         return nullptr;
     }

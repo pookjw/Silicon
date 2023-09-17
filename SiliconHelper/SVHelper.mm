@@ -57,21 +57,22 @@ void SVHelper::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull messa
             authorize(authData, authDataLength, ^(NSError * _Nullable authError) {
                 if (authError) {
                     XPCCommon::sendReply(authError, peer, message);
-                    return;
+                    NS_VOIDRETURN;
                 }
                 
-                const char *path = xpc_dictionary_get_string(message, "path");
+                const char *filePath = xpc_dictionary_get_string(message, "filePath");
                 NSError * _Nullable error = nullptr;
-                xpc_object_t fd = openFile(path, &error);
+                int fd = openFile(filePath, &error);
                 
                 if (error) {
-                    xpc_release(fd);
                     XPCCommon::sendReply(error, peer, message);
-                    return;
+                    NS_VOIDRETURN;
                 }
                 
-                xpc_rich_error_t _Nullable xpcError = xpc_session_send_message(peer, fd);
-                xpc_release(fd);
+                xpc_object_t reply = xpc_dictionary_create_reply(message);
+                xpc_dictionary_set_fd(reply, "fd", fd);
+                xpc_rich_error_t _Nullable xpcError = xpc_session_send_message(peer, reply);
+                xpc_release(reply);
                 assert(!xpcError);
                 xpc_release(xpcError);
             });
@@ -79,18 +80,18 @@ void SVHelper::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull messa
     }];
 }
 
-xpc_object_t SVHelper::openFile(std::string path, NSError * _Nullable * _Nullable error) {
-    NSString *string = [[NSString alloc] initWithCString:path.data() encoding:NSUTF8StringEncoding];
-    NSURL *url = [[NSURL alloc] initWithString:string];
+int SVHelper::openFile(std::string filePath, NSError * _Nullable * _Nullable error) {
+    NSString *string = [[NSString alloc] initWithCString:filePath.data() encoding:NSUTF8StringEncoding];
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:string];
     [string release];
     NSFileHandle *handle = [NSFileHandle fileHandleForUpdatingURL:url error:error];
     [url release];
     
     if (*error) {
-        return xpc_null_create();
+        return -1;
     }
     
-    return xpc_fd_create(handle.fileDescriptor);
+    return handle.fileDescriptor;
 }
 
 void SVHelper::closeFile(xpc_object_t  _Nonnull fd, std::function<void (NSError * _Nullable)> completionHandler) {

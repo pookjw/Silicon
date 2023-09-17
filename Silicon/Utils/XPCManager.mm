@@ -8,10 +8,6 @@
 #import "XPCManager.hpp"
 #import "XPCCommon.hpp"
 #import "constants.hpp"
-#import <unordered_map>
-#import <ranges>
-#import <vector>
-#import <algorithm>
 
 XPCManager::XPCManager() : _session(xpc_null_create()) {
     xpc_rich_error_t error = nullptr;
@@ -36,8 +32,8 @@ void XPCManager::installDaemon(std::function<void (NSError * _Nullable)> complet
         {"function", xpc_string_create("installDaemon")}
     };
     
-    sendMessageAndReleaseValues(input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
-        if (handleErrorIfNeeded(reply, error, completionHandler)) return;
+    XPCCommon::sendMessageAndReleaseValues(_session, input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
+        if (handleErrorIfNeeded(reply, error, completionHandler)) NS_VOIDRETURN;
         completionHandler(nullptr);
     });
 }
@@ -47,8 +43,8 @@ void XPCManager::uninstallDaemon(std::function<void (NSError * _Nullable)> compl
         {"function", xpc_string_create("uninstallDaemon")}
     };
     
-    sendMessageAndReleaseValues(input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
-        if (handleErrorIfNeeded(reply, error, completionHandler)) return;
+    XPCCommon::sendMessageAndReleaseValues(_session, input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
+        if (handleErrorIfNeeded(reply, error, completionHandler)) NS_VOIDRETURN;
         completionHandler(nullptr);
     });
 }
@@ -59,34 +55,12 @@ void XPCManager::openFile(std::string path, std::function<void (std::variant<int
         {"filePath", xpc_string_create(path.data())}
     };
     
-    sendMessageAndReleaseValues(input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
+    XPCCommon::sendMessageAndReleaseValues(_session, input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {
+        if (handleErrorIfNeeded(reply, error, ^(NSError *error) { completionHandler(error); })) NS_VOIDRETURN;
         
+        int fd = xpc_dictionary_dup_fd(reply, "fd");
+        completionHandler(fd);
     });
-}
-
-void XPCManager::sendMessageAndReleaseValues(std::unordered_map<std::string, xpc_object_t> message, std::function<void (xpc_object_t _Nullable, xpc_rich_error_t _Nullable)> completionHandler) {
-    auto keys = message | std::views::transform([](std::pair<std::string, xpc_object_t> pair) {
-        return pair.first.data();
-    });
-    
-    auto values = message | std::views::transform([](std::pair<std::string, xpc_object_t> pair) {
-        return pair.second;
-    });
-    
-    std::vector<const char *> keysArr {keys.begin(), keys.end()};
-    std::vector<xpc_object_t> valuesArr {values.begin(), values.end()};
-    
-    xpc_object_t dictionary = xpc_dictionary_create(keysArr.data(), valuesArr.data(), keysArr.size());
-    
-    std::for_each(values.begin(), values.end(), [](xpc_object_t object) {
-        xpc_release(object);
-    });
-    
-    xpc_session_send_message_with_reply_async(_session, dictionary, ^(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error) {
-        completionHandler(reply, error);
-    });
-    
-    xpc_release(dictionary);
 }
 
 BOOL XPCManager::handleErrorIfNeeded(xpc_object_t  _Nullable reply, xpc_rich_error_t  _Nullable error, std::function<void (NSError * _Nullable)> errorHandler) {
@@ -114,14 +88,13 @@ BOOL XPCManager::handleErrorIfNeeded(xpc_object_t  _Nullable reply, xpc_rich_err
             
             return YES;
         } else {
-            xpc_rich_error_t _Nullable richError = xpc_dictionary_get_value(reply, "richError");
+            const char * _Nullable description = xpc_dictionary_get_string(reply, "richErrorDescription");
             
-            if (richError) {
-                const char *description = xpc_rich_error_copy_description(richError);
+            if (description) {
                 NSString *string = [[NSString alloc] initWithCString:description encoding:NSUTF8StringEncoding];
-                delete description;
                 
                 errorHandler([NSError errorWithDomain:SiliconErrorDomain code:SiliconXPCCommonError userInfo:@{NSLocalizedDescriptionKey: string}]);
+                
                 [string release];
                 
                 return YES;

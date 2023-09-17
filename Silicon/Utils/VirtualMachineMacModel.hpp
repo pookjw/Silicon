@@ -11,6 +11,7 @@
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @interface VirtualMachineMacModel : NSManagedObject
+@property (class) int tmp_fd;
 @property (assign) NSDate *createdDate;
 @property (assign) NSURL *bundleURL;
 

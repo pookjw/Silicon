@@ -12,6 +12,7 @@
 #import <functional>
 #import <string>
 #import <mutex>
+#import <variant>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -39,7 +40,7 @@ private:
     void handle(xpc_session_t peer, xpc_object_t message);
     void installDaemon(NSError * _Nullable * error);
     void uninstallDaemon(std::function<void (NSError * _Nullable)> completionHandler);
-    void openFile(std::string path, NSError * _Nullable * error);
+    void openFile(std::string path, std::function<void (std::variant<int, xpc_rich_error_t>)> completionHandler);
     void closeFile(xpc_object_t fd, std::function<void (NSError * _Nullable)> completionHandler);
 };
 

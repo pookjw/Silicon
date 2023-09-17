@@ -7,6 +7,7 @@
 
 #import "DaemonViewController.hpp"
 #import "XPCManager.hpp"
+#import "VirtualMachineMacModel.hpp"
 
 @interface DaemonViewController ()
 @property (retain) NSStackView *stackView;
@@ -121,18 +122,22 @@
 - (void)didTriggerOpenFileButton:(NSButton *)sender {
     XPCManager::getInstance().openFile("/dev/rdisk7", ^(std::variant<int, NSError *> result) {
         if (int *np = std::get_if<int>(&result)) {
-            if (int n = *np) {
-                // Int Value
-            }
+            NSLog(@"%d", *np);
+            VirtualMachineMacModel.tmp_fd = *np;
         } else if (NSError **error_p = std::get_if<NSError *>(&result)) {
-            if (NSError *error = *error_p) {
-                // Error Value
-            }
+            NSLog(@"%@", (*error_p).localizedDescription);
         }
     });
 }
 
 - (void)didTriggerCloseFileButton:(NSButton *)sender {
+    std::variant<int, double> v {1.};
+    
+    if (double *d = std::get_if<double>(&v)) {
+        NSLog(@"%f", *d);
+    } else if (int *i = std::get_if<int>(&v)) {
+        NSLog(@"%d", *i);
+    }
 }
 
 @end
