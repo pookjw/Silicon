@@ -34,6 +34,9 @@ private:
     
     xpc_session_t _session;
     
+    AuthorizationRef _authRef;
+    NSData *_authorization;
+    
     BOOL handleErrorIfNeeded(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error, std::function<void (NSError *)> errorHandler);
 };
 

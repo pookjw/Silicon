@@ -18,6 +18,35 @@ XPCManager::XPCManager() : _session(xpc_null_create()) {
     assert(!error);
     
     _session = session;
+    
+    //
+    
+    OSStatus status_1 = AuthorizationCreate(nullptr, nullptr, 0, &_authRef);
+    assert(status_1 == errAuthorizationSuccess);
+    
+    AuthorizationExternalForm extForm;
+    OSStatus status_2 = AuthorizationMakeExternalForm(_authRef, &extForm);
+    assert(status_2 == errAuthorizationSuccess);
+    
+    _authorization = [[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)];
+    
+    OSStatus status_3 = AuthorizationRightGet(XPCCommon::authRightName().data(), nullptr);
+    if (status_3 == errAuthorizationDenied) {
+        CFStringRef rightDefinition = CFSTR(kAuthorizationRuleAuthenticateAsAdmin);
+        CFStringRef descriptionKey = CFSTR("TEST");
+        
+        OSStatus status_4 = AuthorizationRightSet(_authRef,
+                                                  XPCCommon::authRightName().data(),
+                                                  rightDefinition,
+                                                  descriptionKey,
+                                                  nullptr,
+                                                  nullptr);
+        
+        CFRelease(rightDefinition);
+        CFRelease(descriptionKey);
+        
+        assert(status_4 == errAuthorizationSuccess);
+    }
 }
 
 XPCManager::~XPCManager() {
@@ -25,6 +54,8 @@ XPCManager::~XPCManager() {
         xpc_session_cancel(_session);
     }
     xpc_release(_session);
+    AuthorizationFree(_authRef, 0);
+    [_authorization release];
 }
 
 void XPCManager::installDaemon(std::function<void (NSError * _Nullable)> completionHandler) {
@@ -52,7 +83,8 @@ void XPCManager::uninstallDaemon(std::function<void (NSError * _Nullable)> compl
 void XPCManager::openFile(std::string path, std::function<void (std::variant<int, NSError *>)> completionHandler) {
     std::unordered_map<std::string, xpc_object_t> input {
         {"function", xpc_string_create("openFile")},
-        {"filePath", xpc_string_create(path.data())}
+        {"filePath", xpc_string_create(path.data())},
+        {"authData", xpc_data_create(_authorization.bytes, _authorization.length)}
     };
     
     XPCCommon::sendMessageAndReleaseValues(_session, input, ^(xpc_object_t _Nullable reply, xpc_rich_error_t _Nullable error) {

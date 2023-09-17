@@ -42,10 +42,8 @@
     
     VZVirtualMachineView *virtualMachineView = self.virtualMachineView;
     self.viewModel.get()->virtualMachine(^(VZVirtualMachine * _Nullable virtualMachine, NSError * _Nullable error) {
-        if (error) {
-            assert(error);
-            return;
-        }
+        assert(!error);
+        assert(virtualMachine);
         
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
             virtualMachineView.virtualMachine = virtualMachine;
@@ -54,10 +52,7 @@
             options.startUpFromMacOSRecovery = YES;
             
             [virtualMachine startWithOptions:options completionHandler:^(NSError * _Nullable errorOrNil) {
-                if (errorOrNil) {
-                    assert(errorOrNil);
-                    return;
-                }
+                assert(!errorOrNil);
             }];
             
             [options release];

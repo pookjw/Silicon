@@ -33,35 +33,6 @@ SVService::SVService(xpc_rich_error_t _Nullable * _Nullable error) : _daemonSess
     }
     
     _appService = [[SMAppService daemonServiceWithPlistName:@"com.pookjw.Silicon.Helper.plist"] retain];
-    
-    //
-    
-    OSStatus status_1 = AuthorizationCreate(nullptr, nullptr, 0, &_authRef);
-    assert(status_1 == errAuthorizationSuccess);
-    
-    AuthorizationExternalForm extForm;
-    OSStatus status_2 = AuthorizationMakeExternalForm(_authRef, &extForm);
-    assert(status_2 == errAuthorizationSuccess);
-    
-    _authorization = [[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)];
-    
-    OSStatus status_3 = AuthorizationRightGet(XPCCommon::authRightName().data(), nullptr);
-    if (status_3 == errAuthorizationDenied) {
-        CFStringRef rightDefinition = CFSTR(kAuthorizationRuleAuthenticateAsAdmin);
-        CFStringRef descriptionKey = CFSTR("TEST");
-        
-        OSStatus status_4 = AuthorizationRightSet(_authRef,
-                                                  XPCCommon::authRightName().data(),
-                                                  rightDefinition,
-                                                  descriptionKey,
-                                                  nullptr,
-                                                  nullptr);
-        
-        CFRelease(rightDefinition);
-        CFRelease(descriptionKey);
-        
-        assert(status_4 == errAuthorizationSuccess);
-    }
 }
 
 SVService::~SVService() {
@@ -72,8 +43,6 @@ SVService::~SVService() {
     xpc_session_cancel(_daemonSession);
     xpc_release(_daemonSession);
     [_appService release];
-    AuthorizationFree(_authRef, 0);
-    [_authorization release];
 }
 
 void SVService::run(xpc_rich_error_t _Nullable * _Nullable error) {
@@ -153,8 +122,10 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
             }
             
             std::string filePath = xpc_dictionary_get_string(message, "filePath");
+            size_t length;
+            const void *authData = xpc_dictionary_get_data(message, "authData", &length);
             
-            openFile(filePath, ^(std::variant<int, xpc_rich_error_t> result) {
+            openFile(filePath, authData, length, ^(std::variant<int, xpc_rich_error_t> result) {
                 if (int *fd_p = std::get_if<int>(&result)) {
                     xpc_object_t reply = xpc_dictionary_create_reply(message);
                     xpc_dictionary_set_fd(reply, "fd", *fd_p);
@@ -182,11 +153,11 @@ void SVService::uninstallDaemon(std::function<void (NSError * _Nullable)> comple
     }];
 }
 
-void SVService::openFile(std::string path, std::function<void (std::variant<int, xpc_rich_error_t>)> completionHandler) {
+void SVService::openFile(std::string path, const void *authData, size_t length,std::function<void (std::variant<int, xpc_rich_error_t>)> completionHandler) {
     std::unordered_map<std::string, xpc_object_t> input = {
         {"function", xpc_string_create("openFile")},
         {"filePath", xpc_string_create(path.data())},
-        {"authData", xpc_data_create(_authorization.bytes, _authorization.length)}
+        {"authData", xpc_data_create(authData, length)}
     };
     
     XPCCommon::sendMessageAndReleaseValues(_daemonSession, input, ^(xpc_object_t _Nullable message, xpc_rich_error_t _Nullable error) {

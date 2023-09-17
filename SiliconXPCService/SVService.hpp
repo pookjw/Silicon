@@ -8,7 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <xpc/xpc.h>
 #import <ServiceManagement/ServiceManagement.h>
-#import <Security/Security.h>
 #import <functional>
 #import <string>
 #import <mutex>
@@ -32,15 +31,12 @@ private:
     xpc_session_t _Nullable _daemonSession;
     SMAppService *_appService;
     
-    AuthorizationRef _authRef;
-    NSData *_authorization;
-    
     std::mutex _mtx;
     
     void handle(xpc_session_t peer, xpc_object_t message);
     void installDaemon(NSError * _Nullable * error);
     void uninstallDaemon(std::function<void (NSError * _Nullable)> completionHandler);
-    void openFile(std::string path, std::function<void (std::variant<int, xpc_rich_error_t>)> completionHandler);
+    void openFile(std::string path, const void *authData, size_t length, std::function<void (std::variant<int, xpc_rich_error_t>)> completionHandler);
     void closeFile(xpc_object_t fd, std::function<void (NSError * _Nullable)> completionHandler);
 };
 

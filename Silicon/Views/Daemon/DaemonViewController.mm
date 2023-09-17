@@ -8,6 +8,7 @@
 #import "DaemonViewController.hpp"
 #import "XPCManager.hpp"
 #import "VirtualMachineMacModel.hpp"
+#import <Virtualization/Virtualization.h>
 
 @interface DaemonViewController ()
 @property (retain) NSStackView *stackView;
@@ -120,10 +121,18 @@
 }
 
 - (void)didTriggerOpenFileButton:(NSButton *)sender {
-    XPCManager::getInstance().openFile("/dev/rdisk7", ^(std::variant<int, NSError *> result) {
+    XPCManager::getInstance().openFile("/dev/rdisk27", ^(std::variant<int, NSError *> result) {
         if (int *np = std::get_if<int>(&result)) {
             NSLog(@"%d", *np);
             VirtualMachineMacModel.tmp_fd = *np;
+            
+            NSFileHandle *handle = [[NSFileHandle alloc] initWithFileDescriptor:*np];
+            NSError * _Nullable error = nullptr;
+            VZDiskBlockDeviceStorageDeviceAttachment *a = [[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:handle readOnly:YES synchronizationMode:VZDiskSynchronizationModeFull error:&error];
+            assert(!error);
+            [handle release];
+            NSLog(@"%@", a);
+            [a release];
         } else if (NSError **error_p = std::get_if<NSError *>(&result)) {
             NSLog(@"%@", (*error_p).localizedDescription);
         }

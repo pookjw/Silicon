@@ -208,7 +208,7 @@ static int _fd;
     NSLog(@"%d", VirtualMachineMacModel.tmp_fd);
     NSFileHandle *fileHandle = [[NSFileHandle alloc] initWithFileDescriptor:VirtualMachineMacModel.tmp_fd];
 
-    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:YES synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
+    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:NO synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
     [fileHandle release];
     
     if (*error) {
