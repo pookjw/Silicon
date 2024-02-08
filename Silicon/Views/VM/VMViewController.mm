@@ -68,10 +68,10 @@
     
     [self.view addSubview:virtualMachineView];
     [NSLayoutConstraint activateConstraints:@[
-        [virtualMachineView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [virtualMachineView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [virtualMachineView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [virtualMachineView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+        [virtualMachineView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
+        [virtualMachineView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [virtualMachineView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
+        [virtualMachineView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
     ]];
     
     self.virtualMachineView = virtualMachineView;

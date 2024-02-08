@@ -9,7 +9,7 @@
 #import "XPCCommon.hpp"
 #import "constants.hpp"
 
-XPCManager::XPCManager() : _session(xpc_null_create()) {
+XPCManager::XPCManager() : _session(NULL) {
     xpc_rich_error_t error = nullptr;
     xpc_session_t session = xpc_session_create_xpc_service("com.pookjw.Silicon.XPCService", nullptr, XPC_SESSION_CREATE_INACTIVE, &error);
     assert(!error);
@@ -50,10 +50,10 @@ XPCManager::XPCManager() : _session(xpc_null_create()) {
 }
 
 XPCManager::~XPCManager() {
-    if (xpc_get_type(_session) == XPC_TYPE_SESSION) {
+    if (_session) {
         xpc_session_cancel(_session);
+        xpc_release(reinterpret_cast<xpc_object_t>(_session));
     }
-    xpc_release(_session);
     AuthorizationFree(_authRef, 0);
     [_authorization release];
 }

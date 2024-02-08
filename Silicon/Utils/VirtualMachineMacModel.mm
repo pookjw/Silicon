@@ -205,20 +205,20 @@ static int _fd;
     //
     
     
-    NSLog(@"%d", VirtualMachineMacModel.tmp_fd);
-    NSFileHandle *fileHandle = [[NSFileHandle alloc] initWithFileDescriptor:VirtualMachineMacModel.tmp_fd];
-
-    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:NO synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
-    [fileHandle release];
-    
-    if (*error) {
-        return nullptr;
-    }
-    VZNVMExpressControllerDeviceConfiguration *tmp_storageDeviceConfiguration = [[[VZNVMExpressControllerDeviceConfiguration alloc] initWithAttachment:tmp_storageDeviceAttachment] autorelease];
+//    NSLog(@"%d", VirtualMachineMacModel.tmp_fd);
+//    NSFileHandle *fileHandle = [[NSFileHandle alloc] initWithFileDescriptor:VirtualMachineMacModel.tmp_fd];
+//
+//    VZDiskBlockDeviceStorageDeviceAttachment *tmp_storageDeviceAttachment = [[[VZDiskBlockDeviceStorageDeviceAttachment alloc] initWithFileHandle:fileHandle readOnly:NO synchronizationMode:VZDiskSynchronizationModeFull error:error] autorelease];
+//    [fileHandle release];
+//    
+//    if (*error) {
+//        return nullptr;
+//    }
+//    VZNVMExpressControllerDeviceConfiguration *tmp_storageDeviceConfiguration = [[[VZNVMExpressControllerDeviceConfiguration alloc] initWithAttachment:tmp_storageDeviceAttachment] autorelease];
     
     //
     
-    virtualMachineConfiguration.storageDevices = @[storageDeviceConfiguration, tmp_storageDeviceConfiguration];
+    virtualMachineConfiguration.storageDevices = @[storageDeviceConfiguration];
     
     //
     

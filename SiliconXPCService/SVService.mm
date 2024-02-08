@@ -41,7 +41,7 @@ SVService::~SVService() {
     xpc_listener_cancel(_listener);
     [_listener release];
     xpc_session_cancel(_daemonSession);
-    xpc_release(_daemonSession);
+    xpc_release(reinterpret_cast<xpc_object_t>(_daemonSession));
     [_appService release];
 }
 
@@ -101,7 +101,7 @@ void SVService::handle(xpc_session_t  _Nonnull peer, xpc_object_t  _Nonnull mess
             
             uninstallDaemon(^(NSError * _Nullable error) {
                 xpc_session_cancel(_daemonSession);
-                xpc_release(_daemonSession);
+                xpc_release(reinterpret_cast<xpc_object_t>(_daemonSession));
                 _daemonSession = nullptr;
                 
                 if (error) {
