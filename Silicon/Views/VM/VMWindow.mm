@@ -22,7 +22,7 @@ namespace _VirtualMachineWindow {
 - (instancetype)initWithVirtualMachineMacModel:(VirtualMachineMacModel *)virtualMachineMacModel {
     if (self = [super init]) {
         self.styleMask = NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskResizable | NSWindowStyleMaskTitled;
-        self.movableByWindowBackground = YES;
+        self.movableByWindowBackground = NO;
         self.title = @"Untitled";
         self.releasedWhenClosed = NO;
         self.titlebarAppearsTransparent = NO;
